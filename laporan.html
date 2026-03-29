@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Laporan Penjualan — Ming Mart POS</title>
+    <link rel="stylesheet" href="assets/icon/favicon.ico" />
+    <link rel="stylesheet" href="dist/css/style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body>
+    <div id="navbar-placeholder"></div>
+
+    <div class="container">
+      <div class="page-header">
+        <div class="page-title">
+          <div class="title-icon">📊</div>
+          Dashboard Penjualan
+        </div>
+        <button onclick="resetLaporan()" class="btn btn-danger btn-sm">
+          🗑 Reset Semua Data
+        </button>
+      </div>
+
+      <!-- Stat Cards -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon">💰</div>
+          <div class="stat-label">Total Omzet</div>
+          <div class="stat-value font-mono" id="totalOmzet">Rp 0</div>
+        </div>
+        <div class="stat-card green">
+          <div class="stat-icon green">📦</div>
+          <div class="stat-label">Produk Terjual</div>
+          <div class="stat-value font-mono" id="totalTerjual">0 Item</div>
+        </div>
+        <div class="stat-card orange">
+          <div class="stat-icon orange">🧾</div>
+          <div class="stat-label">Total Transaksi</div>
+          <div class="stat-value font-mono" id="totalTransaksi">
+            0 Transaksi
+          </div>
+        </div>
+      </div>
+
+      <!-- Chart -->
+      <div class="chart-container">
+        <div class="chart-title">📈 Grafik Penjualan Per Produk</div>
+        <div class="chart-inner">
+          <canvas id="chartPenjualan"></canvas>
+        </div>
+      </div>
+
+      <!-- Transaction History -->
+      <div class="card" style="padding: 0; overflow: hidden">
+        <div
+          style="
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--border);
+          "
+        >
+          <div
+            style="
+              font-size: 0.95rem;
+              font-weight: 700;
+              color: var(--text-heading);
+            "
+          >
+            📜 Riwayat Transaksi
+          </div>
+          <div
+            style="font-size: 0.8rem; color: var(--text-muted)"
+            id="transaksiCount"
+          >
+            —
+          </div>
+        </div>
+
+        <div class="table-wrapper" style="border: none; border-radius: 0">
+          <table>
+            <thead>
+              <tr>
+                <th>Waktu</th>
+                <th>ID Transaksi</th>
+                <th>Total Belanja</th>
+                <th class="text-center">Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="bodyRiwayat">
+              <tr>
+                <td
+                  colspan="4"
+                  class="text-center"
+                  style="padding: 40px; color: var(--text-muted)"
+                >
+                  Memuat data...
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Edit Laporan -->
+    <div id="modalEditLaporan" class="modal-overlay">
+      <div class="modal-box" style="max-width: 400px">
+        <div class="modal-header">
+          <div class="modal-title">📝 Edit Total Transaksi</div>
+          <button class="modal-close" onclick="tutupEditLaporan()">✕</button>
+        </div>
+
+        <input type="hidden" id="editTransId" />
+
+        <div class="form-group">
+          <label>Total Baru (Rp)</label>
+          <input
+            type="number"
+            id="editTotalNominal"
+            class="input-custom"
+            placeholder="0"
+            min="0"
+          />
+        </div>
+
+        <div
+          style="
+            background: var(--warning-bg);
+            border: 1px solid rgba(245, 158, 11, 0.2);
+            border-radius: var(--radius-sm);
+            padding: 10px 14px;
+            margin-bottom: 4px;
+          "
+        >
+          <p style="font-size: 0.78rem; color: var(--warning); margin: 0">
+            ⚠️ Ubah nilai dengan hati-hati. Perubahan ini tidak dapat
+            dibatalkan.
+          </p>
+        </div>
+
+        <div class="modal-footer">
+          <button class="btn btn-ghost" onclick="tutupEditLaporan()">
+            Batal
+          </button>
+          <button class="btn btn-primary" onclick="simpanEditLaporan()">
+            💾 Update
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="dist/js/script.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        muatNavbar("nav-laporan");
+        renderDashboard();
+      });
+
+      // Update transaksi count after render
+      const _origDashboard = renderDashboard;
+      window.renderDashboard = function () {
+        _origDashboard();
+        const riwayat = JSON.parse(localStorage.getItem("pos_riwayat")) || [];
+        const el = document.getElementById("transaksiCount");
+        if (el) el.textContent = `${riwayat.length} transaksi tersimpan`;
+      };
+
+      // Close modals on overlay click
+      document
+        .getElementById("modalEditLaporan")
+        .addEventListener("click", function (e) {
+          if (e.target === this) tutupEditLaporan();
+        });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,123 @@
+<nav class="navbar">
+  <a class="nav-logo" href="index.html">
+    <div class="nav-logo-icon">🛒</div>
+    <div class="nav-logo-text">MING<span>MART</span></div>
+  </a>
+
+  <ul class="nav-links" id="navLinks">
+    <li>
+      <a href="index.html" id="nav-kasir">
+        <span class="nav-icon">🛒</span> Kasir
+      </a>
+    </li>
+    <li>
+      <a href="produk.html" id="nav-stok">
+        <span class="nav-icon">📦</span> Stok Produk
+      </a>
+    </li>
+    <li>
+      <a href="laporan.html" id="nav-laporan">
+        <span class="nav-icon">📊</span> Laporan
+      </a>
+    </li>
+    <!-- Mobile only -->
+    <li
+      class="mobile-only"
+      style="
+        margin-top: 8px;
+        padding-top: 8px;
+        border-top: 1px solid var(--border);
+      "
+    >
+      <a
+        href="#"
+        onclick="
+          bukaModalAkun();
+          toggleMenu();
+        "
+        style="color: var(--primary-light)"
+      >
+        <span class="nav-icon">⚙️</span> Kelola Akun
+      </a>
+    </li>
+    <li class="mobile-only">
+      <a href="#" onclick="logout()" style="color: var(--danger)">
+        <span class="nav-icon">🚪</span> Logout
+      </a>
+    </li>
+  </ul>
+
+  <div class="nav-user">
+    <div class="user-info">
+      <div class="user-avatar" id="navUserAvatar">A</div>
+      <span class="user-name" id="displayAdminName">Admin</span>
+    </div>
+    <button class="btn-nav-icon" onclick="bukaModalAkun()" title="Kelola Akun">
+      ⚙️
+    </button>
+    <button class="btn-logout" onclick="logout()">🚪 Logout</button>
+  </div>
+
+  <button
+    class="menu-toggle"
+    onclick="toggleMenu()"
+    aria-label="Menu"
+    id="menuToggleBtn"
+  >
+    <span class="hamburger-line"></span>
+    <span class="hamburger-line"></span>
+    <span class="hamburger-line"></span>
+  </button>
+</nav>
+
+<!-- Modal Kelola Akun Admin -->
+<div id="modalAkun" class="modal-overlay">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div class="modal-title">⚙️ Kelola Akun Admin</div>
+      <button class="modal-close" onclick="tutupModalAkun()">✕</button>
+    </div>
+
+    <div class="form-group">
+      <label>Username Baru</label>
+      <input
+        type="text"
+        id="updateUsername"
+        class="input-custom"
+        placeholder="Masukkan username baru"
+      />
+    </div>
+    <div class="form-group">
+      <label>Password Baru</label>
+      <input
+        type="password"
+        id="updatePassword"
+        class="input-custom"
+        placeholder="Min. 5 karakter"
+      />
+    </div>
+
+    <div
+      style="
+        background: var(--warning-bg);
+        border: 1px solid rgba(245, 158, 11, 0.2);
+        border-radius: var(--radius-sm);
+        padding: 12px;
+        margin-bottom: 4px;
+      "
+    >
+      <p style="font-size: 0.78rem; color: var(--warning); margin: 0">
+        ⚠️ Setelah disimpan, Anda akan diminta login ulang.
+      </p>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="tutupModalAkun()">Batal</button>
+      <button class="btn btn-primary" onclick="simpanPerubahanAkun()">
+        💾 Simpan Perubahan
+      </button>
+    </div>
+  </div>
+</div>
+
+<div id="toastContainer" class="toast-container"></div>

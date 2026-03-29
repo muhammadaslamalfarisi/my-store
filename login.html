@@ -1,0 +1,472 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login — Ming Mart POS</title>
+    <link rel="stylesheet" href="assets/icon/favicon.ico" />
+    <link rel="stylesheet" href="dist/css/style.css" />
+    <style>
+      body {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        padding: 20px;
+      }
+
+      .login-wrap {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        max-width: 860px;
+        width: 100%;
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-xl);
+        overflow: hidden;
+        box-shadow: var(--shadow-lg);
+        animation: slideUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+
+      .login-brand {
+        background: linear-gradient(135deg, #0d1020 0%, #1a1040 100%);
+        padding: 48px 40px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .login-brand::before {
+        content: "";
+        position: absolute;
+        width: 300px;
+        height: 300px;
+        background: radial-gradient(
+          circle,
+          rgba(99, 102, 241, 0.2) 0%,
+          transparent 70%
+        );
+        top: -80px;
+        right: -80px;
+        border-radius: 50%;
+      }
+
+      .login-brand::after {
+        content: "";
+        position: absolute;
+        width: 200px;
+        height: 200px;
+        background: radial-gradient(
+          circle,
+          rgba(6, 182, 212, 0.15) 0%,
+          transparent 70%
+        );
+        bottom: -40px;
+        left: -40px;
+        border-radius: 50%;
+      }
+
+      .brand-logo {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        position: relative;
+        z-index: 1;
+      }
+
+      .brand-icon {
+        width: 48px;
+        height: 48px;
+        background: linear-gradient(135deg, var(--primary), var(--accent));
+        border-radius: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        box-shadow: 0 8px 20px var(--primary-glow);
+      }
+
+      .brand-name {
+        font-size: 1.6rem;
+        font-weight: 800;
+        color: white;
+        letter-spacing: -0.5px;
+      }
+
+      .brand-name span {
+        color: var(--primary-light);
+      }
+
+      .brand-tagline {
+        font-size: 0.8rem;
+        color: rgba(255, 255, 255, 0.4);
+        letter-spacing: 0.5px;
+      }
+
+      .brand-features {
+        position: relative;
+        z-index: 1;
+      }
+
+      .feature-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      }
+
+      .feature-item:last-child {
+        border-bottom: none;
+      }
+
+      .feature-icon {
+        width: 36px;
+        height: 36px;
+        background: rgba(99, 102, 241, 0.15);
+        border: 1px solid rgba(99, 102, 241, 0.25);
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        flex-shrink: 0;
+      }
+
+      .feature-text {
+        font-size: 0.85rem;
+        color: rgba(255, 255, 255, 0.6);
+      }
+      .feature-text strong {
+        color: rgba(255, 255, 255, 0.9);
+        display: block;
+        font-size: 0.875rem;
+        margin-bottom: 2px;
+      }
+
+      .brand-footer {
+        font-size: 0.75rem;
+        color: rgba(255, 255, 255, 0.25);
+        position: relative;
+        z-index: 1;
+      }
+
+      .login-form-side {
+        padding: 48px 40px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .login-heading {
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: var(--text-heading);
+        margin-bottom: 6px;
+        letter-spacing: -0.5px;
+      }
+
+      .login-sub {
+        font-size: 0.875rem;
+        color: var(--text-muted);
+        margin-bottom: 36px;
+      }
+
+      .input-wrap {
+        position: relative;
+      }
+
+      .input-prefix {
+        position: absolute;
+        left: 14px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 16px;
+        pointer-events: none;
+      }
+
+      .input-prefixed {
+        padding-left: 40px !important;
+      }
+
+      .btn-login {
+        background: linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary-dark)
+        );
+        color: white;
+        border: none;
+        width: 100%;
+        padding: 14px;
+        border-radius: var(--radius-md);
+        font-family: "Plus Jakarta Sans", sans-serif;
+        font-size: 0.95rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: var(--transition-bounce);
+        box-shadow: 0 6px 20px var(--primary-glow);
+        margin-top: 8px;
+        letter-spacing: 0.2px;
+      }
+
+      .btn-login:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 28px rgba(99, 102, 241, 0.45);
+      }
+
+      .btn-login:active {
+        transform: scale(0.98);
+      }
+
+      .btn-login.loading {
+        opacity: 0.7;
+        pointer-events: none;
+      }
+
+      .error-msg {
+        display: none;
+        background: var(--danger-bg);
+        border: 1px solid rgba(244, 63, 94, 0.2);
+        color: var(--danger);
+        padding: 12px 16px;
+        border-radius: var(--radius-sm);
+        font-size: 0.85rem;
+        font-weight: 500;
+        margin-top: 14px;
+        text-align: center;
+        animation: shake 0.4s ease;
+      }
+
+      @keyframes shake {
+        0%,
+        100% {
+          transform: translateX(0);
+        }
+        25% {
+          transform: translateX(-6px);
+        }
+        75% {
+          transform: translateX(6px);
+        }
+      }
+
+      .login-links {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+        font-size: 0.8rem;
+      }
+
+      .login-links a {
+        color: var(--text-muted);
+        text-decoration: none;
+        transition: var(--transition);
+      }
+
+      .login-links a:hover {
+        color: var(--primary-light);
+      }
+
+      .default-cred {
+        background: var(--bg-elevated);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        padding: 12px 14px;
+        margin-top: 20px;
+        font-size: 0.78rem;
+        color: var(--text-muted);
+        text-align: center;
+      }
+
+      .default-cred strong {
+        color: var(--text-secondary);
+        font-family: "JetBrains Mono", monospace;
+      }
+
+      @media (max-width: 640px) {
+        .login-wrap {
+          grid-template-columns: 1fr;
+        }
+        .login-brand {
+          display: none;
+        }
+        .login-form-side {
+          padding: 36px 28px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="login-wrap">
+      <!-- Brand Side -->
+      <div class="login-brand">
+        <div class="brand-logo">
+          <div class="brand-icon">🛒</div>
+          <div>
+            <div class="brand-name">MING<span>MART</span></div>
+            <div class="brand-tagline">Point of Sale System</div>
+          </div>
+        </div>
+
+        <div class="brand-features">
+          <div class="feature-item">
+            <div class="feature-icon">🛒</div>
+            <div class="feature-text">
+              <strong>Kasir Modern</strong>
+              Proses transaksi cepat & cetak struk PDF
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">📦</div>
+            <div class="feature-text">
+              <strong>Manajemen Stok</strong>
+              CRUD produk real-time dengan notifikasi stok rendah
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">📊</div>
+            <div class="feature-text">
+              <strong>Dashboard Laporan</strong>
+              Grafik penjualan & riwayat transaksi lengkap
+            </div>
+          </div>
+        </div>
+
+        <div class="brand-footer">© 2026 Ming Mart POS System</div>
+      </div>
+
+      <!-- Form Side -->
+      <div class="login-form-side">
+        <div class="login-heading">Selamat Datang 👋</div>
+        <div class="login-sub">Masuk ke sistem kasir Ming Mart</div>
+
+        <form id="formLogin" autocomplete="off">
+          <div class="form-group">
+            <label>Username</label>
+            <div class="input-wrap">
+              <span class="input-prefix">👤</span>
+              <input
+                type="text"
+                id="username"
+                class="input-custom input-prefixed"
+                placeholder="Masukkan username"
+                required
+                autocomplete="username"
+              />
+            </div>
+          </div>
+          <div class="form-group" style="margin-bottom: 6px">
+            <label>Password</label>
+            <div class="input-wrap">
+              <span class="input-prefix">🔒</span>
+              <input
+                type="password"
+                id="password"
+                class="input-custom input-prefixed"
+                placeholder="Masukkan password"
+                required
+                autocomplete="current-password"
+              />
+            </div>
+          </div>
+
+          <button type="submit" class="btn-login" id="btnLogin">
+            Masuk ke Sistem →
+          </button>
+        </form>
+
+        <p id="pesanError" class="error-msg">
+          ❌ Username atau password salah!
+        </p>
+
+        <div class="login-links">
+          <a href="#" onclick="lupaPassword()">Lupa password?</a>
+          <a href="#" onclick="buatAkunBaru()">Daftar akun baru</a>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const KEY_STORAGE = "user_admin";
+
+      function initAuth() {
+        if (!localStorage.getItem(KEY_STORAGE)) {
+          localStorage.setItem(
+            KEY_STORAGE,
+            JSON.stringify({ username: "admin", password: "admin123" }),
+          );
+        }
+      }
+      initAuth();
+
+      document
+        .getElementById("formLogin")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+          const userInput = document.getElementById("username").value;
+          const passInput = document.getElementById("password").value;
+          const errorBox = document.getElementById("pesanError");
+          const btn = document.getElementById("btnLogin");
+
+          const account = JSON.parse(localStorage.getItem(KEY_STORAGE));
+
+          if (
+            userInput === account.username &&
+            passInput === account.password
+          ) {
+            btn.textContent = "Menghubungkan...";
+            btn.classList.add("loading");
+            sessionStorage.setItem("isLoggedIn", "true");
+            setTimeout(() => {
+              window.location.href = "index.html";
+            }, 700);
+          } else {
+            errorBox.style.display = "block";
+            errorBox.style.animation = "none";
+            void errorBox.offsetWidth;
+            errorBox.style.animation = "shake 0.4s ease";
+            setTimeout(() => {
+              errorBox.style.display = "none";
+            }, 3500);
+          }
+        });
+
+      function lupaPassword() {
+        const kode = prompt("Masukkan Kode Keamanan Master (9999):");
+        if (kode === "9999") {
+          const passBaru = prompt("Masukkan Password Baru (min. 5 karakter):");
+          if (passBaru && passBaru.trim().length >= 5) {
+            const acc = JSON.parse(localStorage.getItem(KEY_STORAGE));
+            acc.password = passBaru.trim();
+            localStorage.setItem(KEY_STORAGE, JSON.stringify(acc));
+            alert("✅ Password berhasil diperbarui! Silakan login.");
+          } else if (passBaru !== null) {
+            alert("Password minimal 5 karakter!");
+          }
+        } else if (kode !== null) {
+          alert("❌ Kode keamanan salah!");
+        }
+      }
+
+      function buatAkunBaru() {
+        if (!confirm("Membuat akun baru akan mengganti akun lama. Lanjutkan?"))
+          return;
+        const userBaru = prompt("Username Baru:");
+        const passBaru = prompt("Password Baru (min. 5 karakter):");
+        if (userBaru && passBaru && passBaru.length >= 5) {
+          localStorage.setItem(
+            KEY_STORAGE,
+            JSON.stringify({ username: userBaru, password: passBaru }),
+          );
+          alert("🎉 Akun berhasil dibuat! Silakan login.");
+          location.reload();
+        } else if (userBaru !== null && passBaru !== null) {
+          alert("Data tidak valid. Password minimal 5 karakter.");
+        }
+      }
+    </script>
+  </body>
+</html>

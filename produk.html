@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Manajemen Produk — Ming Mart POS</title>
+    <link rel="stylesheet" href="assets/icon/favicon.ico" />
+    <link rel="stylesheet" href="dist/css/style.css" />
+  </head>
+  <body>
+    <div id="navbar-placeholder"></div>
+
+    <div class="container">
+      <div class="page-header">
+        <div class="page-title">
+          <div class="title-icon">📦</div>
+          Manajemen Stok Produk
+        </div>
+        <div
+          id="produkStat"
+          style="font-size: 0.85rem; color: var(--text-muted)"
+        >
+          Memuat...
+        </div>
+      </div>
+
+      <!-- Add Product Form -->
+      <div class="add-form-bar">
+        <div
+          style="
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--text-secondary);
+            margin-bottom: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+          "
+        >
+          ➕ Tambah Produk Baru
+        </div>
+        <div class="add-form-row">
+          <div class="form-group" style="flex: 2">
+            <label>Nama Produk</label>
+            <input
+              type="text"
+              id="newNama"
+              placeholder="Contoh: Kopi Susu"
+              class="input-custom"
+              onkeydown="if (event.key === 'Enter') tambahProdukBaru();"
+            />
+          </div>
+          <div class="form-group" style="flex: 1.2">
+            <label>Harga Jual (Rp)</label>
+            <input
+              type="number"
+              id="newHarga"
+              placeholder="15000"
+              class="input-custom"
+              min="0"
+            />
+          </div>
+          <div class="form-group" style="flex: 0.8">
+            <label>Stok Awal</label>
+            <input
+              type="number"
+              id="newStok"
+              value="0"
+              class="input-custom"
+              min="0"
+            />
+          </div>
+          <div class="form-group" style="min-width: 140px; flex: 0">
+            <label style="opacity: 0">‎</label>
+            <button
+              onclick="tambahProdukBaru()"
+              class="btn btn-primary btn-full"
+              style="height: 43px"
+            >
+              ➕ Tambah
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product Table -->
+      <div class="card" style="padding: 0; overflow: hidden">
+        <div
+          style="
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--border);
+          "
+        >
+          <div
+            style="
+              font-size: 0.95rem;
+              font-weight: 700;
+              color: var(--text-heading);
+            "
+          >
+            Daftar Produk
+          </div>
+          <div class="search-bar" style="margin: 0; min-width: 240px">
+            <span class="search-icon">🔍</span>
+            <input
+              type="text"
+              class="input-custom"
+              style="padding: 8px 12px 8px 36px; font-size: 0.85rem"
+              placeholder="Cari produk..."
+              oninput="renderTabelStok(this.value)"
+            />
+          </div>
+        </div>
+
+        <div class="table-wrapper" style="border: none; border-radius: 0">
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Nama Produk</th>
+                <th>Harga Jual</th>
+                <th class="text-center">Stok</th>
+                <th class="text-center">Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="bodyStok">
+              <tr>
+                <td
+                  colspan="5"
+                  class="text-center"
+                  style="padding: 40px; color: var(--text-muted)"
+                >
+                  Memuat data...
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Edit Produk -->
+    <div id="modalEdit" class="modal-overlay">
+      <div class="modal-box">
+        <div class="modal-header">
+          <div class="modal-title">✎ Edit Data Produk</div>
+          <button class="modal-close" onclick="tutupModalEdit()">✕</button>
+        </div>
+
+        <input type="hidden" id="editId" />
+
+        <div class="form-group">
+          <label>Nama Produk</label>
+          <input
+            type="text"
+            id="editNama"
+            class="input-custom"
+            placeholder="Nama produk"
+          />
+        </div>
+        <div class="form-group">
+          <label>Harga Jual (Rp)</label>
+          <input
+            type="number"
+            id="editHarga"
+            class="input-custom"
+            placeholder="0"
+            min="0"
+          />
+        </div>
+        <div class="form-group">
+          <label>Jumlah Stok</label>
+          <input
+            type="number"
+            id="editStok"
+            class="input-custom"
+            placeholder="0"
+            min="0"
+          />
+        </div>
+
+        <div class="modal-footer">
+          <button class="btn btn-ghost" onclick="tutupModalEdit()">
+            Batal
+          </button>
+          <button class="btn btn-primary" onclick="simpanPerubahan()">
+            💾 Simpan
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="dist/js/script.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        muatNavbar("nav-stok");
+        renderTabelStok();
+        updateProdukStat();
+      });
+
+      function updateProdukStat() {
+        const produk = JSON.parse(localStorage.getItem("pos_produk")) || [];
+        const lowStock = produk.filter((p) => p.stok <= 5).length;
+        const el = document.getElementById("produkStat");
+        if (el) {
+          el.innerHTML = `
+          <span style="margin-right:16px">📦 ${produk.length} produk</span>
+          ${lowStock > 0 ? `<span style="color:var(--danger)">⚠️ ${lowStock} stok rendah</span>` : `<span style="color:var(--success)">✓ Semua stok normal</span>`}
+        `;
+        }
+      }
+
+      // Override to also update stat
+      const _origRenderTabel = renderTabelStok;
+      window.renderTabelStok = function (keyword = "") {
+        _origRenderTabel(keyword);
+        updateProdukStat();
+      };
+
+      // Close modal on overlay click
+      document
+        .getElementById("modalEdit")
+        .addEventListener("click", function (e) {
+          if (e.target === this) tutupModalEdit();
+        });
+    </script>
+  </body>
+</html>

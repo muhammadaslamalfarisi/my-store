@@ -4,8 +4,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login — Ming Mart POS</title>
-    <link rel="stylesheet" href="assets/icon/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="assets/icon/favicon.ico" />
     <link rel="stylesheet" href="dist/css/style.css" />
+    <script>
+      (function () {
+        var t = localStorage.getItem("pos_tema") || "dark";
+        if (t === "light")
+          document.documentElement.setAttribute("data-theme", "light");
+      })();
+    </script>
     <style>
       body {
         display: flex;
@@ -36,6 +43,10 @@
         justify-content: space-between;
         position: relative;
         overflow: hidden;
+      }
+
+      html[data-theme="light"] .login-brand {
+        background: linear-gradient(135deg, #312e81 0%, #1e40af 100%);
       }
 
       .login-brand::before {
@@ -77,15 +88,34 @@
       }
 
       .brand-icon {
-        width: 48px;
-        height: 48px;
+        width: 52px;
+        height: 52px;
+        background: transparent;
+        border-radius: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        flex-shrink: 0;
+      }
+
+      .brand-icon img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+
+      .brand-icon-fallback {
+        width: 52px;
+        height: 52px;
         background: linear-gradient(135deg, var(--primary), var(--accent));
         border-radius: 14px;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 24px;
+        font-size: 26px;
         box-shadow: 0 8px 20px var(--primary-glow);
+        flex-shrink: 0;
       }
 
       .brand-name {
@@ -94,11 +124,9 @@
         color: white;
         letter-spacing: -0.5px;
       }
-
       .brand-name span {
-        color: var(--primary-light);
+        color: #a5b4fc;
       }
-
       .brand-tagline {
         font-size: 0.8rem;
         color: rgba(255, 255, 255, 0.4);
@@ -117,7 +145,6 @@
         padding: 12px 0;
         border-bottom: 1px solid rgba(255, 255, 255, 0.06);
       }
-
       .feature-item:last-child {
         border-bottom: none;
       }
@@ -145,7 +172,6 @@
         font-size: 0.875rem;
         margin-bottom: 2px;
       }
-
       .brand-footer {
         font-size: 0.75rem;
         color: rgba(255, 255, 255, 0.25);
@@ -159,7 +185,6 @@
         flex-direction: column;
         justify-content: center;
       }
-
       .login-heading {
         font-size: 1.5rem;
         font-weight: 800;
@@ -167,7 +192,6 @@
         margin-bottom: 6px;
         letter-spacing: -0.5px;
       }
-
       .login-sub {
         font-size: 0.875rem;
         color: var(--text-muted);
@@ -177,7 +201,6 @@
       .input-wrap {
         position: relative;
       }
-
       .input-prefix {
         position: absolute;
         left: 14px;
@@ -186,7 +209,6 @@
         font-size: 16px;
         pointer-events: none;
       }
-
       .input-prefixed {
         padding-left: 40px !important;
       }
@@ -211,16 +233,13 @@
         margin-top: 8px;
         letter-spacing: 0.2px;
       }
-
       .btn-login:hover {
         transform: translateY(-2px);
         box-shadow: 0 10px 28px rgba(99, 102, 241, 0.45);
       }
-
       .btn-login:active {
         transform: scale(0.98);
       }
-
       .btn-login.loading {
         opacity: 0.7;
         pointer-events: none;
@@ -259,31 +278,36 @@
         margin-top: 20px;
         font-size: 0.8rem;
       }
-
       .login-links a {
         color: var(--text-muted);
         text-decoration: none;
         transition: var(--transition);
       }
-
       .login-links a:hover {
         color: var(--primary-light);
       }
 
-      .default-cred {
-        background: var(--bg-elevated);
+      /* Theme toggle on login */
+      .login-theme-btn {
+        position: fixed;
+        top: 16px;
+        right: 16px;
+        width: 40px;
+        height: 40px;
+        background: var(--bg-card);
         border: 1px solid var(--border);
         border-radius: var(--radius-sm);
-        padding: 12px 14px;
-        margin-top: 20px;
-        font-size: 0.78rem;
-        color: var(--text-muted);
-        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-size: 18px;
+        transition: var(--transition);
+        z-index: 10;
       }
-
-      .default-cred strong {
-        color: var(--text-secondary);
-        font-family: "JetBrains Mono", monospace;
+      .login-theme-btn:hover {
+        background: var(--primary-glow);
+        border-color: var(--primary);
       }
 
       @media (max-width: 640px) {
@@ -300,11 +324,38 @@
     </style>
   </head>
   <body>
+    <!-- Tombol ganti tema -->
+    <button
+      class="login-theme-btn"
+      onclick="toggleTemaLogin()"
+      id="loginThemeBtn"
+      title="Ganti Tema"
+    >
+      🌙
+    </button>
+
     <div class="login-wrap">
       <!-- Brand Side -->
       <div class="login-brand">
         <div class="brand-logo">
-          <div class="brand-icon">🛒</div>
+          <div class="brand-icon">
+            <img
+              src="assets/images/logo-toko.png"
+              alt="Logo"
+              onerror="
+                this.parentElement.style.display = 'none';
+                document.getElementById('brandIconFallback').style.display =
+                  'flex';
+              "
+            />
+          </div>
+          <div
+            id="brandIconFallback"
+            class="brand-icon-fallback"
+            style="display: none"
+          >
+            🛒
+          </div>
           <div>
             <div class="brand-name">MING<span>MART</span></div>
             <div class="brand-tagline">Point of Sale System</div>
@@ -316,7 +367,7 @@
             <div class="feature-icon">🛒</div>
             <div class="feature-text">
               <strong>Kasir Modern</strong>
-              Proses transaksi cepat & cetak struk PDF
+              Proses transaksi cepat &amp; cetak struk PDF
             </div>
           </div>
           <div class="feature-item">
@@ -330,7 +381,7 @@
             <div class="feature-icon">📊</div>
             <div class="feature-text">
               <strong>Dashboard Laporan</strong>
-              Grafik penjualan & riwayat transaksi lengkap
+              Grafik penjualan &amp; riwayat transaksi lengkap
             </div>
           </div>
         </div>
@@ -372,7 +423,6 @@
               />
             </div>
           </div>
-
           <button type="submit" class="btn-login" id="btnLogin">
             Masuk ke Sistem →
           </button>
@@ -391,6 +441,27 @@
 
     <script>
       const KEY_STORAGE = "user_admin";
+      const KEY_TEMA = "pos_tema";
+
+      // Inisialisasi tombol tema
+      (function () {
+        var t = localStorage.getItem(KEY_TEMA) || "dark";
+        var btn = document.getElementById("loginThemeBtn");
+        if (btn) btn.textContent = t === "dark" ? "☀️" : "🌙";
+      })();
+
+      function toggleTemaLogin() {
+        var tema = localStorage.getItem(KEY_TEMA) || "dark";
+        var baru = tema === "dark" ? "light" : "dark";
+        localStorage.setItem(KEY_TEMA, baru);
+        if (baru === "light") {
+          document.documentElement.setAttribute("data-theme", "light");
+        } else {
+          document.documentElement.removeAttribute("data-theme");
+        }
+        var btn = document.getElementById("loginThemeBtn");
+        if (btn) btn.textContent = baru === "dark" ? "☀️" : "🌙";
+      }
 
       function initAuth() {
         if (!localStorage.getItem(KEY_STORAGE)) {
@@ -410,7 +481,6 @@
           const passInput = document.getElementById("password").value;
           const errorBox = document.getElementById("pesanError");
           const btn = document.getElementById("btnLogin");
-
           const account = JSON.parse(localStorage.getItem(KEY_STORAGE));
 
           if (

@@ -4,9 +4,16 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Laporan Penjualan — Ming Mart POS</title>
-    <link rel="stylesheet" href="assets/icon/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="assets/icon/favicon.ico" />
     <link rel="stylesheet" href="dist/css/style.css" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+      (function () {
+        var t = localStorage.getItem("pos_tema") || "dark";
+        if (t === "light")
+          document.documentElement.setAttribute("data-theme", "light");
+      })();
+    </script>
   </head>
   <body>
     <div id="navbar-placeholder"></div>
@@ -22,7 +29,6 @@
         </button>
       </div>
 
-      <!-- Stat Cards -->
       <div class="stats-grid">
         <div class="stat-card">
           <div class="stat-icon">💰</div>
@@ -43,7 +49,6 @@
         </div>
       </div>
 
-      <!-- Chart -->
       <div class="chart-container">
         <div class="chart-title">📈 Grafik Penjualan Per Produk</div>
         <div class="chart-inner">
@@ -51,7 +56,6 @@
         </div>
       </div>
 
-      <!-- Transaction History -->
       <div class="card" style="padding: 0; overflow: hidden">
         <div
           style="
@@ -78,7 +82,6 @@
             —
           </div>
         </div>
-
         <div class="table-wrapper" style="border: none; border-radius: 0">
           <table>
             <thead>
@@ -112,9 +115,7 @@
           <div class="modal-title">📝 Edit Total Transaksi</div>
           <button class="modal-close" onclick="tutupEditLaporan()">✕</button>
         </div>
-
         <input type="hidden" id="editTransId" />
-
         <div class="form-group">
           <label>Total Baru (Rp)</label>
           <input
@@ -125,7 +126,6 @@
             min="0"
           />
         </div>
-
         <div
           style="
             background: var(--warning-bg);
@@ -140,7 +140,6 @@
             dibatalkan.
           </p>
         </div>
-
         <div class="modal-footer">
           <button class="btn btn-ghost" onclick="tutupEditLaporan()">
             Batal
@@ -159,7 +158,6 @@
         renderDashboard();
       });
 
-      // Update transaksi count after render
       const _origDashboard = renderDashboard;
       window.renderDashboard = function () {
         _origDashboard();
@@ -168,7 +166,6 @@
         if (el) el.textContent = `${riwayat.length} transaksi tersimpan`;
       };
 
-      // Close modals on overlay click
       document
         .getElementById("modalEditLaporan")
         .addEventListener("click", function (e) {

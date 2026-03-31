@@ -4,8 +4,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Manajemen Produk — Ming Mart POS</title>
-    <link rel="stylesheet" href="assets/icon/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="assets/icon/favicon.ico" />
     <link rel="stylesheet" href="dist/css/style.css" />
+    <script>
+      (function () {
+        var t = localStorage.getItem("pos_tema") || "dark";
+        if (t === "light")
+          document.documentElement.setAttribute("data-theme", "light");
+      })();
+    </script>
   </head>
   <body>
     <div id="navbar-placeholder"></div>
@@ -24,7 +31,6 @@
         </div>
       </div>
 
-      <!-- Add Product Form -->
       <div class="add-form-bar">
         <div
           style="
@@ -82,7 +88,6 @@
         </div>
       </div>
 
-      <!-- Product Table -->
       <div class="card" style="padding: 0; overflow: hidden">
         <div
           style="
@@ -91,6 +96,8 @@
             justify-content: space-between;
             padding: 20px 24px;
             border-bottom: 1px solid var(--border);
+            flex-wrap: wrap;
+            gap: 12px;
           "
         >
           <div
@@ -148,9 +155,7 @@
           <div class="modal-title">✎ Edit Data Produk</div>
           <button class="modal-close" onclick="tutupModalEdit()">✕</button>
         </div>
-
         <input type="hidden" id="editId" />
-
         <div class="form-group">
           <label>Nama Produk</label>
           <input
@@ -180,7 +185,6 @@
             min="0"
           />
         </div>
-
         <div class="modal-footer">
           <button class="btn btn-ghost" onclick="tutupModalEdit()">
             Batal
@@ -206,20 +210,21 @@
         const el = document.getElementById("produkStat");
         if (el) {
           el.innerHTML = `
-          <span style="margin-right:16px">📦 ${produk.length} produk</span>
-          ${lowStock > 0 ? `<span style="color:var(--danger)">⚠️ ${lowStock} stok rendah</span>` : `<span style="color:var(--success)">✓ Semua stok normal</span>`}
-        `;
+            <span style="margin-right:16px">📦 ${produk.length} produk</span>
+            ${
+              lowStock > 0
+                ? `<span style="color:var(--danger)">⚠️ ${lowStock} stok rendah</span>`
+                : `<span style="color:var(--success)">✓ Semua stok normal</span>`
+            }`;
         }
       }
 
-      // Override to also update stat
       const _origRenderTabel = renderTabelStok;
       window.renderTabelStok = function (keyword = "") {
         _origRenderTabel(keyword);
         updateProdukStat();
       };
 
-      // Close modal on overlay click
       document
         .getElementById("modalEdit")
         .addEventListener("click", function (e) {

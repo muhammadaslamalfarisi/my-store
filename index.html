@@ -4,11 +4,33 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Kasir — Ming Mart POS</title>
-    <link rel="stylesheet" href="assets/icon/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="assets/icon/favicon.ico" />
     <link rel="stylesheet" href="dist/css/style.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <!-- Libraries dimuat dengan crossorigin agar CORS tidak block -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/sweetalert2@11"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      // Apply theme before page renders (avoid flash)
+      (function () {
+        var t = localStorage.getItem("pos_tema") || "dark";
+        if (t === "light")
+          document.documentElement.setAttribute("data-theme", "light");
+      })();
+    </script>
   </head>
   <body>
     <div id="navbar-placeholder"></div>
@@ -30,7 +52,6 @@
       </div>
 
       <div class="pos-grid">
-        <!-- LEFT: Pilih Produk -->
         <div class="pos-left">
           <div class="section-title">Tambah Produk</div>
 
@@ -93,7 +114,6 @@
             ➕ Tambah ke Keranjang
           </button>
 
-          <!-- Quick Stats -->
           <div
             style="
               background: var(--bg-elevated);
@@ -154,7 +174,6 @@
           </div>
         </div>
 
-        <!-- RIGHT: Keranjang -->
         <div class="pos-right">
           <div class="section-title" style="justify-content: space-between">
             <span>🧾 Daftar Belanja</span>
@@ -186,22 +205,10 @@
                   <th class="text-center" style="width: 60px">Hapus</th>
                 </tr>
               </thead>
-              <tbody id="tabelKeranjang">
-                <tr>
-                  <td colspan="4">
-                    <div class="cart-empty">
-                      <div class="cart-empty-icon">🛒</div>
-                      <p style="color: var(--text-muted); font-size: 0.875rem">
-                        Keranjang masih kosong
-                      </p>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
+              <tbody id="tabelKeranjang"></tbody>
             </table>
           </div>
 
-          <!-- Total & Checkout -->
           <div class="total-panel">
             <div class="total-row">
               <span class="total-label">Total Pembayaran</span>
@@ -211,15 +218,130 @@
             <button
               onclick="prosesBayar()"
               class="btn btn-accent btn-full btn-lg"
-              style="
-                font-size: 1.05rem;
-                font-weight: 800;
-                letter-spacing: 0.3px;
-              "
+              style="font-size: 1.05rem; font-weight: 800"
             >
               💳 PROSES BAYAR &amp; CETAK STRUK
             </button>
           </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Pembayaran -->
+    <div
+      id="modalBayar"
+      class="modal-overlay"
+      style="
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.7);
+        z-index: 9999;
+        justify-content: center;
+        align-items: center;
+      "
+    >
+      <div
+        style="
+          background: var(--bg-card);
+          padding: 24px;
+          border-radius: var(--radius-lg);
+          width: 95%;
+          max-width: 400px;
+          border: 1px solid var(--border);
+          box-shadow: var(--shadow-xl);
+        "
+      >
+        <h3
+          style="
+            margin-bottom: 20px;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+          "
+        >
+          <span>💰</span> Selesaikan Pembayaran
+        </h3>
+
+        <div class="form-group">
+          <label>Metode Pembayaran</label>
+          <select
+            id="metodeBayar"
+            class="input-custom"
+            onchange="toggleInputUang()"
+          >
+            <option value="Cash">💵 Cash (Tunai)</option>
+            <option value="QRIS">📱 QRIS / Transfer</option>
+            <option value="Hutang">📝 Hutang (Bon)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Nama Pembeli (Opsional)</label>
+          <input
+            type="text"
+            id="namaPembeli"
+            class="input-custom"
+            placeholder="Masukkan nama pembeli"
+          />
+        </div>
+        <div class="form-group" id="groupUangBayar">
+          <label>Uang Dibayar (Rp)</label>
+          <input
+            type="number"
+            id="nominalBayar"
+            class="input-custom"
+            placeholder="0"
+            oninput="hitungKembalian()"
+          />
+        </div>
+
+        <div
+          style="
+            background: var(--bg-elevated);
+            padding: 15px;
+            border-radius: var(--radius-md);
+            margin: 20px 0;
+          "
+        >
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              font-size: 0.85rem;
+              color: var(--text-muted);
+              margin-bottom: 5px;
+            "
+          >
+            <span>Total Tagihan:</span>
+            <span id="modalTotalTagihan">Rp 0</span>
+          </div>
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              font-weight: 700;
+              color: var(--accent);
+            "
+          >
+            <span>Kembalian:</span>
+            <span id="textKembalian">Rp 0</span>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 12px">
+          <button onclick="tutupModalBayar()" class="btn btn-ghost btn-full">
+            Batal
+          </button>
+          <button
+            onclick="konfirmasiProsesCetak()"
+            class="btn btn-primary btn-full"
+          >
+            Konfirmasi &amp; Cetak
+          </button>
         </div>
       </div>
     </div>
@@ -229,26 +351,27 @@
       document.addEventListener("DOMContentLoaded", () => {
         muatNavbar("nav-kasir");
         renderProdukKasir();
+        renderKeranjang();
       });
 
-      // Sync side total with main total
-      const origRenderKeranjang = renderKeranjang;
-      const _syncSide = () => {
-        const total = document.getElementById("totalHarga");
-        const side = document.getElementById("totalHargaSide");
-        const badge = document.getElementById("cartBadge");
-        const count = document.getElementById("cartCount");
-        if (side && total) side.textContent = total.textContent;
-        const n = keranjang.reduce((s, i) => s + i.qty, 0);
-        if (badge) badge.textContent = `${n} item`;
-        if (count) count.textContent = n;
-      };
-
-      // Patch renderKeranjang to also update side panel
-      const _origRender = renderKeranjang;
+      // Sinkronisasi ringkasan sisi kiri
+      const _origRender = window.renderKeranjang;
       window.renderKeranjang = function () {
-        _origRender();
-        setTimeout(_syncSide, 10);
+        if (typeof _origRender === "function") _origRender();
+        setTimeout(() => {
+          const totalElem = document.getElementById("totalHarga");
+          const sideElem = document.getElementById("totalHargaSide");
+          const badge = document.getElementById("cartBadge");
+          const count = document.getElementById("cartCount");
+          if (totalElem && sideElem)
+            sideElem.textContent = totalElem.textContent;
+          const n =
+            typeof keranjang !== "undefined"
+              ? keranjang.reduce((s, i) => s + i.qty, 0)
+              : 0;
+          if (badge) badge.textContent = `${n} item`;
+          if (count) count.textContent = n;
+        }, 10);
       };
     </script>
   </body>

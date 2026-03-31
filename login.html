@@ -5,436 +5,142 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login — Ming Mart POS</title>
     <link rel="icon" type="image/x-icon" href="assets/icon/favicon.ico" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+      crossorigin="anonymous"
+    />
     <link rel="stylesheet" href="dist/css/style.css" />
     <script>
       (function () {
-        var t = localStorage.getItem("pos_tema") || "dark";
-        if (t === "light")
-          document.documentElement.setAttribute("data-theme", "light");
+        var t = localStorage.getItem("pos_tema") || "light";
+        if (t === "dark") document.documentElement.classList.add("dark-mode");
+        else document.documentElement.classList.add("light-mode");
       })();
     </script>
-    <style>
-      body {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        min-height: 100vh;
-        padding: 20px;
-      }
-
-      .login-wrap {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        max-width: 860px;
-        width: 100%;
-        background: var(--bg-card);
-        border: 1px solid var(--border);
-        border-radius: var(--radius-xl);
-        overflow: hidden;
-        box-shadow: var(--shadow-lg);
-        animation: slideUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-      }
-
-      .login-brand {
-        background: linear-gradient(135deg, #0d1020 0%, #1a1040 100%);
-        padding: 48px 40px;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        position: relative;
-        overflow: hidden;
-      }
-
-      html[data-theme="light"] .login-brand {
-        background: linear-gradient(135deg, #312e81 0%, #1e40af 100%);
-      }
-
-      .login-brand::before {
-        content: "";
-        position: absolute;
-        width: 300px;
-        height: 300px;
-        background: radial-gradient(
-          circle,
-          rgba(99, 102, 241, 0.2) 0%,
-          transparent 70%
-        );
-        top: -80px;
-        right: -80px;
-        border-radius: 50%;
-      }
-
-      .login-brand::after {
-        content: "";
-        position: absolute;
-        width: 200px;
-        height: 200px;
-        background: radial-gradient(
-          circle,
-          rgba(6, 182, 212, 0.15) 0%,
-          transparent 70%
-        );
-        bottom: -40px;
-        left: -40px;
-        border-radius: 50%;
-      }
-
-      .brand-logo {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        position: relative;
-        z-index: 1;
-      }
-
-      .brand-icon {
-        width: 52px;
-        height: 52px;
-        background: transparent;
-        border-radius: 14px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        overflow: hidden;
-        flex-shrink: 0;
-      }
-
-      .brand-icon img {
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
-      }
-
-      .brand-icon-fallback {
-        width: 52px;
-        height: 52px;
-        background: linear-gradient(135deg, var(--primary), var(--accent));
-        border-radius: 14px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 26px;
-        box-shadow: 0 8px 20px var(--primary-glow);
-        flex-shrink: 0;
-      }
-
-      .brand-name {
-        font-size: 1.6rem;
-        font-weight: 800;
-        color: white;
-        letter-spacing: -0.5px;
-      }
-      .brand-name span {
-        color: #a5b4fc;
-      }
-      .brand-tagline {
-        font-size: 0.8rem;
-        color: rgba(255, 255, 255, 0.4);
-        letter-spacing: 0.5px;
-      }
-
-      .brand-features {
-        position: relative;
-        z-index: 1;
-      }
-
-      .feature-item {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        padding: 12px 0;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-      }
-      .feature-item:last-child {
-        border-bottom: none;
-      }
-
-      .feature-icon {
-        width: 36px;
-        height: 36px;
-        background: rgba(99, 102, 241, 0.15);
-        border: 1px solid rgba(99, 102, 241, 0.25);
-        border-radius: 10px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 16px;
-        flex-shrink: 0;
-      }
-
-      .feature-text {
-        font-size: 0.85rem;
-        color: rgba(255, 255, 255, 0.6);
-      }
-      .feature-text strong {
-        color: rgba(255, 255, 255, 0.9);
-        display: block;
-        font-size: 0.875rem;
-        margin-bottom: 2px;
-      }
-      .brand-footer {
-        font-size: 0.75rem;
-        color: rgba(255, 255, 255, 0.25);
-        position: relative;
-        z-index: 1;
-      }
-
-      .login-form-side {
-        padding: 48px 40px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-      }
-      .login-heading {
-        font-size: 1.5rem;
-        font-weight: 800;
-        color: var(--text-heading);
-        margin-bottom: 6px;
-        letter-spacing: -0.5px;
-      }
-      .login-sub {
-        font-size: 0.875rem;
-        color: var(--text-muted);
-        margin-bottom: 36px;
-      }
-
-      .input-wrap {
-        position: relative;
-      }
-      .input-prefix {
-        position: absolute;
-        left: 14px;
-        top: 50%;
-        transform: translateY(-50%);
-        font-size: 16px;
-        pointer-events: none;
-      }
-      .input-prefixed {
-        padding-left: 40px !important;
-      }
-
-      .btn-login {
-        background: linear-gradient(
-          135deg,
-          var(--primary),
-          var(--primary-dark)
-        );
-        color: white;
-        border: none;
-        width: 100%;
-        padding: 14px;
-        border-radius: var(--radius-md);
-        font-family: "Plus Jakarta Sans", sans-serif;
-        font-size: 0.95rem;
-        font-weight: 700;
-        cursor: pointer;
-        transition: var(--transition-bounce);
-        box-shadow: 0 6px 20px var(--primary-glow);
-        margin-top: 8px;
-        letter-spacing: 0.2px;
-      }
-      .btn-login:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 10px 28px rgba(99, 102, 241, 0.45);
-      }
-      .btn-login:active {
-        transform: scale(0.98);
-      }
-      .btn-login.loading {
-        opacity: 0.7;
-        pointer-events: none;
-      }
-
-      .error-msg {
-        display: none;
-        background: var(--danger-bg);
-        border: 1px solid rgba(244, 63, 94, 0.2);
-        color: var(--danger);
-        padding: 12px 16px;
-        border-radius: var(--radius-sm);
-        font-size: 0.85rem;
-        font-weight: 500;
-        margin-top: 14px;
-        text-align: center;
-        animation: shake 0.4s ease;
-      }
-
-      @keyframes shake {
-        0%,
-        100% {
-          transform: translateX(0);
-        }
-        25% {
-          transform: translateX(-6px);
-        }
-        75% {
-          transform: translateX(6px);
-        }
-      }
-
-      .login-links {
-        display: flex;
-        justify-content: space-between;
-        margin-top: 20px;
-        font-size: 0.8rem;
-      }
-      .login-links a {
-        color: var(--text-muted);
-        text-decoration: none;
-        transition: var(--transition);
-      }
-      .login-links a:hover {
-        color: var(--primary-light);
-      }
-
-      /* Theme toggle on login */
-      .login-theme-btn {
-        position: fixed;
-        top: 16px;
-        right: 16px;
-        width: 40px;
-        height: 40px;
-        background: var(--bg-card);
-        border: 1px solid var(--border);
-        border-radius: var(--radius-sm);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        font-size: 18px;
-        transition: var(--transition);
-        z-index: 10;
-      }
-      .login-theme-btn:hover {
-        background: var(--primary-glow);
-        border-color: var(--primary);
-      }
-
-      @media (max-width: 640px) {
-        .login-wrap {
-          grid-template-columns: 1fr;
-        }
-        .login-brand {
-          display: none;
-        }
-        .login-form-side {
-          padding: 36px 28px;
-        }
-      }
-    </style>
   </head>
-  <body>
-    <!-- Tombol ganti tema -->
+  <body class="login-page">
+    <!-- Tema Toggle -->
     <button
       class="login-theme-btn"
       onclick="toggleTemaLogin()"
       id="loginThemeBtn"
       title="Ganti Tema"
     >
-      🌙
+      <i class="fa fa-moon-o" id="loginThemeIcon"></i>
     </button>
 
-    <div class="login-wrap">
+    <div class="login-box">
       <!-- Brand Side -->
-      <div class="login-brand">
-        <div class="brand-logo">
-          <div class="brand-icon">
+      <div class="login-brand-side">
+        <div>
+          <div class="login-brand-logo">
             <img
+              class="login-logo-img"
               src="assets/images/logo-toko.png"
               alt="Logo"
-              onerror="
-                this.parentElement.style.display = 'none';
-                document.getElementById('brandIconFallback').style.display =
-                  'flex';
-              "
+              onerror="this.style.display = 'none'"
             />
           </div>
-          <div
-            id="brandIconFallback"
-            class="brand-icon-fallback"
-            style="display: none"
-          >
-            🛒
-          </div>
-          <div>
-            <div class="brand-name">MING<span>MART</span></div>
-            <div class="brand-tagline">Point of Sale System</div>
-          </div>
+          <div class="login-brand-name">MING<span>MART</span></div>
+          <div class="login-brand-tag">Point of Sale System v2.0</div>
         </div>
-
-        <div class="brand-features">
-          <div class="feature-item">
-            <div class="feature-icon">🛒</div>
-            <div class="feature-text">
-              <strong>Kasir Modern</strong>
-              Proses transaksi cepat &amp; cetak struk PDF
+        <div class="login-feature-list">
+          <div class="login-feature-item">
+            <i class="fa fa-shopping-cart"></i>
+            <div>
+              <strong>Kasir Modern</strong>Proses transaksi & cetak struk PDF,
+              Bluetooth, USB
             </div>
           </div>
-          <div class="feature-item">
-            <div class="feature-icon">📦</div>
-            <div class="feature-text">
-              <strong>Manajemen Stok</strong>
-              CRUD produk real-time dengan notifikasi stok rendah
+          <div class="login-feature-item">
+            <i class="fa fa-cubes"></i>
+            <div>
+              <strong>Manajemen Stok</strong>CRUD produk real-time, notifikasi
+              stok rendah
             </div>
           </div>
-          <div class="feature-item">
-            <div class="feature-icon">📊</div>
-            <div class="feature-text">
-              <strong>Dashboard Laporan</strong>
-              Grafik penjualan &amp; riwayat transaksi lengkap
+          <div class="login-feature-item">
+            <i class="fa fa-bar-chart"></i>
+            <div>
+              <strong>Laporan Lengkap</strong>Dashboard, grafik & ekspor Excel
+              semua laporan
+            </div>
+          </div>
+          <div class="login-feature-item">
+            <i class="fa fa-user-circle"></i>
+            <div>
+              <strong>Kelola Admin</strong>Update profil, foto, username &
+              password
             </div>
           </div>
         </div>
-
-        <div class="brand-footer">© 2026 Ming Mart POS System</div>
+        <div class="login-brand-footer">
+          © 2026 Ming Mart POS System — AdminLTE 2
+        </div>
       </div>
 
       <!-- Form Side -->
       <div class="login-form-side">
-        <div class="login-heading">Selamat Datang 👋</div>
-        <div class="login-sub">Masuk ke sistem kasir Ming Mart</div>
+        <h2 class="login-heading">Selamat Datang 👋</h2>
+        <p class="login-sub">Masuk ke sistem kasir Ming Mart</p>
 
         <form id="formLogin" autocomplete="off">
           <div class="form-group">
             <label>Username</label>
-            <div class="input-wrap">
-              <span class="input-prefix">👤</span>
+            <div class="input-group">
+              <span class="input-group-addon"><i class="fa fa-user"></i></span>
               <input
                 type="text"
                 id="username"
-                class="input-custom input-prefixed"
+                class="form-control"
                 placeholder="Masukkan username"
                 required
                 autocomplete="username"
               />
             </div>
           </div>
-          <div class="form-group" style="margin-bottom: 6px">
+          <div class="form-group">
             <label>Password</label>
-            <div class="input-wrap">
-              <span class="input-prefix">🔒</span>
+            <div class="input-group">
+              <span class="input-group-addon"><i class="fa fa-lock"></i></span>
               <input
                 type="password"
                 id="password"
-                class="input-custom input-prefixed"
+                class="form-control"
                 placeholder="Masukkan password"
                 required
                 autocomplete="current-password"
               />
+              <span class="input-group-btn">
+                <button
+                  type="button"
+                  class="btn btn-default"
+                  onclick="toggleShowPass()"
+                  id="togglePassBtn"
+                  title="Tampilkan password"
+                >
+                  <i class="fa fa-eye" id="eyeIcon"></i>
+                </button>
+              </span>
             </div>
           </div>
           <button type="submit" class="btn-login" id="btnLogin">
-            Masuk ke Sistem →
+            <i class="fa fa-sign-in"></i> Masuk ke Sistem
           </button>
         </form>
 
-        <p id="pesanError" class="error-msg">
-          ❌ Username atau password salah!
-        </p>
+        <div id="pesanError" class="error-box">
+          <i class="fa fa-exclamation-circle"></i> Username atau password salah!
+        </div>
 
         <div class="login-links">
-          <a href="#" onclick="lupaPassword()">Lupa password?</a>
-          <a href="#" onclick="buatAkunBaru()">Daftar akun baru</a>
+          <a href="#" onclick="lupaPassword()"
+            ><i class="fa fa-key"></i> Lupa password?</a
+          >
+          <a href="#" onclick="buatAkunBaru()"
+            ><i class="fa fa-user-plus"></i> Buat akun baru</a
+          >
         </div>
       </div>
     </div>
@@ -443,52 +149,67 @@
       const KEY_STORAGE = "user_admin";
       const KEY_TEMA = "pos_tema";
 
-      // Inisialisasi tombol tema
+      // Init
       (function () {
-        var t = localStorage.getItem(KEY_TEMA) || "dark";
-        var btn = document.getElementById("loginThemeBtn");
-        if (btn) btn.textContent = t === "dark" ? "☀️" : "🌙";
-      })();
-
-      function toggleTemaLogin() {
-        var tema = localStorage.getItem(KEY_TEMA) || "dark";
-        var baru = tema === "dark" ? "light" : "dark";
-        localStorage.setItem(KEY_TEMA, baru);
-        if (baru === "light") {
-          document.documentElement.setAttribute("data-theme", "light");
-        } else {
-          document.documentElement.removeAttribute("data-theme");
-        }
-        var btn = document.getElementById("loginThemeBtn");
-        if (btn) btn.textContent = baru === "dark" ? "☀️" : "🌙";
-      }
-
-      function initAuth() {
+        var t = localStorage.getItem(KEY_TEMA) || "light";
+        var icon = document.getElementById("loginThemeIcon");
+        if (icon)
+          icon.className = t === "dark" ? "fa fa-sun-o" : "fa fa-moon-o";
         if (!localStorage.getItem(KEY_STORAGE)) {
           localStorage.setItem(
             KEY_STORAGE,
-            JSON.stringify({ username: "admin", password: "admin123" }),
+            JSON.stringify({
+              username: "admin",
+              password: "admin123",
+              foto: null,
+              nama_lengkap: "Administrator",
+            }),
           );
         }
+      })();
+
+      function toggleTemaLogin() {
+        var tema = localStorage.getItem(KEY_TEMA) || "light";
+        var baru = tema === "dark" ? "light" : "dark";
+        localStorage.setItem(KEY_TEMA, baru);
+        document.documentElement.classList.remove("dark-mode", "light-mode");
+        document.documentElement.classList.add(
+          baru === "dark" ? "dark-mode" : "light-mode",
+        );
+        var icon = document.getElementById("loginThemeIcon");
+        if (icon)
+          icon.className = baru === "dark" ? "fa fa-sun-o" : "fa fa-moon-o";
       }
-      initAuth();
+
+      function toggleShowPass() {
+        var inp = document.getElementById("password");
+        var icon = document.getElementById("eyeIcon");
+        if (inp.type === "password") {
+          inp.type = "text";
+          icon.className = "fa fa-eye-slash";
+        } else {
+          inp.type = "password";
+          icon.className = "fa fa-eye";
+        }
+      }
 
       document
         .getElementById("formLogin")
         .addEventListener("submit", function (e) {
           e.preventDefault();
-          const userInput = document.getElementById("username").value;
-          const passInput = document.getElementById("password").value;
-          const errorBox = document.getElementById("pesanError");
-          const btn = document.getElementById("btnLogin");
-          const account = JSON.parse(localStorage.getItem(KEY_STORAGE));
+          var userInput = document.getElementById("username").value;
+          var passInput = document.getElementById("password").value;
+          var errorBox = document.getElementById("pesanError");
+          var btn = document.getElementById("btnLogin");
+          var account = JSON.parse(localStorage.getItem(KEY_STORAGE));
 
           if (
             userInput === account.username &&
             passInput === account.password
           ) {
-            btn.textContent = "Menghubungkan...";
-            btn.classList.add("loading");
+            btn.innerHTML =
+              '<i class="fa fa-spinner fa-spin"></i> Menghubungkan...';
+            btn.disabled = true;
             sessionStorage.setItem("isLoggedIn", "true");
             setTimeout(() => {
               window.location.href = "index.html";
@@ -505,31 +226,32 @@
         });
 
       function lupaPassword() {
-        const kode = prompt("Masukkan Kode Keamanan Master (9999):");
+        var kode = prompt("Masukkan Kode Keamanan Master (9999):");
         if (kode === "9999") {
-          const passBaru = prompt("Masukkan Password Baru (min. 5 karakter):");
+          var passBaru = prompt("Masukkan Password Baru (min. 5 karakter):");
           if (passBaru && passBaru.trim().length >= 5) {
-            const acc = JSON.parse(localStorage.getItem(KEY_STORAGE));
+            var acc = JSON.parse(localStorage.getItem(KEY_STORAGE));
             acc.password = passBaru.trim();
             localStorage.setItem(KEY_STORAGE, JSON.stringify(acc));
             alert("✅ Password berhasil diperbarui! Silakan login.");
-          } else if (passBaru !== null) {
-            alert("Password minimal 5 karakter!");
-          }
-        } else if (kode !== null) {
-          alert("❌ Kode keamanan salah!");
-        }
+          } else if (passBaru !== null) alert("Password minimal 5 karakter!");
+        } else if (kode !== null) alert("❌ Kode keamanan salah!");
       }
 
       function buatAkunBaru() {
         if (!confirm("Membuat akun baru akan mengganti akun lama. Lanjutkan?"))
           return;
-        const userBaru = prompt("Username Baru:");
-        const passBaru = prompt("Password Baru (min. 5 karakter):");
+        var userBaru = prompt("Username Baru:");
+        var passBaru = prompt("Password Baru (min. 5 karakter):");
         if (userBaru && passBaru && passBaru.length >= 5) {
           localStorage.setItem(
             KEY_STORAGE,
-            JSON.stringify({ username: userBaru, password: passBaru }),
+            JSON.stringify({
+              username: userBaru,
+              password: passBaru,
+              foto: null,
+              nama_lengkap: userBaru,
+            }),
           );
           alert("🎉 Akun berhasil dibuat! Silakan login.");
           location.reload();

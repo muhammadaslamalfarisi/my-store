@@ -5,8 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Kasir — Ming Mart POS</title>
     <link rel="icon" type="image/x-icon" href="assets/icon/favicon.ico" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+      crossorigin="anonymous"
+    />
     <link rel="stylesheet" href="dist/css/style.css" />
-    <!-- Libraries dimuat dengan crossorigin agar CORS tidak block -->
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"
       crossorigin="anonymous"
@@ -19,328 +23,320 @@
       src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"
       crossorigin="anonymous"
     ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/sweetalert2@11"
-      crossorigin="anonymous"
-    ></script>
     <script>
-      // Apply theme before page renders (avoid flash)
       (function () {
-        var t = localStorage.getItem("pos_tema") || "dark";
-        if (t === "light")
-          document.documentElement.setAttribute("data-theme", "light");
+        var t = localStorage.getItem("pos_tema") || "light";
+        document.documentElement.classList.add(
+          t === "dark" ? "dark-mode" : "light-mode",
+        );
       })();
     </script>
   </head>
   <body>
     <div id="navbar-placeholder"></div>
 
-    <div class="container">
-      <div class="page-header">
-        <div class="page-title">
-          <div class="title-icon">🛒</div>
-          Kasir
-        </div>
-        <div style="display: flex; gap: 10px; flex-wrap: wrap">
-          <button class="btn btn-ghost btn-sm" onclick="bersihkanKeranjang()">
-            🗑 Kosongkan
+    <!-- Content Wrapper -->
+    <div class="content-wrapper">
+      <!-- Header -->
+      <div class="content-header">
+        <h1><i class="fa fa-shopping-cart"></i> Kasir</h1>
+        <div
+          style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap"
+        >
+          <button class="btn btn-default btn-sm" onclick="bersihkanKeranjang()">
+            <i class="fa fa-trash"></i> Kosongkan
           </button>
           <button class="btn btn-success btn-sm" onclick="eksporExcel()">
-            📊 Ekspor Excel
+            <i class="fa fa-file-excel-o"></i> Ekspor Excel
           </button>
         </div>
       </div>
 
-      <div class="pos-grid">
-        <div class="pos-left">
-          <div class="section-title">Tambah Produk</div>
-
-          <div class="form-group">
-            <label>Pilih Produk</label>
-            <select
-              id="pilihProduk"
-              onchange="updateHargaOtomatis()"
-              class="input-custom"
-            ></select>
-          </div>
-
-          <div class="form-group">
-            <label>Harga Satuan</label>
-            <div style="position: relative">
-              <span
-                style="
-                  position: absolute;
-                  left: 14px;
-                  top: 50%;
-                  transform: translateY(-50%);
-                  font-size: 0.8rem;
-                  color: var(--text-muted);
-                  font-weight: 600;
-                "
-                >Rp</span
+      <!-- POS Layout -->
+      <div class="pos-layout">
+        <!-- LEFT: Input Panel -->
+        <div>
+          <!-- Add Product Box -->
+          <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">
+                <i class="fa fa-plus-circle"></i> Tambah Produk
+              </h3>
+            </div>
+            <div class="box-body">
+              <div class="form-group">
+                <label>Pilih Produk</label>
+                <select
+                  id="pilihProduk"
+                  class="form-control"
+                  onchange="updateHargaOtomatis()"
+                ></select>
+              </div>
+              <div class="form-group">
+                <label>Harga Satuan</label>
+                <div class="input-group">
+                  <span class="input-group-addon">Rp</span>
+                  <input
+                    type="number"
+                    id="hargaProduk"
+                    class="form-control"
+                    readonly
+                    placeholder="0"
+                    style="cursor: not-allowed"
+                  />
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Jumlah Beli</label>
+                <input
+                  type="number"
+                  id="jumlahProduk"
+                  value="1"
+                  min="1"
+                  class="form-control"
+                />
+              </div>
+              <button
+                onclick="tambahKeKeranjang()"
+                class="btn btn-primary btn-block"
               >
-              <input
-                type="number"
-                id="hargaProduk"
-                class="input-custom"
-                readonly
-                placeholder="0"
-                style="
-                  padding-left: 36px;
-                  background: var(--bg-elevated);
-                  cursor: not-allowed;
-                  opacity: 0.7;
-                "
-              />
+                <i class="fa fa-cart-plus"></i> Tambah ke Keranjang
+              </button>
             </div>
           </div>
 
-          <div class="form-group">
-            <label>Jumlah Beli</label>
-            <input
-              type="number"
-              id="jumlahProduk"
-              value="1"
-              min="1"
-              class="input-custom"
-            />
+          <!-- Diskon Box -->
+          <div class="box box-warning">
+            <div class="box-header with-border">
+              <h3 class="box-title"><i class="fa fa-tag"></i> Diskon</h3>
+            </div>
+            <div class="box-body" style="padding: 12px 15px">
+              <div class="input-group">
+                <span class="input-group-addon">Rp</span>
+                <input
+                  type="number"
+                  id="inputDiskon"
+                  class="form-control"
+                  placeholder="0"
+                  min="0"
+                />
+                <span class="input-group-btn">
+                  <button class="btn btn-warning" onclick="terapkanDiskon()">
+                    Terapkan
+                  </button>
+                </span>
+              </div>
+            </div>
           </div>
 
-          <button
-            onclick="tambahKeKeranjang()"
-            class="btn btn-primary btn-full btn-lg"
-            style="margin-bottom: 12px"
-          >
-            ➕ Tambah ke Keranjang
-          </button>
-
-          <div
-            style="
-              background: var(--bg-elevated);
-              border: 1px solid var(--border);
-              border-radius: var(--radius-md);
-              padding: 16px;
-              margin-top: 8px;
-            "
-          >
-            <div
-              style="
-                font-size: 0.75rem;
-                color: var(--text-muted);
-                font-weight: 600;
-                text-transform: uppercase;
-                letter-spacing: 0.5px;
-                margin-bottom: 12px;
-              "
-            >
-              Ringkasan
+          <!-- Ringkasan -->
+          <div class="box box-default">
+            <div class="box-header with-border">
+              <h3 class="box-title">
+                <i class="fa fa-list-alt"></i> Ringkasan
+              </h3>
             </div>
-            <div
-              style="
-                display: flex;
-                justify-content: space-between;
-                margin-bottom: 8px;
-              "
-            >
-              <span style="font-size: 0.8rem; color: var(--text-secondary)"
-                >Total Item</span
-              >
-              <span
-                id="cartCount"
-                style="
-                  font-family: &quot;JetBrains Mono&quot;, monospace;
-                  font-size: 0.85rem;
-                  font-weight: 700;
-                  color: var(--primary-light);
-                "
-                >0</span
-              >
-            </div>
-            <div style="display: flex; justify-content: space-between">
-              <span style="font-size: 0.8rem; color: var(--text-secondary)"
-                >Total Bayar</span
-              >
-              <span
-                id="totalHargaSide"
-                style="
-                  font-family: &quot;JetBrains Mono&quot;, monospace;
-                  font-size: 0.85rem;
-                  font-weight: 700;
-                  color: var(--accent);
-                "
-                >Rp 0</span
-              >
+            <div class="box-body">
+              <table style="width: 100%; font-size: 13px">
+                <tr>
+                  <td style="padding: 5px 0; color: var(--text-muted)">
+                    Total Item
+                  </td>
+                  <td
+                    style="padding: 5px 0; text-align: right; font-weight: 700"
+                    id="cartCount"
+                  >
+                    0
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding: 5px 0; color: var(--text-muted)">
+                    Subtotal
+                  </td>
+                  <td
+                    style="padding: 5px 0; text-align: right; font-weight: 700"
+                    id="subtotalHarga"
+                  >
+                    Rp 0
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding: 5px 0; color: #f39c12">Diskon</td>
+                  <td
+                    style="
+                      padding: 5px 0;
+                      text-align: right;
+                      font-weight: 700;
+                      color: #f39c12;
+                    "
+                    id="diskonHarga"
+                  >
+                    - Rp 0
+                  </td>
+                </tr>
+                <tr style="border-top: 1px solid var(--box-border)">
+                  <td style="padding: 8px 0; font-weight: 700; font-size: 15px">
+                    Total Bayar
+                  </td>
+                  <td
+                    style="
+                      padding: 8px 0;
+                      text-align: right;
+                      font-weight: 700;
+                      font-size: 15px;
+                      color: #3c8dbc;
+                    "
+                    id="totalHargaSide"
+                  >
+                    Rp 0
+                  </td>
+                </tr>
+              </table>
             </div>
           </div>
         </div>
 
-        <div class="pos-right">
-          <div class="section-title" style="justify-content: space-between">
-            <span>🧾 Daftar Belanja</span>
-            <span
-              id="cartBadge"
-              style="
-                background: var(--primary-glow);
-                color: var(--primary-light);
-                padding: 3px 10px;
-                border-radius: 20px;
-                font-size: 0.75rem;
-                font-weight: 700;
-                border: 1px solid rgba(99, 102, 241, 0.3);
-              "
-              >0 item</span
-            >
-          </div>
-
-          <div
-            class="table-wrapper"
-            style="min-height: 200px; margin-bottom: 0"
-          >
-            <table>
-              <thead>
-                <tr>
-                  <th>Produk</th>
-                  <th class="text-center">Qty</th>
-                  <th>Subtotal</th>
-                  <th class="text-center" style="width: 60px">Hapus</th>
-                </tr>
-              </thead>
-              <tbody id="tabelKeranjang"></tbody>
-            </table>
-          </div>
-
-          <div class="total-panel">
-            <div class="total-row">
-              <span class="total-label">Total Pembayaran</span>
+        <!-- RIGHT: Cart -->
+        <div>
+          <div class="box box-default">
+            <div class="box-header with-border">
+              <h3 class="box-title">
+                <i class="fa fa-shopping-basket"></i> Keranjang Belanja
+              </h3>
+              <div class="box-tools">
+                <span class="badge bg-blue" id="cartBadge">0 item</span>
+              </div>
             </div>
-            <div class="total-amount" id="totalHarga">Rp 0</div>
-            <div class="total-divider"></div>
-            <button
-              onclick="prosesBayar()"
-              class="btn btn-accent btn-full btn-lg"
-              style="font-size: 1.05rem; font-weight: 800"
-            >
-              💳 PROSES BAYAR &amp; CETAK STRUK
-            </button>
+            <div class="box-body" style="padding: 0">
+              <div class="table-responsive">
+                <table class="table table-hover" style="margin-bottom: 0">
+                  <thead>
+                    <tr>
+                      <th>Produk</th>
+                      <th class="text-center" style="width: 120px">Jumlah</th>
+                      <th class="text-right">Harga</th>
+                      <th class="text-right">Subtotal</th>
+                      <th class="text-center" style="width: 50px">×</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tabelKeranjang"></tbody>
+                </table>
+              </div>
+            </div>
+            <!-- Total Panel -->
+            <div class="box-footer" style="padding: 0">
+              <div class="total-panel">
+                <div class="label-total">Total Pembayaran</div>
+                <div class="amount-total" id="totalHarga">Rp 0</div>
+                <button
+                  onclick="prosesBayar()"
+                  class="btn btn-block"
+                  style="
+                    background: #fff;
+                    color: #3c8dbc;
+                    font-weight: 800;
+                    font-size: 15px;
+                    border: none;
+                    padding: 12px;
+                  "
+                >
+                  <i class="fa fa-credit-card"></i> PROSES BAYAR &amp; CETAK
+                  STRUK
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
 
     <!-- Modal Pembayaran -->
-    <div
-      id="modalBayar"
-      class="modal-overlay"
-      style="
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.7);
-        z-index: 9999;
-        justify-content: center;
-        align-items: center;
-      "
-    >
-      <div
-        style="
-          background: var(--bg-card);
-          padding: 24px;
-          border-radius: var(--radius-lg);
-          width: 95%;
-          max-width: 400px;
-          border: 1px solid var(--border);
-          box-shadow: var(--shadow-xl);
-        "
-      >
-        <h3
-          style="
-            margin-bottom: 20px;
-            color: var(--text-main);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-          "
-        >
-          <span>💰</span> Selesaikan Pembayaran
-        </h3>
-
-        <div class="form-group">
-          <label>Metode Pembayaran</label>
-          <select
-            id="metodeBayar"
-            class="input-custom"
-            onchange="toggleInputUang()"
-          >
-            <option value="Cash">💵 Cash (Tunai)</option>
-            <option value="QRIS">📱 QRIS / Transfer</option>
-            <option value="Hutang">📝 Hutang (Bon)</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label>Nama Pembeli (Opsional)</label>
-          <input
-            type="text"
-            id="namaPembeli"
-            class="input-custom"
-            placeholder="Masukkan nama pembeli"
-          />
-        </div>
-        <div class="form-group" id="groupUangBayar">
-          <label>Uang Dibayar (Rp)</label>
-          <input
-            type="number"
-            id="nominalBayar"
-            class="input-custom"
-            placeholder="0"
-            oninput="hitungKembalian()"
-          />
-        </div>
-
+    <div id="modalBayar" class="modal-overlay" style="display: none">
+      <div class="modal-box" style="max-width: 420px">
         <div
-          style="
-            background: var(--bg-elevated);
-            padding: 15px;
-            border-radius: var(--radius-md);
-            margin: 20px 0;
-          "
+          class="modal-header"
+          style="border-top: 3px solid #00a65a; border-radius: 4px 4px 0 0"
         >
-          <div
-            style="
-              display: flex;
-              justify-content: space-between;
-              font-size: 0.85rem;
-              color: var(--text-muted);
-              margin-bottom: 5px;
-            "
-          >
-            <span>Total Tagihan:</span>
-            <span id="modalTotalTagihan">Rp 0</span>
+          <div class="modal-title">
+            <i class="fa fa-money text-success"></i> Selesaikan Pembayaran
+          </div>
+          <button class="modal-close" onclick="tutupModalBayar()">✕</button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label>Metode Pembayaran</label>
+            <select
+              id="metodeBayar"
+              class="form-control"
+              onchange="toggleInputUang()"
+            >
+              <option value="Cash">💵 Cash (Tunai)</option>
+              <option value="QRIS">📱 QRIS</option>
+              <option value="Transfer">🏦 Transfer Bank</option>
+              <option value="Hutang">📝 Hutang (Bon)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Nama Pembeli (Opsional)</label>
+            <input
+              type="text"
+              id="namaPembeli"
+              class="form-control"
+              placeholder="Masukkan nama pembeli"
+            />
+          </div>
+          <div class="form-group" id="groupUangBayar">
+            <label>Uang Dibayar (Rp)</label>
+            <div class="input-group">
+              <span class="input-group-addon">Rp</span>
+              <input
+                type="number"
+                id="nominalBayar"
+                class="form-control"
+                placeholder="0"
+                oninput="hitungKembalian()"
+              />
+            </div>
           </div>
           <div
             style="
-              display: flex;
-              justify-content: space-between;
-              font-weight: 700;
-              color: var(--accent);
+              background: var(--table-stripe);
+              border-radius: 4px;
+              padding: 14px;
+              margin-top: 6px;
             "
           >
-            <span>Kembalian:</span>
-            <span id="textKembalian">Rp 0</span>
+            <div
+              style="
+                display: flex;
+                justify-content: space-between;
+                font-size: 13px;
+                color: var(--text-muted);
+                margin-bottom: 6px;
+              "
+            >
+              <span>Total Tagihan:</span>
+              <strong id="modalTotalTagihan">Rp 0</strong>
+            </div>
+            <div
+              style="
+                display: flex;
+                justify-content: space-between;
+                font-size: 16px;
+                font-weight: 700;
+              "
+            >
+              <span>Kembalian:</span>
+              <span id="textKembalian" style="color: #00a65a">Rp 0</span>
+            </div>
           </div>
         </div>
-
-        <div style="display: flex; gap: 12px">
-          <button onclick="tutupModalBayar()" class="btn btn-ghost btn-full">
+        <div class="modal-footer">
+          <button onclick="tutupModalBayar()" class="btn btn-default">
             Batal
           </button>
-          <button
-            onclick="konfirmasiProsesCetak()"
-            class="btn btn-primary btn-full"
-          >
-            Konfirmasi &amp; Cetak
+          <button onclick="konfirmasiProsesCetak()" class="btn btn-success">
+            <i class="fa fa-check"></i> Konfirmasi &amp; Cetak
           </button>
         </div>
       </div>
@@ -353,26 +349,6 @@
         renderProdukKasir();
         renderKeranjang();
       });
-
-      // Sinkronisasi ringkasan sisi kiri
-      const _origRender = window.renderKeranjang;
-      window.renderKeranjang = function () {
-        if (typeof _origRender === "function") _origRender();
-        setTimeout(() => {
-          const totalElem = document.getElementById("totalHarga");
-          const sideElem = document.getElementById("totalHargaSide");
-          const badge = document.getElementById("cartBadge");
-          const count = document.getElementById("cartCount");
-          if (totalElem && sideElem)
-            sideElem.textContent = totalElem.textContent;
-          const n =
-            typeof keranjang !== "undefined"
-              ? keranjang.reduce((s, i) => s + i.qty, 0)
-              : 0;
-          if (badge) badge.textContent = `${n} item`;
-          if (count) count.textContent = n;
-        }, 10);
-      };
     </script>
   </body>
 </html>

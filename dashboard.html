@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Kasir — Ming Mart POS</title>
+    <title>Dashboard — Ming Mart POS</title>
     <link rel="icon" href="assets/icon/favicon.ico" type="image/x-icon" />
     <link
       rel="stylesheet"
@@ -19,8 +19,6 @@
     />
     <link rel="stylesheet" href="dist/css/adminlte.min.css" />
     <link rel="stylesheet" href="dist/css/style.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script>
       (function () {
         document.documentElement.setAttribute(
@@ -48,7 +46,6 @@
             </li>
           </ul>
           <ul class="navbar-nav ms-auto align-items-center gap-1">
-            <!-- Theme Toggle -->
             <li class="nav-item">
               <button
                 class="btn btn-sm btn-outline-secondary rounded-circle theme-toggle"
@@ -59,7 +56,6 @@
                 <i class="bi bi-moon-fill"></i>
               </button>
             </li>
-            <!-- User Dropdown -->
             <li class="nav-item dropdown">
               <button
                 class="nav-user-btn dropdown-toggle"
@@ -139,7 +135,7 @@
       >
         <div class="sidebar-brand">
           <a
-            href="index.html"
+            href="dashboard.html"
             class="brand-link d-flex align-items-center gap-2 px-3 py-3 text-decoration-none"
           >
             <img
@@ -157,7 +153,6 @@
           </a>
         </div>
 
-        <!-- User Panel -->
         <div class="sidebar-user-panel">
           <div class="d-flex align-items-center gap-2">
             <div class="sidebar-user-avatar">
@@ -246,178 +241,271 @@
       <main class="app-main">
         <div class="app-content-header py-3 px-4">
           <div class="content-header">
-            <h1><i class="bi bi-cart-fill me-2"></i>Kasir</h1>
-            <div class="d-flex gap-2 flex-wrap">
-              <button
-                class="btn btn-outline-secondary btn-sm"
-                onclick="bersihkanKeranjang()"
-              >
-                <i class="bi bi-trash me-1"></i>Kosongkan
-              </button>
-              <button
-                class="btn btn-outline-success btn-sm"
-                onclick="eksporExcel()"
-              >
-                <i class="bi bi-file-earmark-excel me-1"></i>Ekspor Excel
-              </button>
-            </div>
+            <h1><i class="fa-solid fa-gauge-high me-2"></i>Dashboard</h1>
+            <div class="text-muted small" id="dashboardDate"></div>
           </div>
         </div>
 
         <div class="app-content px-4 pb-4">
-          <div class="pos-layout">
-            <!-- LEFT: Input + Ringkasan -->
-            <div class="d-flex flex-column gap-3">
-              <!-- Tambah Produk -->
-              <div class="card">
-                <div class="card-header d-flex align-items-center gap-2">
-                  <i class="bi bi-plus-circle-fill text-primary"></i> Tambah
-                  Produk
-                </div>
+          <!-- Stat Cards Row -->
+          <div class="row g-3 mb-4" id="statCards">
+            <!-- Total Users -->
+            <div class="col-12 col-sm-6 col-xl-3">
+              <div class="card stat-card border-0">
                 <div class="card-body">
-                  <div class="mb-3">
-                    <label class="form-label">Pilih Produk</label>
-                    <select
-                      id="pilihProduk"
-                      class="form-select"
-                      onchange="updateHargaOtomatis()"
-                    ></select>
-                  </div>
-                  <div class="mb-3">
-                    <label class="form-label">Harga Satuan</label>
-                    <div class="input-group">
-                      <span class="input-group-text">Rp</span>
-                      <input
-                        type="number"
-                        id="hargaProduk"
-                        class="form-control"
-                        readonly
-                        placeholder="0"
-                        style="background: transparent"
-                      />
+                  <div
+                    class="d-flex align-items-center justify-content-between"
+                  >
+                    <div>
+                      <div class="stat-label mb-1">Total User</div>
+                      <div class="stat-value text-primary" id="statUsers">
+                        1
+                      </div>
+                      <div
+                        class="mt-1"
+                        style="font-size: 0.75rem; color: #64748b"
+                      >
+                        Akun Admin Terdaftar
+                      </div>
+                    </div>
+                    <div
+                      class="stat-icon"
+                      style="background: rgba(37, 99, 235, 0.1)"
+                    >
+                      <i
+                        class="fa-solid fa-users"
+                        style="color: #2563eb; font-size: 1.5rem"
+                      ></i>
                     </div>
                   </div>
-                  <div class="mb-3">
-                    <label class="form-label">Jumlah</label>
-                    <input
-                      type="number"
-                      id="jumlahProduk"
-                      class="form-control"
-                      value="1"
-                      min="1"
-                    />
-                  </div>
-                  <button
-                    class="btn btn-primary w-100"
-                    onclick="tambahKeKeranjang()"
+                  <div
+                    class="mt-3 pt-2 border-top d-flex align-items-center gap-1"
+                    style="font-size: 0.76rem"
                   >
-                    <i class="bi bi-cart-plus-fill me-2"></i>Tambah ke Keranjang
-                  </button>
-                </div>
-              </div>
-
-              <!-- Diskon -->
-              <div class="card">
-                <div class="card-header d-flex align-items-center gap-2">
-                  <i class="bi bi-tag-fill text-warning"></i> Diskon
-                </div>
-                <div class="card-body py-2">
-                  <div class="input-group">
-                    <span class="input-group-text">Rp</span>
-                    <input
-                      type="number"
-                      id="inputDiskon"
-                      class="form-control"
-                      placeholder="0"
-                      min="0"
-                    />
-                    <button class="btn btn-warning" onclick="terapkanDiskon()">
-                      Terapkan
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Ringkasan -->
-              <div class="card">
-                <div class="card-header d-flex align-items-center gap-2">
-                  <i class="bi bi-receipt text-info"></i> Ringkasan
-                </div>
-                <div class="card-body">
-                  <div class="summary-row">
-                    <span class="label">Total Item</span
-                    ><strong id="cartCount">0</strong>
-                  </div>
-                  <div class="summary-row">
-                    <span class="label">Subtotal</span
-                    ><strong id="subtotalHarga">Rp 0</strong>
-                  </div>
-                  <div class="summary-row">
-                    <span class="label text-warning">Diskon</span
-                    ><strong id="diskonHarga" class="text-warning"
-                      >- Rp 0</strong
-                    >
-                  </div>
-                  <div class="summary-row total">
-                    <span>Total Bayar</span
-                    ><strong id="totalHargaSide" class="text-primary"
-                      >Rp 0</strong
-                    >
+                    <i class="fa-solid fa-circle-check text-success"></i>
+                    <span class="text-muted">Aktif</span>
                   </div>
                 </div>
               </div>
             </div>
 
-            <!-- RIGHT: Keranjang -->
-            <div class="d-flex flex-column gap-3">
+            <!-- Total Produk -->
+            <div class="col-12 col-sm-6 col-xl-3">
+              <div class="card stat-card border-0">
+                <div class="card-body">
+                  <div
+                    class="d-flex align-items-center justify-content-between"
+                  >
+                    <div>
+                      <div class="stat-label mb-1">Total Produk</div>
+                      <div class="stat-value text-success" id="statProduk">
+                        0
+                      </div>
+                      <div
+                        class="mt-1"
+                        style="font-size: 0.75rem; color: #64748b"
+                      >
+                        Produk Tersedia
+                      </div>
+                    </div>
+                    <div
+                      class="stat-icon"
+                      style="background: rgba(22, 163, 74, 0.1)"
+                    >
+                      <i
+                        class="fa-solid fa-boxes-stacked"
+                        style="color: #16a34a; font-size: 1.5rem"
+                      ></i>
+                    </div>
+                  </div>
+                  <div
+                    class="mt-3 pt-2 border-top d-flex align-items-center gap-1"
+                    style="font-size: 0.76rem"
+                  >
+                    <i class="fa-solid fa-arrow-up text-success"></i>
+                    <span class="text-muted">Di Inventaris</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Total Order -->
+            <div class="col-12 col-sm-6 col-xl-3">
+              <div class="card stat-card border-0">
+                <div class="card-body">
+                  <div
+                    class="d-flex align-items-center justify-content-between"
+                  >
+                    <div>
+                      <div class="stat-label mb-1">Total Order</div>
+                      <div class="stat-value text-warning" id="statOrder">
+                        0
+                      </div>
+                      <div
+                        class="mt-1"
+                        style="font-size: 0.75rem; color: #64748b"
+                      >
+                        Transaksi Selesai
+                      </div>
+                    </div>
+                    <div
+                      class="stat-icon"
+                      style="background: rgba(217, 119, 6, 0.1)"
+                    >
+                      <i
+                        class="fa-solid fa-receipt"
+                        style="color: #d97706; font-size: 1.5rem"
+                      ></i>
+                    </div>
+                  </div>
+                  <div
+                    class="mt-3 pt-2 border-top d-flex align-items-center gap-1"
+                    style="font-size: 0.76rem"
+                  >
+                    <i class="fa-solid fa-clock text-warning"></i>
+                    <span class="text-muted">Semua Waktu</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Total Pendapatan -->
+            <div class="col-12 col-sm-6 col-xl-3">
+              <div class="card stat-card border-0">
+                <div class="card-body">
+                  <div
+                    class="d-flex align-items-center justify-content-between"
+                  >
+                    <div>
+                      <div class="stat-label mb-1">Total Pendapatan</div>
+                      <div
+                        class="stat-value text-danger"
+                        id="statPendapatan"
+                        style="font-size: 1.1rem"
+                      >
+                        Rp 0
+                      </div>
+                      <div
+                        class="mt-1"
+                        style="font-size: 0.75rem; color: #64748b"
+                      >
+                        Omzet Keseluruhan
+                      </div>
+                    </div>
+                    <div
+                      class="stat-icon"
+                      style="background: rgba(220, 38, 38, 0.1)"
+                    >
+                      <i
+                        class="fa-solid fa-sack-dollar"
+                        style="color: #dc2626; font-size: 1.5rem"
+                      ></i>
+                    </div>
+                  </div>
+                  <div
+                    class="mt-3 pt-2 border-top d-flex align-items-center gap-1"
+                    style="font-size: 0.76rem"
+                  >
+                    <i class="fa-solid fa-chart-line text-danger"></i>
+                    <span class="text-muted">Total Omzet</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tables Row -->
+          <div class="row g-3">
+            <!-- 5 Transaksi Terakhir -->
+            <div class="col-12 col-xl-7">
               <div class="card h-100">
                 <div
                   class="card-header d-flex align-items-center justify-content-between"
                 >
                   <span
-                    ><i class="bi bi-basket-fill text-primary me-2"></i
-                    >Keranjang Belanja</span
+                    ><i
+                      class="fa-solid fa-clock-rotate-left me-2 text-primary"
+                    ></i
+                    >5 Transaksi Terakhir</span
                   >
-                  <span class="badge bg-primary" id="cartBadge">0 item</span>
+                  <a
+                    href="laporan.html"
+                    class="btn btn-sm btn-outline-primary"
+                    style="font-size: 0.75rem"
+                  >
+                    <i class="fa-solid fa-eye me-1"></i>Lihat Semua
+                  </a>
+                </div>
+                <div class="card-body p-0">
+                  <div class="table-responsive">
+                    <table
+                      class="table table-hover align-middle mb-0"
+                      id="tabelTransaksiTerakhir"
+                    >
+                      <thead>
+                        <tr>
+                          <th>ID</th>
+                          <th>Pembeli</th>
+                          <th>Metode</th>
+                          <th class="text-end">Total</th>
+                          <th>Waktu</th>
+                        </tr>
+                      </thead>
+                      <tbody id="bodyTransaksiTerakhir">
+                        <tr>
+                          <td colspan="5" class="text-center text-muted py-4">
+                            <i
+                              class="fa-solid fa-inbox fa-2x d-block mb-2 opacity-25"
+                            ></i
+                            >Belum ada transaksi
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Produk Terlaris -->
+            <div class="col-12 col-xl-5">
+              <div class="card h-100">
+                <div
+                  class="card-header d-flex align-items-center justify-content-between"
+                >
+                  <span
+                    ><i class="fa-solid fa-fire me-2 text-danger"></i>Produk
+                    Terlaris</span
+                  >
+                  <span
+                    class="badge bg-danger-subtle text-danger"
+                    style="font-size: 0.7rem"
+                    >Top 5</span
+                  >
                 </div>
                 <div class="card-body p-0">
                   <div class="table-responsive">
                     <table class="table table-hover align-middle mb-0">
                       <thead>
                         <tr>
+                          <th>#</th>
                           <th>Produk</th>
-                          <th class="text-center" style="width: 120px">
-                            Jumlah
-                          </th>
-                          <th class="text-end">Harga</th>
-                          <th class="text-end">Subtotal</th>
-                          <th class="text-center" style="width: 50px">×</th>
+                          <th class="text-center">Terjual</th>
+                          <th class="text-end">Pendapatan</th>
                         </tr>
                       </thead>
-                      <tbody id="tabelKeranjang"></tbody>
+                      <tbody id="bodyProdukTerlaris">
+                        <tr>
+                          <td colspan="4" class="text-center text-muted py-4">
+                            <i
+                              class="fa-solid fa-inbox fa-2x d-block mb-2 opacity-25"
+                            ></i
+                            >Belum ada data
+                          </td>
+                        </tr>
+                      </tbody>
                     </table>
                   </div>
-                </div>
-                <div class="card-footer p-0">
-                  <div class="total-panel">
-                    <div class="label-total">Total Pembayaran</div>
-                    <div class="amount-total" id="totalHarga">Rp 0</div>
-                    <button class="btn-bayar" onclick="prosesBayar()">
-                      <i class="bi bi-credit-card-fill me-2"></i>PROSES BAYAR
-                      &amp; CETAK STRUK
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Quick Add Grid -->
-              <div class="card">
-                <div class="card-header">
-                  <i class="bi bi-grid-fill text-success me-2"></i>Pilih Cepat
-                  (klik untuk tambah)
-                </div>
-                <div class="card-body">
-                  <div class="row g-2" id="produkGrid"></div>
                 </div>
               </div>
             </div>
@@ -440,89 +528,6 @@
         </footer>
       </main>
 
-      <!-- ===== MODAL BAYAR ===== -->
-      <div class="modal fade" id="modalBayar" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
-          <div class="modal-content">
-            <div class="modal-header bg-success text-white">
-              <h5 class="modal-title">
-                <i class="bi bi-cash-coin me-2"></i>Selesaikan Pembayaran
-              </h5>
-              <button
-                type="button"
-                class="btn-close btn-close-white"
-                data-bs-dismiss="modal"
-              ></button>
-            </div>
-            <div class="modal-body">
-              <div class="mb-3">
-                <label class="form-label">Metode Pembayaran</label>
-                <select
-                  id="metodeBayar"
-                  class="form-select"
-                  onchange="toggleInputUang()"
-                >
-                  <option value="Cash">💵 Cash (Tunai)</option>
-                  <option value="QRIS">📱 QRIS</option>
-                  <option value="Transfer">🏦 Transfer Bank</option>
-                  <option value="Hutang">📝 Hutang (Bon)</option>
-                </select>
-              </div>
-              <div class="mb-3">
-                <label class="form-label">Nama Pembeli (Opsional)</label>
-                <input
-                  type="text"
-                  id="namaPembeli"
-                  class="form-control"
-                  placeholder="Nama pembeli"
-                />
-              </div>
-              <div class="mb-3" id="groupUangBayar">
-                <label class="form-label">Uang Dibayar (Rp)</label>
-                <div class="input-group">
-                  <span class="input-group-text">Rp</span>
-                  <input
-                    type="number"
-                    id="nominalBayar"
-                    class="form-control"
-                    placeholder="0"
-                    oninput="hitungKembalian()"
-                  />
-                </div>
-              </div>
-              <div class="card bg-light border-0">
-                <div class="card-body py-2 px-3">
-                  <div
-                    class="d-flex justify-content-between small text-muted mb-1"
-                  >
-                    <span>Total Tagihan:</span
-                    ><strong id="modalTotalTagihan">Rp 0</strong>
-                  </div>
-                  <div class="d-flex justify-content-between fw-bold fs-5">
-                    <span>Kembalian:</span
-                    ><span id="textKembalian" class="text-success fw-bold"
-                      >Rp 0</span
-                    >
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="modal-footer">
-              <button class="btn btn-secondary" data-bs-dismiss="modal">
-                Batal
-              </button>
-              <button
-                class="btn btn-success fw-bold"
-                onclick="konfirmasiBayar()"
-              >
-                <i class="bi bi-check-circle-fill me-2"></i>Konfirmasi &amp;
-                Cetak
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-
       <!-- ===== MODAL KELOLA AKUN ===== -->
       <div class="modal fade" id="modalAkun" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
@@ -538,7 +543,6 @@
               ></button>
             </div>
             <div class="modal-body">
-              <!-- Foto Upload -->
               <div class="foto-upload-area mb-3">
                 <div class="foto-circle" id="akunFotoCircle">
                   <span id="akunFotoInisial">A</span>
@@ -569,7 +573,6 @@
                 </label>
                 <small class="text-muted">JPG/PNG maks. 2MB</small>
               </div>
-
               <div class="row g-3">
                 <div class="col-md-6">
                   <label class="form-label"
@@ -630,8 +633,7 @@
               </div>
               <div class="alert alert-warning py-2 mt-3 small mb-0">
                 <i class="bi bi-exclamation-triangle-fill me-1"></i>
-                Kosongkan password jika tidak ingin mengubah. Jika diubah, Anda
-                akan diminta login ulang.
+                Kosongkan password jika tidak ingin mengubah.
               </div>
             </div>
             <div class="modal-footer">
@@ -653,29 +655,109 @@
     <script src="dist/js/script.js"></script>
     <script>
       document.addEventListener("DOMContentLoaded", () => {
-        setActivePage("nav-kasir");
+        setActivePage("nav-dashboard");
         loadUserInfo();
-        renderProdukKasir();
-        renderKeranjang();
         updateThemeBtn(getTheme());
+        loadDashboard();
+        // Footer year
+        document.getElementById("footerYear").textContent =
+          new Date().getFullYear();
+        // Header date
+        document.getElementById("dashboardDate").textContent =
+          new Date().toLocaleDateString("id-ID", {
+            weekday: "long",
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          });
       });
-      function eksporExcel() {
-        if (!keranjang.length || typeof XLSX === "undefined") {
-          showToast("Tidak ada data", "warning");
-          return;
+
+      function loadDashboard() {
+        const produk = JSON.parse(localStorage.getItem("pos_produk")) || [];
+        const riwayat = JSON.parse(localStorage.getItem("pos_riwayat")) || [];
+
+        // Stat cards
+        document.getElementById("statUsers").textContent = 1;
+        document.getElementById("statProduk").textContent = produk.length;
+        document.getElementById("statOrder").textContent = riwayat.length;
+        const totalPendapatan = riwayat.reduce((s, t) => s + (t.total || 0), 0);
+        document.getElementById("statPendapatan").textContent =
+          "Rp " + totalPendapatan.toLocaleString("id-ID");
+
+        // 5 Transaksi Terakhir
+        const tbody5 = document.getElementById("bodyTransaksiTerakhir");
+        const last5 = [...riwayat].reverse().slice(0, 5);
+        if (last5.length === 0) {
+          tbody5.innerHTML =
+            '<tr><td colspan="5" class="text-center text-muted py-4"><i class="fa-solid fa-inbox fa-2x d-block mb-2 opacity-25"></i>Belum ada transaksi</td></tr>';
+        } else {
+          const metodeMap = {
+            Cash: '<span class="badge bg-success-subtle text-success">Cash</span>',
+            QRIS: '<span class="badge bg-info-subtle text-info">QRIS</span>',
+            Transfer:
+              '<span class="badge bg-primary-subtle text-primary">Transfer</span>',
+            Hutang:
+              '<span class="badge bg-warning-subtle text-warning">Hutang</span>',
+          };
+          tbody5.innerHTML = last5
+            .map(
+              (t, i) => `
+        <tr>
+          <td><span class="badge bg-secondary-subtle text-secondary" style="font-size:.72rem">#${String(riwayat.length - i).padStart(3, "0")}</span></td>
+          <td><span class="fw-600" style="font-size:.85rem">${t.pembeli || "Umum"}</span></td>
+          <td>${metodeMap[t.metode] || `<span class="badge bg-secondary">${t.metode || "-"}</span>`}</td>
+          <td class="text-end fw-bold" style="font-size:.85rem;color:#2563eb">Rp ${(t.total || 0).toLocaleString("id-ID")}</td>
+          <td style="font-size:.75rem;color:#64748b">${new Date(t.waktu || t.id || Date.now()).toLocaleString("id-ID", { day: "2-digit", month: "short", hour: "2-digit", minute: "2-digit" })}</td>
+        </tr>`,
+            )
+            .join("");
         }
-        const data = [
-          ["Produk", "Harga", "Qty", "Subtotal"],
-          ...keranjang.map((i) => [i.nama, i.harga, i.qty, i.subtotal]),
+
+        // Produk Terlaris
+        const terlaris = {};
+        riwayat.forEach((t) => {
+          (t.items || []).forEach((item) => {
+            if (!terlaris[item.nama])
+              terlaris[item.nama] = { nama: item.nama, qty: 0, pendapatan: 0 };
+            terlaris[item.nama].qty += item.qty || 1;
+            terlaris[item.nama].pendapatan += item.subtotal || 0;
+          });
+        });
+        const topProduk = Object.values(terlaris)
+          .sort((a, b) => b.qty - a.qty)
+          .slice(0, 5);
+        const bodyTP = document.getElementById("bodyProdukTerlaris");
+        const medalColors = [
+          "#f59e0b",
+          "#9ca3af",
+          "#b45309",
+          "#6b7280",
+          "#6b7280",
         ];
-        const ws = XLSX.utils.aoa_to_sheet(data);
-        const wb = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(wb, ws, "Keranjang");
-        XLSX.writeFile(wb, `Keranjang_MingMart_${Date.now()}.xlsx`);
-        showToast("Ekspor berhasil!", "success");
+        const medalIcons = [
+          "fa-trophy",
+          "fa-medal",
+          "fa-award",
+          "fa-star",
+          "fa-star",
+        ];
+        if (topProduk.length === 0) {
+          bodyTP.innerHTML =
+            '<tr><td colspan="4" class="text-center text-muted py-4"><i class="fa-solid fa-inbox fa-2x d-block mb-2 opacity-25"></i>Belum ada data</td></tr>';
+        } else {
+          bodyTP.innerHTML = topProduk
+            .map(
+              (p, i) => `
+        <tr>
+          <td><i class="fa-solid ${medalIcons[i]}" style="color:${medalColors[i]}"></i></td>
+          <td style="font-size:.85rem;font-weight:600">${p.nama}</td>
+          <td class="text-center"><span class="badge bg-primary-subtle text-primary">${p.qty} pcs</span></td>
+          <td class="text-end" style="font-size:.82rem;color:#16a34a;font-weight:700">Rp ${p.pendapatan.toLocaleString("id-ID")}</td>
+        </tr>`,
+            )
+            .join("");
+        }
       }
-      document.getElementById("footerYear").textContent =
-        new Date().getFullYear();
     </script>
   </body>
 </html>

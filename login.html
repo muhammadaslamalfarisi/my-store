@@ -4,259 +4,160 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login — Ming Mart POS</title>
-    <link rel="icon" type="image/x-icon" href="assets/icon/favicon.ico" />
+    <link rel="icon" href="assets/icon/favicon.ico" type="image/x-icon" />
     <link
       rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-      crossorigin="anonymous"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
+    />
+    <link rel="stylesheet" href="dist/css/adminlte.min.css" />
     <link rel="stylesheet" href="dist/css/style.css" />
     <script>
       (function () {
         var t = localStorage.getItem("pos_tema") || "light";
-        if (t === "dark") document.documentElement.classList.add("dark-mode");
-        else document.documentElement.classList.add("light-mode");
+        document.documentElement.setAttribute("data-bs-theme", t);
       })();
     </script>
   </head>
-  <body class="login-page">
-    <!-- Tema Toggle -->
-    <button
-      class="login-theme-btn"
-      onclick="toggleTemaLogin()"
-      id="loginThemeBtn"
-      title="Ganti Tema"
-    >
-      <i class="fa fa-moon-o" id="loginThemeIcon"></i>
-    </button>
-
-    <div class="login-box">
+  <body class="p-0 m-0">
+    <div class="login-wrapper">
       <!-- Brand Side -->
       <div class="login-brand-side">
-        <div>
+        <div style="position: relative; z-index: 1; text-align: center">
           <div class="login-brand-logo">
             <img
-              class="login-logo-img"
               src="assets/images/logo-toko.png"
               alt="Logo"
-              onerror="this.style.display = 'none'"
+              onerror="
+                this.style.display = 'none';
+                this.parentElement.innerHTML = '🛒';
+              "
             />
           </div>
-          <div class="login-brand-name">MING<span>MART</span></div>
-          <div class="login-brand-tag">Point of Sale System v2.0</div>
-        </div>
-        <div class="login-feature-list">
-          <div class="login-feature-item">
-            <i class="fa fa-shopping-cart"></i>
-            <div>
-              <strong>Kasir Modern</strong>Proses transaksi & cetak struk PDF,
-              Bluetooth, USB
-            </div>
-          </div>
-          <div class="login-feature-item">
-            <i class="fa fa-cubes"></i>
-            <div>
-              <strong>Manajemen Stok</strong>CRUD produk real-time, notifikasi
-              stok rendah
-            </div>
-          </div>
-          <div class="login-feature-item">
-            <i class="fa fa-bar-chart"></i>
-            <div>
-              <strong>Laporan Lengkap</strong>Dashboard, grafik & ekspor Excel
-              semua laporan
-            </div>
-          </div>
-          <div class="login-feature-item">
-            <i class="fa fa-user-circle"></i>
-            <div>
-              <strong>Kelola Admin</strong>Update profil, foto, username &
-              password
-            </div>
-          </div>
-        </div>
-        <div class="login-brand-footer">
-          © 2026 Ming Mart POS System — AdminLTE 2
+          <div class="login-brand-title">MING<span>MART</span></div>
+          <div class="login-brand-sub">Point of Sale System v3.0</div>
+          <ul class="login-features">
+            <li><i class="bi bi-cart-check-fill"></i> Kasir cepat & mudah</li>
+            <li>
+              <i class="bi bi-box-seam-fill"></i> Manajemen stok real-time
+            </li>
+            <li>
+              <i class="bi bi-bar-chart-fill"></i> Laporan penjualan lengkap
+            </li>
+            <li>
+              <i class="bi bi-printer-fill"></i> Cetak struk PDF & Bluetooth
+            </li>
+            <li><i class="bi bi-shield-fill-check"></i> Data tersimpan aman</li>
+          </ul>
         </div>
       </div>
 
       <!-- Form Side -->
       <div class="login-form-side">
-        <h2 class="login-heading">Selamat Datang 👋</h2>
-        <p class="login-sub">Masuk ke sistem kasir Ming Mart</p>
-
-        <form id="formLogin" autocomplete="off">
-          <div class="form-group">
-            <label>Username</label>
-            <div class="input-group">
-              <span class="input-group-addon"><i class="fa fa-user"></i></span>
-              <input
-                type="text"
-                id="username"
-                class="form-control"
-                placeholder="Masukkan username"
-                required
-                autocomplete="username"
-              />
+        <div class="login-card animate-in">
+          <!-- Theme Toggle -->
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <div class="d-flex align-items-center gap-2">
+              <div
+                class="nav-avatar"
+                style="width: 32px; height: 32px; font-size: 0.8rem"
+              >
+                M
+              </div>
+              <span class="fw-700 small text-muted">Ming Mart POS</span>
             </div>
+            <button
+              class="btn btn-sm btn-outline-secondary rounded-circle theme-toggle"
+              onclick="toggleTheme()"
+              title="Ganti Tema"
+              style="width: 34px; height: 34px; padding: 0"
+            >
+              <i class="bi bi-moon-fill"></i>
+            </button>
           </div>
-          <div class="form-group">
-            <label>Password</label>
-            <div class="input-group">
-              <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-              <input
-                type="password"
-                id="password"
-                class="form-control"
-                placeholder="Masukkan password"
-                required
-                autocomplete="current-password"
-              />
-              <span class="input-group-btn">
+
+          <div class="login-title">Selamat Datang 👋</div>
+          <div class="login-sub">Masuk untuk mengelola toko Anda</div>
+
+          <form onsubmit="doLogin(event)">
+            <div class="mb-3">
+              <label class="form-label">Username</label>
+              <div class="input-group">
+                <span class="input-group-text"
+                  ><i class="bi bi-person-fill"></i
+                ></span>
+                <input
+                  type="text"
+                  id="loginUser"
+                  class="form-control"
+                  placeholder="Masukkan username"
+                  value="admin"
+                  required
+                  autocomplete="username"
+                />
+              </div>
+            </div>
+            <div class="mb-4">
+              <label class="form-label">Password</label>
+              <div class="input-group">
+                <span class="input-group-text"
+                  ><i class="bi bi-lock-fill"></i
+                ></span>
+                <input
+                  type="password"
+                  id="loginPass"
+                  class="form-control"
+                  placeholder="Masukkan password"
+                  value="admin123"
+                  required
+                  autocomplete="current-password"
+                />
                 <button
                   type="button"
-                  class="btn btn-default"
-                  onclick="toggleShowPass()"
-                  id="togglePassBtn"
-                  title="Tampilkan password"
+                  class="btn btn-outline-secondary"
+                  onclick="togglePass()"
                 >
-                  <i class="fa fa-eye" id="eyeIcon"></i>
+                  <i class="bi bi-eye-fill" id="passEyeIcon"></i>
                 </button>
-              </span>
+              </div>
             </div>
+            <div class="alert alert-info py-2 mb-3 small">
+              <i class="bi bi-info-circle-fill me-1"></i>
+              Default: <strong>admin</strong> / <strong>admin123</strong>
+            </div>
+            <button type="submit" class="btn btn-primary w-100 py-2 fw-bold">
+              <i class="bi bi-box-arrow-in-right me-2"></i>Masuk ke Sistem
+            </button>
+          </form>
+
+          <div class="text-center mt-3">
+            <small class="text-muted"
+              >© 2025 Ming Mart POS · All rights reserved</small
+            >
           </div>
-          <button type="submit" class="btn-login" id="btnLogin">
-            <i class="fa fa-sign-in"></i> Masuk ke Sistem
-          </button>
-        </form>
-
-        <div id="pesanError" class="error-box">
-          <i class="fa fa-exclamation-circle"></i> Username atau password salah!
-        </div>
-
-        <div class="login-links">
-          <a href="#" onclick="lupaPassword()"
-            ><i class="fa fa-key"></i> Lupa password?</a
-          >
-          <a href="#" onclick="buatAkunBaru()"
-            ><i class="fa fa-user-plus"></i> Buat akun baru</a
-          >
         </div>
       </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="dist/js/script.js"></script>
     <script>
-      const KEY_STORAGE = "user_admin";
-      const KEY_TEMA = "pos_tema";
-
-      // Init
-      (function () {
-        var t = localStorage.getItem(KEY_TEMA) || "light";
-        var icon = document.getElementById("loginThemeIcon");
-        if (icon)
-          icon.className = t === "dark" ? "fa fa-sun-o" : "fa fa-moon-o";
-        if (!localStorage.getItem(KEY_STORAGE)) {
-          localStorage.setItem(
-            KEY_STORAGE,
-            JSON.stringify({
-              username: "admin",
-              password: "admin123",
-              foto: null,
-              nama_lengkap: "Administrator",
-            }),
-          );
-        }
-      })();
-
-      function toggleTemaLogin() {
-        var tema = localStorage.getItem(KEY_TEMA) || "light";
-        var baru = tema === "dark" ? "light" : "dark";
-        localStorage.setItem(KEY_TEMA, baru);
-        document.documentElement.classList.remove("dark-mode", "light-mode");
-        document.documentElement.classList.add(
-          baru === "dark" ? "dark-mode" : "light-mode",
-        );
-        var icon = document.getElementById("loginThemeIcon");
-        if (icon)
-          icon.className = baru === "dark" ? "fa fa-sun-o" : "fa fa-moon-o";
-      }
-
-      function toggleShowPass() {
-        var inp = document.getElementById("password");
-        var icon = document.getElementById("eyeIcon");
+      // If already logged in, redirect
+      if (sessionStorage.getItem("isLoggedIn") === "true")
+        window.location.href = "index.html";
+      updateThemeBtn(getTheme());
+      function togglePass() {
+        const inp = document.getElementById("loginPass");
+        const icon = document.getElementById("passEyeIcon");
         if (inp.type === "password") {
           inp.type = "text";
-          icon.className = "fa fa-eye-slash";
+          icon.className = "bi bi-eye-slash-fill";
         } else {
           inp.type = "password";
-          icon.className = "fa fa-eye";
-        }
-      }
-
-      document
-        .getElementById("formLogin")
-        .addEventListener("submit", function (e) {
-          e.preventDefault();
-          var userInput = document.getElementById("username").value;
-          var passInput = document.getElementById("password").value;
-          var errorBox = document.getElementById("pesanError");
-          var btn = document.getElementById("btnLogin");
-          var account = JSON.parse(localStorage.getItem(KEY_STORAGE));
-
-          if (
-            userInput === account.username &&
-            passInput === account.password
-          ) {
-            btn.innerHTML =
-              '<i class="fa fa-spinner fa-spin"></i> Menghubungkan...';
-            btn.disabled = true;
-            sessionStorage.setItem("isLoggedIn", "true");
-            setTimeout(() => {
-              window.location.href = "index.html";
-            }, 700);
-          } else {
-            errorBox.style.display = "block";
-            errorBox.style.animation = "none";
-            void errorBox.offsetWidth;
-            errorBox.style.animation = "shake 0.4s ease";
-            setTimeout(() => {
-              errorBox.style.display = "none";
-            }, 3500);
-          }
-        });
-
-      function lupaPassword() {
-        var kode = prompt("Masukkan Kode Keamanan Master (9999):");
-        if (kode === "9999") {
-          var passBaru = prompt("Masukkan Password Baru (min. 5 karakter):");
-          if (passBaru && passBaru.trim().length >= 5) {
-            var acc = JSON.parse(localStorage.getItem(KEY_STORAGE));
-            acc.password = passBaru.trim();
-            localStorage.setItem(KEY_STORAGE, JSON.stringify(acc));
-            alert("✅ Password berhasil diperbarui! Silakan login.");
-          } else if (passBaru !== null) alert("Password minimal 5 karakter!");
-        } else if (kode !== null) alert("❌ Kode keamanan salah!");
-      }
-
-      function buatAkunBaru() {
-        if (!confirm("Membuat akun baru akan mengganti akun lama. Lanjutkan?"))
-          return;
-        var userBaru = prompt("Username Baru:");
-        var passBaru = prompt("Password Baru (min. 5 karakter):");
-        if (userBaru && passBaru && passBaru.length >= 5) {
-          localStorage.setItem(
-            KEY_STORAGE,
-            JSON.stringify({
-              username: userBaru,
-              password: passBaru,
-              foto: null,
-              nama_lengkap: userBaru,
-            }),
-          );
-          alert("🎉 Akun berhasil dibuat! Silakan login.");
-          location.reload();
-        } else if (userBaru !== null && passBaru !== null) {
-          alert("Data tidak valid. Password minimal 5 karakter.");
+          icon.className = "bi bi-eye-fill";
         }
       }
     </script>

@@ -1089,7 +1089,16 @@ async function cetakPDF(
     let logoY = 8;
     try {
       if (LOGO_TOKO_B64) {
-        doc.addImage(LOGO_TOKO_B64, "PNG", 28, logoY, 24, 24);
+        doc.addImage(
+          LOGO_TOKO_B64,
+          "PNG",
+          28,
+          logoY,
+          24,
+          24,
+          undefined,
+          "FAST",
+        );
         logoY = 36;
       }
     } catch (e) {

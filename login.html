@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login — Ming Mart POS</title>
+    <link rel="icon" href="assets/icon/favicon.ico" type="image/x-icon" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
+    />
+    <link rel="stylesheet" href="dist/css/adminlte.min.css" />
+    <link rel="stylesheet" href="dist/css/style.css" />
+    <script>
+      (function () {
+        var t = localStorage.getItem("pos_tema") || "light";
+        document.documentElement.setAttribute("data-bs-theme", t);
+      })();
+    </script>
+  </head>
+  <body class="p-0 m-0">
+    <div class="login-wrapper">
+      <!-- Brand Side -->
+      <div class="login-brand-side">
+        <div style="position: relative; z-index: 1; text-align: center">
+          <div class="login-brand-logo">
+            <img
+              src="assets/images/logo-toko.png"
+              alt="Logo"
+              onerror="
+                this.style.display = 'none';
+                this.parentElement.innerHTML = '🛒';
+              "
+            />
+          </div>
+          <div class="login-brand-title">MING<span>MART</span></div>
+          <div class="login-brand-sub">Point of Sale System v3.0</div>
+          <ul class="login-features">
+            <li><i class="bi bi-cart-check-fill"></i> Kasir cepat & mudah</li>
+            <li>
+              <i class="bi bi-box-seam-fill"></i> Manajemen stok real-time
+            </li>
+            <li>
+              <i class="bi bi-bar-chart-fill"></i> Laporan penjualan lengkap
+            </li>
+            <li>
+              <i class="bi bi-printer-fill"></i> Cetak struk PDF & Bluetooth
+            </li>
+            <li><i class="bi bi-shield-fill-check"></i> Data tersimpan aman</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Form Side -->
+      <div class="login-form-side">
+        <div class="login-card animate-in">
+          <!-- Theme Toggle -->
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <div class="d-flex align-items-center gap-2">
+              <div
+                class="nav-avatar"
+                style="width: 32px; height: 32px; font-size: 0.8rem"
+              >
+                M
+              </div>
+              <span class="fw-700 small text-muted">Ming Mart POS</span>
+            </div>
+            <button
+              class="btn btn-sm btn-outline-secondary rounded-circle theme-toggle"
+              onclick="toggleTheme()"
+              title="Ganti Tema"
+              style="width: 34px; height: 34px; padding: 0"
+            >
+              <i class="bi bi-moon-fill"></i>
+            </button>
+          </div>
+
+          <div class="login-title">Selamat Datang 👋</div>
+          <div class="login-sub">Masuk untuk mengelola toko Anda</div>
+
+          <form onsubmit="doLogin(event)">
+            <div class="mb-3">
+              <label class="form-label">Username</label>
+              <div class="input-group">
+                <span class="input-group-text"
+                  ><i class="bi bi-person-fill"></i
+                ></span>
+                <input
+                  type="text"
+                  id="loginUser"
+                  class="form-control"
+                  placeholder="Masukkan username"
+                  required
+                  autocomplete="username"
+                />
+              </div>
+            </div>
+            <div class="mb-4">
+              <label class="form-label">Password</label>
+              <div class="input-group">
+                <span class="input-group-text"
+                  ><i class="bi bi-lock-fill"></i
+                ></span>
+                <input
+                  type="password"
+                  id="loginPass"
+                  class="form-control"
+                  placeholder="Masukkan password"
+                  required
+                  autocomplete="current-password"
+                />
+                <button
+                  type="button"
+                  class="btn btn-outline-secondary"
+                  onclick="togglePass()"
+                >
+                  <i class="bi bi-eye-fill" id="passEyeIcon"></i>
+                </button>
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100 py-2 fw-bold">
+              <i class="bi bi-box-arrow-in-right me-2"></i>Masuk ke Sistem
+            </button>
+          </form>
+
+          <div class="text-center mt-3">
+            <small class="text-muted"
+              >© 2025 Ming Mart POS · All rights reserved</small
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="dist/js/script.js"></script>
+    <script>
+      // If already logged in, redirect
+      if (sessionStorage.getItem("isLoggedIn") === "true")
+        window.location.href = "index.html";
+      updateThemeBtn(getTheme());
+      function togglePass() {
+        const inp = document.getElementById("loginPass");
+        const icon = document.getElementById("passEyeIcon");
+        if (inp.type === "password") {
+          inp.type = "text";
+          icon.className = "bi bi-eye-slash-fill";
+        } else {
+          inp.type = "password";
+          icon.className = "bi bi-eye-fill";
+        }
+      }
+    </script>
+  </body>
+</html>

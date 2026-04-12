@@ -1,0 +1,712 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Manajemen Hutang — Ming Mart POS</title>
+    <link rel="icon" href="assets/icon/favicon.ico" type="image/x-icon" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <link rel="stylesheet" href="dist/css/adminlte.min.css" />
+    <link rel="stylesheet" href="dist/css/style.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script>
+      (function () {
+        document.documentElement.setAttribute(
+          "data-bs-theme",
+          localStorage.getItem("pos_tema") || "light",
+        );
+      })();
+    </script>
+  </head>
+  <body class="layout-fixed sidebar-expand-lg bg-body-tertiary">
+    <div class="app-wrapper">
+      <!-- TOP NAVBAR -->
+      <nav class="app-header navbar navbar-expand bg-body shadow-sm">
+        <div class="container-fluid">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                data-lte-toggle="sidebar"
+                href="#"
+                role="button"
+                ><i class="bi bi-list fs-5"></i
+              ></a>
+            </li>
+          </ul>
+          <ul class="navbar-nav ms-auto align-items-center gap-1">
+            <li class="nav-item">
+              <button
+                class="btn btn-sm btn-outline-secondary rounded-circle theme-toggle"
+                onclick="toggleTheme()"
+                style="width: 36px; height: 36px; padding: 0"
+              >
+                <i class="bi bi-moon-fill"></i>
+              </button>
+            </li>
+            <li class="nav-item dropdown">
+              <button
+                class="nav-user-btn dropdown-toggle"
+                data-bs-toggle="dropdown"
+              >
+                <div class="nav-avatar">
+                  <img
+                    class="nav-user-photo"
+                    src=""
+                    alt=""
+                    style="display: none"
+                  /><span class="nav-user-initial">A</span>
+                </div>
+                <span class="nav-user-name d-none d-md-inline">Admin</span>
+              </button>
+              <ul
+                class="dropdown-menu dropdown-menu-end shadow-lg"
+                style="min-width: 200px; border-radius: 12px"
+              >
+                <li class="px-3 py-2 border-bottom">
+                  <div class="d-flex align-items-center gap-2">
+                    <div
+                      class="nav-avatar"
+                      style="width: 40px; height: 40px; font-size: 1rem"
+                    >
+                      <img
+                        class="nav-user-photo"
+                        src=""
+                        alt=""
+                        style="display: none"
+                      /><span class="nav-user-initial">A</span>
+                    </div>
+                    <div>
+                      <div class="fw-bold small nav-user-name">Admin</div>
+                      <div class="text-muted" style="font-size: 0.72rem">
+                        Administrator
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item py-2"
+                    href="#"
+                    onclick="openModalAkun()"
+                    ><i class="bi bi-person-fill-gear me-2 text-primary"></i
+                    >Kelola Akun</a
+                  >
+                </li>
+                <li><hr class="dropdown-divider my-1" /></li>
+                <li>
+                  <a
+                    class="dropdown-item py-2 text-danger"
+                    href="#"
+                    onclick="doLogout()"
+                    ><i class="bi bi-box-arrow-right me-2"></i>Logout</a
+                  >
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+      <!-- SIDEBAR -->
+      <aside
+        class="app-sidebar bg-dark sidebar-dark-primary shadow"
+        data-bs-theme="dark"
+      >
+        <div class="sidebar-brand">
+          <a
+            href="index.html"
+            class="brand-link d-flex align-items-center gap-2 px-3 py-3 text-decoration-none"
+            ><img
+              src="assets/images/logo-toko.png"
+              alt="Logo"
+              style="
+                width: 32px;
+                height: 32px;
+                object-fit: contain;
+                border-radius: 8px;
+              "
+              onerror="this.style.display = 'none'"
+            /><span class="sidebar-brand-name">MING<span>MART</span></span></a
+          >
+        </div>
+        <div class="sidebar-user-panel">
+          <div class="d-flex align-items-center gap-2">
+            <div class="sidebar-user-avatar">
+              <img
+                class="nav-user-photo"
+                src=""
+                alt=""
+                style="display: none"
+              /><span class="nav-user-initial">A</span>
+            </div>
+            <div>
+              <div class="sidebar-user-name nav-user-name">Admin</div>
+              <div class="sidebar-user-role">Administrator</div>
+            </div>
+          </div>
+        </div>
+        <div class="sidebar-wrapper">
+          <nav class="mt-2">
+            <ul
+              class="nav sidebar-menu flex-column"
+              data-lte-toggle="treeview"
+              role="menu"
+            >
+              <li class="nav-header">MENU UTAMA</li>
+              <li class="nav-item">
+                <a href="index.html" class="nav-link" id="nav-kasir"
+                  ><i class="bi bi-cart-fill nav-icon me-2"></i>
+                  <p>Kasir</p></a
+                >
+              </li>
+              <li class="nav-item">
+                <a href="produk.html" class="nav-link" id="nav-produk"
+                  ><i class="bi bi-box-seam-fill nav-icon me-2"></i>
+                  <p>Manajemen Produk</p></a
+                >
+              </li>
+              <li class="nav-item">
+                <a href="kategori.html" class="nav-link" id="nav-kategori"
+                  ><i class="bi bi-tags-fill nav-icon me-2"></i>
+                  <p>Kategori</p></a
+                >
+              </li>
+              <li class="nav-item">
+                <a href="hutang.html" class="nav-link" id="nav-hutang"
+                  ><i class="bi bi-file-earmark-text-fill nav-icon me-2"></i>
+                  <p>Manajemen Hutang</p></a
+                >
+              </li>
+              <li class="nav-item">
+                <a href="laporan.html" class="nav-link" id="nav-laporan"
+                  ><i class="bi bi-bar-chart-fill nav-icon me-2"></i>
+                  <p>Laporan</p></a
+                >
+              </li>
+              <li class="nav-item">
+                <a href="pengeluaran.html" class="nav-link" id="nav-pengeluaran"
+                  ><i class="bi bi-wallet2 nav-icon me-2"></i>
+                  <p>Pengeluaran</p></a
+                >
+              </li>
+              <li class="nav-header">PENGATURAN</li>
+              <li class="nav-item">
+                <a href="admin.html" class="nav-link" id="nav-admin"
+                  ><i class="bi bi-people-fill nav-icon me-2"></i>
+                  <p>Manajemen Admin</p></a
+                >
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link" onclick="openModalAkun()"
+                  ><i class="bi bi-person-fill-gear nav-icon me-2"></i>
+                  <p>Kelola Admin</p></a
+                >
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link" onclick="toggleTheme()"
+                  ><i class="bi bi-circle-half nav-icon me-2"></i>
+                  <p>Ganti Tema</p></a
+                >
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link text-danger" onclick="doLogout()"
+                  ><i class="bi bi-box-arrow-right nav-icon me-2"></i>
+                  <p>Logout</p></a
+                >
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </aside>
+
+      <!-- MAIN -->
+      <main class="app-main">
+        <div class="app-content-header py-3 px-4">
+          <div class="content-header">
+            <h1>
+              <i class="bi bi-file-earmark-text-fill me-2"></i>Manajemen Hutang
+            </h1>
+            <div class="d-flex gap-2">
+              <label class="btn btn-outline-primary btn-sm mb-0" title="Import Excel">
+                <i class="bi bi-file-earmark-arrow-up me-1"></i>Import Excel
+                <input type="file" accept=".xlsx,.xls" style="display:none" onchange="importHutangExcel(this)">
+              </label>
+              <button
+                class="btn btn-success btn-sm"
+                onclick="eksporHutangExcel()"
+              >
+                <i class="bi bi-file-earmark-excel me-1"></i>Ekspor Excel
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="app-content px-4 pb-4">
+          <!-- Stat Cards -->
+          <div class="row g-3 mb-4">
+            <div class="col-md-4">
+              <div class="card stat-card border-start border-danger border-4">
+                <div class="card-body d-flex align-items-center gap-3">
+                  <div class="stat-icon bg-danger bg-opacity-10">
+                    <i
+                      class="bi bi-exclamation-circle-fill text-danger fs-3"
+                    ></i>
+                  </div>
+                  <div>
+                    <div class="stat-label">Total Hutang Aktif</div>
+                    <div class="stat-value text-danger" id="totalHutangAktif">
+                      Rp 0
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card stat-card border-start border-warning border-4">
+                <div class="card-body d-flex align-items-center gap-3">
+                  <div class="stat-icon bg-warning bg-opacity-10">
+                    <i class="bi bi-people-fill text-warning fs-3"></i>
+                  </div>
+                  <div>
+                    <div class="stat-label">Jumlah Hutang Belum Lunas</div>
+                    <div class="stat-value text-warning" id="jumlahHutangBelum">
+                      0
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card stat-card border-start border-success border-4">
+                <div class="card-body d-flex align-items-center gap-3">
+                  <div class="stat-icon bg-success bg-opacity-10">
+                    <i class="bi bi-check-circle-fill text-success fs-3"></i>
+                  </div>
+                  <div>
+                    <div class="stat-label">Hutang Sudah Lunas</div>
+                    <div class="stat-value text-success" id="jumlahHutangLunas">
+                      0
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tambah Hutang Manual -->
+          <div class="card mb-4">
+            <div class="card-header">
+              <i class="bi bi-plus-circle-fill text-danger me-2"></i>Catat
+              Hutang Manual
+            </div>
+            <div class="card-body">
+              <div class="row g-3 align-items-end">
+                <div class="col-md-4">
+                  <label class="form-label"
+                    >Nama Pembeli / Pelanggan
+                    <span class="text-danger">*</span></label
+                  >
+                  <input
+                    type="text"
+                    id="newHutangPembeli"
+                    class="form-control"
+                    placeholder="Nama pelanggan"
+                  />
+                </div>
+                <div class="col-md-3">
+                  <label class="form-label"
+                    >Total Hutang (Rp) <span class="text-danger">*</span></label
+                  >
+                  <div class="input-group">
+                    <span class="input-group-text">Rp</span>
+                    <input
+                      type="number"
+                      id="newHutangTotal"
+                      class="form-control"
+                      placeholder="0"
+                      min="0"
+                    />
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <label class="form-label">Catatan</label>
+                  <input
+                    type="text"
+                    id="newHutangCatatan"
+                    class="form-control"
+                    placeholder="Opsional"
+                  />
+                </div>
+                <div class="col-md-2">
+                  <button
+                    class="btn btn-danger w-100"
+                    onclick="tambahHutangManual()"
+                  >
+                    <i class="bi bi-plus-lg me-1"></i>Catat
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tabel Hutang -->
+          <div class="card">
+            <div
+              class="card-header d-flex align-items-center justify-content-between flex-wrap gap-2"
+            >
+              <span><i class="bi bi-table me-2"></i>Daftar Hutang</span>
+              <div class="d-flex gap-2">
+                <select
+                  id="filterStatusHutang"
+                  class="form-select form-select-sm"
+                  style="width: 160px"
+                  onchange="filterHutang()"
+                >
+                  <option value="">Semua Status</option>
+                  <option value="Belum Lunas">Belum Lunas</option>
+                  <option value="Lunas">Lunas</option>
+                </select>
+                <div class="input-group input-group-sm" style="width: 200px">
+                  <span class="input-group-text"
+                    ><i class="bi bi-search"></i
+                  ></span>
+                  <input
+                    type="text"
+                    id="searchHutang"
+                    class="form-control"
+                    placeholder="Cari nama..."
+                    oninput="filterHutang()"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="card-body p-0">
+              <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                  <thead>
+                    <tr>
+                      <th style="width: 40px">No</th>
+                      <th style="width: 110px">ID Hutang</th>
+                      <th>Nama Pembeli</th>
+                      <th>Waktu</th>
+                      <th class="text-end">Total</th>
+                      <th>Status</th>
+                      <th class="text-center" style="width: 140px">Aksi</th>
+                    </tr>
+                  </thead>
+                  <tbody id="bodyHutang"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+          <div
+            class="text-center py-3"
+            style="
+              font-size: 0.78rem;
+              color: #64748b;
+              border-top: 1px solid rgba(0, 0, 0, 0.08);
+            "
+          >
+            <strong>MING MART</strong> &copy; <span id="footerYear"></span> —
+            All Rights Reserved
+          </div>
+        </footer>
+      </main>
+
+      <!-- MODAL EDIT HUTANG -->
+      <div class="modal fade" id="modalEditHutang" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header bg-warning text-dark">
+              <h5 class="modal-title">
+                <i class="bi bi-pencil-fill me-2"></i>Edit Hutang
+              </h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <div class="row g-3">
+                <div class="col-12">
+                  <label class="form-label"
+                    >Nama Pembeli <span class="text-danger">*</span></label
+                  >
+                  <input
+                    type="text"
+                    id="editHutangPembeli"
+                    class="form-control"
+                  />
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label"
+                    >Total (Rp) <span class="text-danger">*</span></label
+                  >
+                  <div class="input-group">
+                    <span class="input-group-text">Rp</span
+                    ><input
+                      type="number"
+                      id="editHutangTotal"
+                      class="form-control"
+                      min="0"
+                    />
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Status</label>
+                  <select id="editHutangStatus" class="form-select">
+                    <option value="Belum Lunas">Belum Lunas</option>
+                    <option value="Lunas">Lunas</option>
+                  </select>
+                </div>
+                <div class="col-12">
+                  <label class="form-label">Catatan</label>
+                  <input
+                    type="text"
+                    id="editHutangCatatan"
+                    class="form-control"
+                    placeholder="Opsional"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-secondary" data-bs-dismiss="modal">
+                Batal
+              </button>
+              <button
+                class="btn btn-warning fw-bold"
+                onclick="simpanEditHutang()"
+              >
+                <i class="bi bi-check-circle-fill me-1"></i>Simpan
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MODAL AKUN -->
+      <div class="modal fade" id="modalAkun" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+              <h5 class="modal-title">
+                <i class="bi bi-person-fill-gear me-2"></i>Kelola Profil Admin
+              </h5>
+              <button
+                type="button"
+                class="btn-close btn-close-white"
+                data-bs-dismiss="modal"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <div class="foto-upload-area mb-3">
+                <div class="foto-circle" id="akunFotoCircle">
+                  <span id="akunFotoInisial">A</span
+                  ><img
+                    id="akunFotoPreview"
+                    src=""
+                    alt=""
+                    style="
+                      display: none;
+                      position: absolute;
+                      inset: 0;
+                      width: 100%;
+                      height: 100%;
+                      object-fit: cover;
+                      border-radius: 50%;
+                    "
+                  />
+                </div>
+                <label class="btn btn-sm btn-outline-primary"
+                  ><i class="bi bi-camera-fill me-1"></i>Upload Foto<input
+                    type="file"
+                    id="akunFotoInput"
+                    accept="image/*"
+                    style="display: none"
+                    onchange="previewFotoAkun(this)"
+                /></label>
+                <small class="text-muted">JPG/PNG maks. 2MB</small>
+              </div>
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label">Username</label
+                  ><input type="text" id="akunUsername" class="form-control" />
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Nama Lengkap</label
+                  ><input
+                    type="text"
+                    id="akunNamaLengkap"
+                    class="form-control"
+                  />
+                </div>
+                <div class="col-12">
+                  <label class="form-label">Email</label
+                  ><input type="email" id="akunEmail" class="form-control" />
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Password Baru</label
+                  ><input
+                    type="password"
+                    id="akunPassword"
+                    class="form-control"
+                    placeholder="Min. 5 karakter"
+                  />
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Konfirmasi Password</label
+                  ><input
+                    type="password"
+                    id="akunPassKonfirm"
+                    class="form-control"
+                  />
+                </div>
+              </div>
+              <div class="alert alert-warning py-2 mt-3 small mb-0">
+                <i class="bi bi-exclamation-triangle-fill me-1"></i>Kosongkan
+                password jika tidak ingin mengubah.
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-secondary" data-bs-dismiss="modal">
+                Batal
+              </button>
+              <button class="btn btn-primary fw-bold" onclick="simpanAkun()">
+                <i class="bi bi-check-circle-fill me-1"></i>Simpan
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="dist/js/adminlte.min.js"></script>
+    <script src="dist/js/script.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        setActivePage("nav-hutang");
+        loadUserInfo();
+        updateThemeBtn(getTheme());
+        renderTabelHutang();
+        updateHutangStats();
+      });
+
+      function filterHutang() {
+        const keyword = document.getElementById("searchHutang").value;
+        const status = document.getElementById("filterStatusHutang").value;
+        let hutang = JSON.parse(localStorage.getItem("pos_hutang")) || [];
+        if (keyword)
+          hutang = hutang.filter((h) =>
+            h.pembeli.toLowerCase().includes(keyword.toLowerCase()),
+          );
+        if (status) hutang = hutang.filter((h) => h.status === status);
+        renderHutangData(hutang);
+        updateHutangStats();
+      }
+
+      function renderHutangData(hutang) {
+        const tbody = document.getElementById("bodyHutang");
+        if (!hutang.length) {
+          tbody.innerHTML = `<tr><td colspan="7" class="text-center py-4 text-muted"><i class="bi bi-check-circle fs-1 d-block mb-2 text-success"></i>Tidak ada data hutang</td></tr>`;
+          return;
+        }
+        let total = 0;
+        tbody.innerHTML = hutang
+          .map((h, i) => {
+            if (h.status !== "Lunas") total += h.total;
+            const badge = h.status === "Lunas" ? "bg-success" : "bg-danger";
+            return `<tr class="${h.status === "Lunas" ? "table-success opacity-75" : ""}">
+        <td>${i + 1}</td>
+        <td><span class="badge bg-warning text-dark">${h.id}</span></td>
+        <td><strong>${h.pembeli}</strong>${h.catatan ? `<br><small class="text-muted">${h.catatan}</small>` : ""}</td>
+        <td class="small text-muted">${h.waktu}</td>
+        <td class="text-end fw-bold">Rp ${h.total.toLocaleString("id-ID")}</td>
+        <td><span class="badge ${badge}">${h.status}</span></td>
+        <td class="text-center">
+          ${h.status !== "Lunas" ? `<button class="btn btn-sm btn-success me-1" onclick="lunasHutang('${h.id}')" title="Tandai Lunas"><i class="bi bi-check-circle-fill"></i></button>` : ""}
+          <button class="btn btn-sm btn-warning me-1" onclick="editHutang('${h.id}')" title="Edit"><i class="bi bi-pencil-fill"></i></button>
+          <button class="btn btn-sm btn-danger" onclick="hapusHutang('${h.id}')" title="Hapus"><i class="bi bi-trash-fill"></i></button>
+        </td>
+      </tr>`;
+          })
+          .join("");
+        const el = document.getElementById("totalHutangAktif");
+        if (el) el.textContent = `Rp ${total.toLocaleString("id-ID")}`;
+      }
+
+      function updateHutangStats() {
+        const hutang = JSON.parse(localStorage.getItem("pos_hutang")) || [];
+        const belum = hutang.filter((h) => h.status !== "Lunas");
+        const lunas = hutang.filter((h) => h.status === "Lunas");
+        const el1 = document.getElementById("jumlahHutangBelum");
+        const el2 = document.getElementById("jumlahHutangLunas");
+        if (el1) el1.textContent = belum.length;
+        if (el2) el2.textContent = lunas.length;
+        const totalAktif = belum.reduce((s, h) => s + h.total, 0);
+        const elTotal = document.getElementById("totalHutangAktif");
+        if (elTotal)
+          elTotal.textContent = `Rp ${totalAktif.toLocaleString("id-ID")}`;
+      }
+
+      // Override renderTabelHutang to use filter version
+      const _origRender = renderTabelHutang;
+      renderTabelHutang = function (keyword = "") {
+        const hutang = JSON.parse(localStorage.getItem("pos_hutang")) || [];
+        const filtered = keyword
+          ? hutang.filter((h) =>
+              h.pembeli.toLowerCase().includes(keyword.toLowerCase()),
+            )
+          : hutang;
+        renderHutangData(filtered);
+        updateHutangStats();
+      };
+
+      function eksporHutangExcel() {
+        const hutang = JSON.parse(localStorage.getItem("pos_hutang")) || [];
+        if (!hutang.length || typeof XLSX === "undefined") {
+          showToast("Tidak ada data", "warning");
+          return;
+        }
+        const data = [
+          ["ID", "Pembeli", "Waktu", "Total", "Status", "Catatan"],
+          ...hutang.map((h) => [
+            h.id,
+            h.pembeli,
+            h.waktu,
+            h.total,
+            h.status,
+            h.catatan || "",
+          ]),
+        ];
+        const ws = XLSX.utils.aoa_to_sheet(data);
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, "Hutang");
+        XLSX.writeFile(
+          wb,
+          `DaftarHutang_MingMart_${new Date().toLocaleDateString("id-ID").replace(/\//g, "-")}.xlsx`,
+        );
+        showToast("Ekspor berhasil!", "success");
+      }
+      document.getElementById("footerYear").textContent =
+        new Date().getFullYear();
+    </script>
+  </body>
+</html>

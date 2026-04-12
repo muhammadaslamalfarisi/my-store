@@ -289,25 +289,33 @@
                 <div class="card-body">
                   <div class="mb-3">
                     <label class="form-label">Cari / Pilih Produk</label>
-                    <div class="input-group mb-2">
-                      <span class="input-group-text"><i class="bi bi-search"></i></span>
-                      <input
-                        type="text"
-                        id="searchProdukKasir"
-                        class="form-control"
-                        placeholder="Ketik nama produk..."
-                        oninput="filterProdukKasir()"
-                        autocomplete="off"
-                      />
-                      <button class="btn btn-outline-secondary" type="button" onclick="document.getElementById('searchProdukKasir').value=''; filterProdukKasir();">
-                        <i class="bi bi-x-lg"></i>
-                      </button>
+                    <div class="position-relative" id="produkComboWrapper">
+                      <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-search"></i></span>
+                        <input
+                          type="text"
+                          id="searchProdukKasir"
+                          class="form-control"
+                          placeholder="Ketik nama atau pilih produk..."
+                          oninput="filterProdukKasir()"
+                          onfocus="showProdukDropdown()"
+                          autocomplete="off"
+                        />
+                        <button class="btn btn-outline-secondary" type="button" onclick="clearProdukKasir();">
+                          <i class="bi bi-x-lg"></i>
+                        </button>
+                      </div>
+                      <!-- Hidden select for value tracking -->
+                      <select id="pilihProduk" style="display:none"></select>
+                      <!-- Custom dropdown list -->
+                      <div id="produkDropdownList" class="border rounded shadow-sm bg-white position-absolute w-100 d-none" style="z-index:1050;max-height:220px;overflow-y:auto;top:100%;left:0;"></div>
                     </div>
-                    <select
-                      id="pilihProduk"
-                      class="form-select"
-                      onchange="updateHargaOtomatis()"
-                    ></select>
+                    <div id="produkTerpilih" class="mt-2 d-none">
+                      <span class="badge bg-primary py-2 px-3 d-flex align-items-center justify-content-between gap-2" style="font-size:0.85rem">
+                        <span id="produkTerpilihNama"></span>
+                        <i class="bi bi-x-circle-fill cursor-pointer" onclick="clearProdukKasir()" style="cursor:pointer"></i>
+                      </span>
+                    </div>
                   </div>
                   <div class="mb-3">
                     <label class="form-label">Harga Satuan</label>
@@ -702,6 +710,15 @@
       }
       document.getElementById("footerYear").textContent =
         new Date().getFullYear();
+
+      // Close produk dropdown when clicking outside
+      document.addEventListener("click", function(e) {
+        const wrapper = document.getElementById("produkComboWrapper");
+        if (wrapper && !wrapper.contains(e.target)) {
+          const dl = document.getElementById("produkDropdownList");
+          if (dl) dl.classList.add("d-none");
+        }
+      });
     </script>
   </body>
 </html>

@@ -1290,11 +1290,88 @@ function renderProdukKasir(keyword) {
 function filterProdukKasir() {
   const kw = document.getElementById("searchProdukKasir")?.value || "";
   renderProdukKasir(kw);
-  // Clear selection when search changes
+  // Clear selection when user types
   const sel = document.getElementById("pilihProduk");
   if (sel) sel.value = "";
   const hp = document.getElementById("hargaProduk");
   if (hp) hp.value = "";
+  // Show dropdown while typing
+  showProdukDropdown();
+}
+
+function showProdukDropdown() {
+  const kw = document.getElementById("searchProdukKasir")?.value || "";
+  const dl = document.getElementById("produkDropdownList");
+  if (!dl) return;
+  daftarProduk = getProducts();
+  let filtered = daftarProduk.filter((p) => p.stok > 0);
+  if (kw.length > 0) {
+    const k = kw.toLowerCase();
+    filtered = filtered.filter(
+      (p) =>
+        p.nama.toLowerCase().includes(k) ||
+        p.id.toLowerCase().includes(k) ||
+        (p.kategori || "").toLowerCase().includes(k)
+    );
+  }
+  if (filtered.length === 0) {
+    dl.innerHTML = `<div class="px-3 py-2 text-muted small"><i class="bi bi-search me-1"></i>${kw ? `"${kw}" tidak ditemukan` : "Belum ada produk"}</div>`;
+  } else {
+    dl.innerHTML = filtered.map((p) => `
+      <div class="px-3 py-2 d-flex justify-content-between align-items-center produk-combo-item"
+           style="cursor:pointer;border-bottom:1px solid #f0f0f0"
+           onmousedown="selectProdukKasir('${p.id}')"
+           onmouseover="this.style.background='#f0f6ff'"
+           onmouseout="this.style.background=''">
+        <div>
+          <div class="fw-semibold small">${p.nama}</div>
+          <div class="text-muted" style="font-size:0.78rem">${p.kategori || ""}</div>
+        </div>
+        <div class="text-end">
+          <div class="text-success fw-bold small">Rp ${p.harga.toLocaleString("id-ID")}</div>
+          <span class="badge ${p.stok <= 5 ? "bg-warning text-dark" : "bg-secondary"}" style="font-size:0.7rem">Stok: ${p.stok}</span>
+        </div>
+      </div>`).join("");
+  }
+  dl.classList.remove("d-none");
+}
+
+function selectProdukKasir(id) {
+  const p = getProducts().find((x) => x.id === id);
+  if (!p) return;
+  // Set hidden select value
+  const sel = document.getElementById("pilihProduk");
+  if (sel) sel.value = id;
+  // Set search input text
+  const inp = document.getElementById("searchProdukKasir");
+  if (inp) inp.value = p.nama;
+  // Update harga
+  const hp = document.getElementById("hargaProduk");
+  if (hp) hp.value = p.harga;
+  // Show badge terpilih
+  const badge = document.getElementById("produkTerpilih");
+  const namaEl = document.getElementById("produkTerpilihNama");
+  if (badge) badge.classList.remove("d-none");
+  if (namaEl) namaEl.textContent = `${p.nama} — Rp ${p.harga.toLocaleString("id-ID")} (Stok: ${p.stok})`;
+  // Hide dropdown
+  const dl = document.getElementById("produkDropdownList");
+  if (dl) dl.classList.add("d-none");
+  // Focus jumlah
+  document.getElementById("jumlahProduk")?.focus();
+}
+
+function clearProdukKasir() {
+  const inp = document.getElementById("searchProdukKasir");
+  if (inp) inp.value = "";
+  const sel = document.getElementById("pilihProduk");
+  if (sel) sel.value = "";
+  const hp = document.getElementById("hargaProduk");
+  if (hp) hp.value = "";
+  const badge = document.getElementById("produkTerpilih");
+  if (badge) badge.classList.add("d-none");
+  const dl = document.getElementById("produkDropdownList");
+  if (dl) dl.classList.add("d-none");
+  inp?.focus();
 }
 
 function quickAddProduct(id) {
@@ -2098,6 +2175,22 @@ function eksporLaporanExcel(tipe = "semua") {
       ...hutang.map((t) => [t.id, t.waktu, t.pembeli || "-", t.total]),
     ];
     XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(data), "Hutang");
+  }
+  if (tipe === "pengeluaran" || tipe === "semua") {
+    const pengeluaran = JSON.parse(localStorage.getItem(DB_PENGELUARAN)) || [];
+    const data = [
+      ["No", "Tanggal", "Keterangan", "Kategori", "Produk Stok", "Jumlah Stok", "Jumlah (Rp)"],
+      ...pengeluaran.map((p, i) => [
+        i + 1,
+        new Date(p.tanggal).toLocaleDateString("id-ID"),
+        p.keterangan,
+        p.kategori || "Umum",
+        p.stokProdukNama || "-",
+        p.stokJumlah || 0,
+        p.jumlah,
+      ]),
+    ];
+    XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(data), "Pengeluaran");
   }
 
   XLSX.writeFile(

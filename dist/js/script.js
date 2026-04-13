@@ -791,16 +791,96 @@ function toggleStokFields(kategori, mode) {
 }
 
 function populateStokDropdown() {
+  // Legacy: populate hidden select (still needed for form submit logic)
   const sel = document.getElementById("newPStokProduk");
   if (!sel) return;
   const produk = getProducts();
   sel.innerHTML = '<option value="">— Pilih produk —</option>' +
     produk.map(p => `<option value="${p.id}">[${p.stok} ${p.satuan||'pcs'}] ${p.nama}</option>`).join("");
-  sel.onchange = function() {
-    const chosen = produk.find(p => p.id === this.value);
-    const info = document.getElementById("newPStokSaatIni");
-    if (info) info.value = chosen ? `${chosen.stok} ${chosen.satuan||'pcs'} (tersedia)` : "";
-  };
+  // Init combobox display
+  showStokDropdown();
+}
+
+function showStokDropdown() {
+  const kw = document.getElementById("searchStokProduk")?.value || "";
+  const dl = document.getElementById("stokDropdownList");
+  if (!dl) return;
+  const produk = getProducts();
+  let filtered = produk;
+  if (kw.length > 0) {
+    const k = kw.toLowerCase();
+    filtered = produk.filter(p =>
+      p.nama.toLowerCase().includes(k) ||
+      (p.kategori||"").toLowerCase().includes(k) ||
+      p.id.toLowerCase().includes(k)
+    );
+  }
+  if (filtered.length === 0) {
+    dl.innerHTML = `<div class="px-3 py-2 text-muted small"><i class="bi bi-search me-1"></i>${kw ? `"${kw}" tidak ditemukan` : "Belum ada produk"}</div>`;
+  } else {
+    dl.innerHTML = filtered.map(p => `
+      <div class="px-3 py-2 d-flex justify-content-between align-items-center"
+           style="cursor:pointer;border-bottom:1px solid #f0f0f0"
+           onmousedown="selectStokProduk('${p.id}')"
+           onmouseover="this.style.background='#f0fff4'"
+           onmouseout="this.style.background=''">
+        <div>
+          <div class="fw-semibold small">${p.nama}</div>
+          <div class="text-muted" style="font-size:0.78rem">${p.kategori||""}</div>
+        </div>
+        <div class="text-end">
+          <span class="badge bg-success bg-opacity-75" style="font-size:0.72rem">Stok: ${p.stok} ${p.satuan||'pcs'}</span>
+        </div>
+      </div>`).join("");
+  }
+  dl.classList.remove("d-none");
+}
+
+function filterStokProduk() {
+  showStokDropdown();
+  // Clear selection
+  const sel = document.getElementById("newPStokProduk");
+  if (sel) sel.value = "";
+  const info = document.getElementById("newPStokSaatIni");
+  if (info) info.value = "";
+}
+
+function selectStokProduk(id) {
+  const p = getProducts().find(x => x.id === id);
+  if (!p) return;
+  // Set hidden select
+  const sel = document.getElementById("newPStokProduk");
+  if (sel) sel.value = id;
+  // Set input text
+  const inp = document.getElementById("searchStokProduk");
+  if (inp) inp.value = p.nama;
+  // Update stok info
+  const info = document.getElementById("newPStokSaatIni");
+  if (info) info.value = `${p.stok} ${p.satuan||'pcs'} (tersedia)`;
+  // Show badge terpilih
+  const badge = document.getElementById("stokProdukTerpilih");
+  const namaEl = document.getElementById("stokProdukTerpilihNama");
+  if (badge) badge.classList.remove("d-none");
+  if (namaEl) namaEl.textContent = `${p.nama} — Stok: ${p.stok} ${p.satuan||'pcs'}`;
+  // Hide dropdown
+  const dl = document.getElementById("stokDropdownList");
+  if (dl) dl.classList.add("d-none");
+  // Focus jumlah stok
+  document.getElementById("newPStokJumlah")?.focus();
+}
+
+function clearStokProduk() {
+  const inp = document.getElementById("searchStokProduk");
+  if (inp) inp.value = "";
+  const sel = document.getElementById("newPStokProduk");
+  if (sel) sel.value = "";
+  const info = document.getElementById("newPStokSaatIni");
+  if (info) info.value = "";
+  const badge = document.getElementById("stokProdukTerpilih");
+  if (badge) badge.classList.add("d-none");
+  const dl = document.getElementById("stokDropdownList");
+  if (dl) dl.classList.add("d-none");
+  inp?.focus();
 }
 
 // ============================================================

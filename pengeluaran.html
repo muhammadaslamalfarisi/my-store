@@ -224,9 +224,23 @@
                 </div>
                 <div class="col-md-5">
                   <label class="form-label">Pilih Produk <span class="text-danger">*</span></label>
-                  <select id="newPStokProduk" class="form-select">
-                    <option value="">— Pilih produk —</option>
-                  </select>
+                  <div class="position-relative" id="stokComboWrapper">
+                    <div class="input-group">
+                      <span class="input-group-text"><i class="bi bi-search"></i></span>
+                      <input type="text" id="searchStokProduk" class="form-control" placeholder="Ketik nama produk..." oninput="filterStokProduk()" onfocus="showStokDropdown()" autocomplete="off" />
+                      <button class="btn btn-outline-secondary" type="button" onclick="clearStokProduk()"><i class="bi bi-x-lg"></i></button>
+                    </div>
+                    <!-- Hidden select untuk value -->
+                    <select id="newPStokProduk" style="display:none"></select>
+                    <!-- Dropdown list -->
+                    <div id="stokDropdownList" class="border rounded shadow-sm bg-white position-absolute w-100 d-none" style="z-index:1060;max-height:200px;overflow-y:auto;top:100%;left:0;"></div>
+                  </div>
+                  <div id="stokProdukTerpilih" class="mt-2 d-none">
+                    <span class="badge bg-success py-2 px-3 d-flex align-items-center justify-content-between gap-2" style="font-size:0.82rem">
+                      <span id="stokProdukTerpilihNama"></span>
+                      <i class="bi bi-x-circle-fill" onclick="clearStokProduk()" style="cursor:pointer"></i>
+                    </span>
+                  </div>
                 </div>
                 <div class="col-md-3">
                   <label class="form-label">Jumlah Stok Masuk <span class="text-danger">*</span></label>
@@ -427,7 +441,21 @@
         });
 
         document.getElementById("footerYear").textContent = new Date().getFullYear();
+
+        // Close stok dropdown when clicking outside
+        document.addEventListener("click", function(e) {
+          const wrapper = document.getElementById("stokComboWrapper");
+          if (wrapper && !wrapper.contains(e.target)) {
+            const dl = document.getElementById("stokDropdownList");
+            if (dl) dl.classList.add("d-none");
+          }
+        });
       });
     </script>
-  </body>
+    <!-- Firebase Realtime Database SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+  <!-- Ming Mart Sync -->
+  <script src="dist/js/sync.js"></script>
+</body>
 </html>

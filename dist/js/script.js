@@ -20,47 +20,5135 @@ const LOGO_TOKO_B64 =
 function initData() {
   if (!localStorage.getItem(DB_PRODUK)) {
     const def = [
-      {
-        id: "P001",
-        nama: "Kopi Susu",
-        harga: 15000,
-        stok: 50,
-        kategori: "Minuman",
-        satuan: "Cup",
-      },
-      {
-        id: "P002",
-        nama: "Roti Bakar",
-        harga: 12000,
-        stok: 30,
-        kategori: "Makanan",
-        satuan: "Pcs",
-      },
-      {
-        id: "P003",
-        nama: "Teh Manis",
-        harga: 8000,
-        stok: 100,
-        kategori: "Minuman",
-        satuan: "Cup",
-      },
-      {
-        id: "P004",
-        nama: "Mie Goreng",
-        harga: 20000,
-        stok: 25,
-        kategori: "Makanan",
-        satuan: "Porsi",
-      },
-      {
-        id: "P005",
-        nama: "Jus Alpukat",
-        harga: 18000,
-        stok: 15,
-        kategori: "Minuman",
-        satuan: "Cup",
-      },
-    ];
+{
+"id": "P561620",
+"nama": "Surya",
+"kategori": "Rokok",
+"harga": 2500,
+"stok": 5,
+"satuan": "pcs"
+},
+{
+"id": "P603599",
+"nama": "Scorpion",
+"kategori": "Rokok",
+"harga": 2000,
+"stok": 4,
+"satuan": "pcs"
+},
+{
+"id": "P065883",
+"nama": "Minyak Goreng Lavenia",
+"kategori": "Sembako",
+"harga": 22000,
+"stok": 9,
+"satuan": "Liter"
+},
+{
+"id": "P085485",
+"nama": "Minyak Goreng Bimoli 2L",
+"kategori": "Sembako",
+"harga": 48000,
+"stok": 0,
+"satuan": "Liter"
+},
+{
+"id": "P333005",
+"nama": "Gula",
+"kategori": "Sembako",
+"harga": 6000,
+"stok": 1,
+"satuan": "pcs"
+},
+{
+"id": "P399141",
+"nama": "Gula",
+"kategori": "Sembako",
+"harga": 22000,
+"stok": 10,
+"satuan": "Kg"
+},
+{
+"id": "P485542",
+"nama": "Tepung Terigu",
+"kategori": "Bahan Kue",
+"harga": 6000,
+"stok": 12,
+"satuan": "pcs"
+},
+{
+"id": "P502561",
+"nama": "Tepung Tapioka",
+"kategori": "Bahan Kue",
+"harga": 7000,
+"stok": 2,
+"satuan": "pcs"
+},
+{
+"id": "P521668",
+"nama": "Tepung Beras",
+"kategori": "Bahan Kue",
+"harga": 10000,
+"stok": 4,
+"satuan": "pcs"
+},
+{
+"id": "P534868",
+"nama": "Tepung Ketan",
+"kategori": "Bahan Kue",
+"harga": 13000,
+"stok": 1,
+"satuan": "pcs"
+},
+{
+"id": "P555897",
+"nama": "Tepung Maizena",
+"kategori": "Bahan Kue",
+"harga": 6000,
+"stok": 4,
+"satuan": "pcs"
+},
+{
+"id": "P634887",
+"nama": "Forvita",
+"kategori": "Bahan Kue",
+"harga": 8000,
+"stok": 3,
+"satuan": "pcs"
+},
+{
+"id": "P644988",
+"nama": "Amanda",
+"kategori": "Bahan Kue",
+"harga": 7000,
+"stok": 0,
+"satuan": "pcs"
+},
+{
+"id": "P724286",
+"nama": "Tepung Panir",
+"kategori": "Bahan Kue",
+"harga": 4000,
+"stok": 9,
+"satuan": "pcs"
+},
+{
+"id": "P742880",
+"nama": "Coklat Bubuk",
+"kategori": "Bahan Kue",
+"harga": 8000,
+"stok": 7,
+"satuan": "pcs"
+},
+{
+"id": "P773991",
+"nama": "SP",
+"kategori": "Bahan Kue",
+"harga": 5000,
+"stok": 11,
+"satuan": "pcs"
+},
+{
+"id": "P850406",
+"nama": "Permifan",
+"kategori": "Bahan Kue",
+"harga": 6000,
+"stok": 4,
+"satuan": "pcs"
+},
+{
+"id": "P939218",
+"nama": "Baking Powder",
+"kategori": "Bahan Kue",
+"harga": 4500,
+"stok": 5,
+"satuan": "pcs"
+},
+{
+"id": "P951864",
+"nama": "Perenyah",
+"kategori": "Bahan Kue",
+"harga": 4500,
+"stok": 5,
+"satuan": "pcs"
+},
+{
+"id": "P963809",
+"nama": "Soda Kue",
+"kategori": "Bahan Kue",
+"harga": 4500,
+"stok": 4,
+"satuan": "pcs"
+},
+{
+"id": "P044191",
+"nama": "vanili",
+"kategori": "Bahan Kue",
+"harga": 1000,
+"stok": 9,
+"satuan": "pcs"
+},
+{
+"id": "P072527",
+"nama": "Pewarna Marison Pandan",
+"kategori": "Bahan Kue",
+"harga": 7000,
+"stok": 9,
+"satuan": "pcs"
+},
+{
+"id": "P088646",
+"nama": "Pewarna Marison Coklat",
+"kategori": "Bahan Kue",
+"harga": 7000,
+"stok": 8,
+"satuan": "pcs"
+},
+{
+"id": "P108385",
+"nama": "Mutiara",
+"kategori": "Bahan Kue",
+"harga": 2000,
+"stok": 8,
+"satuan": "pcs"
+},
+{
+"id": "P129964",
+"nama": "Tepung kue",
+"kategori": "Bahan Kue",
+"harga": 2500,
+"stok": 29,
+"satuan": "pcs"
+},
+{
+"id": "P172463",
+"nama": "Indomilk Sachet coklat",
+"kategori": "Bahan Kue",
+"harga": 1500,
+"stok": 36,
+"satuan": "pcs"
+},
+{
+"id": "P231478",
+"nama": "Indomilk Sachet Putih",
+"kategori": "Bahan Kue",
+"harga": 1500,
+"stok": 103,
+"satuan": "pcs"
+},
+{
+"id": "P299019",
+"nama": "Agar agar Satelit",
+"kategori": "Bahan Kue",
+"harga": 5500,
+"stok": 21,
+"satuan": "pcs"
+},
+{
+"id": "P412688",
+"nama": "Nutrijel",
+"kategori": "Bahan Kue",
+"harga": 2500,
+"stok": 96,
+"satuan": "pcs"
+},
+{
+"id": "P443650",
+"nama": "Nutrijel coklat",
+"kategori": "Bahan Kue",
+"harga": 3500,
+"stok": 4,
+"satuan": "pcs"
+},
+{
+"id": "P456819",
+"nama": "Biji Selasih",
+"kategori": "Bahan Kue",
+"harga": 5500,
+"stok": 4,
+"satuan": "pcs"
+},
+{
+"id": "P944887",
+"nama": "Santan mama coco",
+"kategori": "Bahan Kue",
+"harga": 6000,
+"stok": 15,
+"satuan": "pcs"
+},
+{
+"id": "P060504",
+"nama": "Miwon 5000",
+"kategori": "Sembako",
+"harga": 5500,
+"stok": 19,
+"satuan": "pcs"
+},
+{
+"id": "P084100",
+"nama": "Miwon 1000",
+"kategori": "Sembako",
+"harga": 1000,
+"stok": 8,
+"satuan": "pcs"
+},
+{
+"id": "P113636",
+"nama": "Masako 5000",
+"kategori": "Sembako",
+"harga": 5000,
+"stok": 22,
+"satuan": "pcs"
+},
+{
+"id": "P165226",
+"nama": "Kecap Sachet",
+"kategori": "Sembako",
+"harga": 500,
+"stok": 46,
+"satuan": "pcs"
+},
+{
+"id": "P220863",
+"nama": "ladaku",
+"kategori": "Sembako",
+"harga": 1000,
+"stok": 56,
+"satuan": "pcs"
+},
+{
+"id": "P273451",
+"nama": "Ketumbar desaku",
+"kategori": "Sembako",
+"harga": 1500,
+"stok": 22,
+"satuan": "pcs"
+},
+{
+"id": "P305137",
+"nama": "Kunyit Desaku",
+"kategori": "Sembako",
+"harga": 1500,
+"stok": 12,
+"satuan": "pcs"
+},
+{
+"id": "P327822",
+"nama": "Kaldu sedap",
+"kategori": "Sembako",
+"harga": 1000,
+"stok": 8,
+"satuan": "pcs"
+},
+{
+"id": "P410129",
+"nama": "Masako jamur",
+"kategori": "Sembako",
+"harga": 500,
+"stok": 55,
+"satuan": "pcs"
+},
+{
+"id": "P443817",
+"nama": "Bon cabe",
+"kategori": "Sembako",
+"harga": 1500,
+"stok": 20,
+"satuan": "pcs"
+},
+{
+"id": "P512406",
+"nama": "Sajiku serbaguna",
+"kategori": "Sembako",
+"harga": 3500,
+"stok": 18,
+"satuan": "pcs"
+},
+{
+"id": "P529225",
+"nama": "Bawang putih bubuk Lavency",
+"kategori": "Sembako",
+"harga": 1500,
+"stok": 10,
+"satuan": "pcs"
+},
+{
+"id": "P626633",
+"nama": "Saori Sachet",
+"kategori": "Sembako",
+"harga": 3500,
+"stok": 8,
+"satuan": "pcs"
+},
+{
+"id": "P703640",
+"nama": "Masako ayam sachet",
+"kategori": "Sembako",
+"harga": 500,
+"stok": 86,
+"satuan": "pcs"
+},
+{
+"id": "P785517",
+"nama": "Masako Sapi Sachet",
+"kategori": "Sembako",
+"harga": 500,
+"stok": 90,
+"satuan": "pcs"
+},
+{
+"id": "P825711",
+"nama": "Terasi permen mamasuka",
+"kategori": "Sembako",
+"harga": 8000,
+"stok": 2,
+"satuan": "pcs"
+},
+{
+"id": "P841669",
+"nama": "Terasi sari",
+"kategori": "Sembako",
+"harga": 3500,
+"stok": 66,
+"satuan": "pcs"
+},
+{
+"id": "P859571",
+"nama": "Garam Halus",
+"kategori": "Sembako",
+"harga": 4000,
+"stok": 11,
+"satuan": "pcs"
+},
+{
+"id": "P030836",
+"nama": "Garem kasar kecil",
+"kategori": "Sembako",
+"harga": 3000,
+"stok": 11,
+"satuan": "pcs"
+},
+{
+"id": "P056774",
+"nama": "Garem kasar besar",
+"kategori": "Sembako",
+"harga": 13000,
+"stok": 1,
+"satuan": "pcs"
+},
+{
+"id": "P115411",
+"nama": "Kecap Indofood",
+"kategori": "Sembako",
+"harga": 11000,
+"stok": 3,
+"satuan": "pcs"
+},
+{
+"id": "P127713",
+"nama": "Kecap Bango",
+"kategori": "Sembako",
+"harga": 12500,
+"stok": 3,
+"satuan": "pcs"
+},
+{
+"id": "P141460",
+"nama": "Saori Botol",
+"kategori": "Sembako",
+"harga": 13000,
+"stok": 3,
+"satuan": "pcs"
+},
+{
+"id": "P172117",
+"nama": "Saos Tomat",
+"kategori": "Sembako",
+"harga": 7000,
+"stok": 3,
+"satuan": "pcs"
+},
+{
+"id": "P205769",
+"nama": "Saos Indofood pedas",
+"kategori": "Sembako",
+"harga": 10000,
+"stok": 7,
+"satuan": "pcs"
+},
+{
+"id": "P278242",
+"nama": "Sarimi  gelas 1500",
+"kategori": "Sembako",
+"harga": 1500,
+"stok": 5,
+"satuan": "pcs"
+},
+{
+"id": "P304329",
+"nama": "Sarimi Renteng",
+"kategori": "Sembako",
+"harga": 10000,
+"stok": 17,
+"satuan": "Lusin"
+},
+{
+"id": "P358133",
+"nama": "Pop mie mini",
+"kategori": "Sembako",
+"harga": 4000,
+"stok": 0,
+"satuan": "pcs"
+},
+{
+"id": "P383551",
+"nama": "Pop mie mini goreng",
+"kategori": "Sembako",
+"harga": 4500,
+"stok": 0,
+"satuan": "pcs"
+},
+{
+"id": "P397805",
+"nama": "Pop Mie Besar goreng",
+"kategori": "Sembako",
+"harga": 6000,
+"stok": 0,
+"satuan": "pcs"
+},
+{
+"id": "P433690",
+"nama": "Pop mie besar biasa",
+"kategori": "Sembako",
+"harga": 5500,
+"stok": 25,
+"satuan": "pcs"
+},
+{
+"id": "P453209",
+"nama": "Pop mie pedas besar",
+"kategori": "Sembako",
+"harga": 6000,
+"stok": 11,
+"satuan": "pcs"
+},
+{
+"id": "P514830",
+"nama": "Mie Kuah Sedap",
+"kategori": "Sembako",
+"harga": 3500,
+"stok": 64,
+"satuan": "pcs"
+},
+{
+"id": "P566686",
+"nama": "Mie Goreng sedap",
+"kategori": "Sembako",
+"harga": 4000,
+"stok": 44,
+"satuan": "pcs"
+},
+{
+"id": "P661379",
+"nama": "Mie Indomie",
+"kategori": "Sembako",
+"harga": 4000,
+"stok": 42,
+"satuan": "pcs"
+},
+{
+"id": "P712565",
+"nama": "Minuman cocolatos",
+"kategori": "Minuman",
+"harga": 2000,
+"stok": 13,
+"satuan": "pcs"
+},
+{
+"id": "P727668",
+"nama": "Energen Kurma",
+"kategori": "Minuman",
+"harga": 3000,
+"stok": 10,
+"satuan": "pcs"
+},
+{
+"id": "P739702",
+"nama": "Energen",
+"kategori": "Minuman",
+"harga": 2500,
+"stok": 39,
+"satuan": "pcs"
+},
+{
+"id": "P760721",
+"nama": "Kopi Jahe",
+"kategori": "Minuman",
+"harga": 2000,
+"stok": 12,
+"satuan": "pcs"
+},
+{
+"id": "P800540",
+"nama": "Kopi Nescafe",
+"kategori": "Minuman",
+"harga": 2000,
+"stok": 25,
+"satuan": "pcs"
+},
+{
+"id": "P814908",
+"nama": "Kopi Goodday",
+"kategori": "Minuman",
+"harga": 2000,
+"stok": 25,
+"satuan": "pcs"
+},
+{
+"id": "P826977",
+"nama": "Kopi Kapal Api",
+"kategori": "Minuman",
+"harga": 2000,
+"stok": 12,
+"satuan": "pcs"
+},
+{
+"id": "P892365",
+"nama": "Kopi Top coffe",
+"kategori": "Minuman",
+"harga": 2000,
+"stok": 49,
+"satuan": "pcs"
+},
+{
+"id": "P907600",
+"nama": "Kopi ABC plus",
+"kategori": "Minuman",
+"harga": 2000,
+"stok": 21,
+"satuan": "pcs"
+},
+{
+"id": "P919404",
+"nama": "Kopi ABC susu",
+"kategori": "Minuman",
+"harga": 2000,
+"stok": 22,
+"satuan": "pcs"
+},
+{
+"id": "P939285",
+"nama": "Kopi Luwak white coffe",
+"kategori": "Minuman",
+"harga": 2000,
+"stok": 29,
+"satuan": "pcs"
+},
+{
+"id": "P957772",
+"nama": "Kopi Warkop",
+"kategori": "Minuman",
+"harga": 5500,
+"stok": 8,
+"satuan": "pcs"
+},
+{
+"id": "P972973",
+"nama": "Kopi cap Pawon",
+"kategori": "Minuman",
+"harga": 17000,
+"stok": 1,
+"satuan": "pcs"
+},
+{
+"id": "P989092",
+"nama": "Teh sariwangi renteng",
+"kategori": "Minuman",
+"harga": 1000,
+"stok": 8,
+"satuan": "pcs"
+},
+{
+"id": "P004360",
+"nama": "Teh sariwangi kotak",
+"kategori": "Minuman",
+"harga": 8000,
+"stok": 7,
+"satuan": "pcs"
+},
+{
+"id": "P017544",
+"nama": "Marjan",
+"kategori": "Minuman",
+"harga": 20000,
+"stok": 3,
+"satuan": "pcs"
+},
+{
+"id": "P065547",
+"nama": "Mie Kriting",
+"kategori": "Sembako",
+"harga": 15000,
+"stok": 3,
+"satuan": "Lusin"
+},
+{
+"id": "P105003",
+"nama": "Mie Kriting ecer",
+"kategori": "Sembako",
+"harga": 500,
+"stok": 29,
+"satuan": "pcs"
+},
+{
+"id": "P377710",
+"nama": "Pop ice",
+"kategori": "Minuman",
+"harga": 2000,
+"stok": 280,
+"satuan": "pcs"
+},
+{
+"id": "P441399",
+"nama": "Adem sari sachet",
+"kategori": "Minuman",
+"harga": 2000,
+"stok": 199,
+"satuan": "pcs"
+},
+{
+"id": "P509895",
+"nama": "Marimas",
+"kategori": "Minuman",
+"harga": 500,
+"stok": 108,
+"satuan": "pcs"
+},
+{
+"id": "P597497",
+"nama": "Nutrisari",
+"kategori": "Minuman",
+"harga": 1500,
+"stok": 105,
+"satuan": "pcs"
+},
+{
+"id": "P616882",
+"nama": "Tembakau",
+"kategori": "Rokok",
+"harga": 5000,
+"stok": 0,
+"satuan": "pcs"
+},
+{
+"id": "P712707",
+"nama": "Narmada Besar",
+"kategori": "Minuman",
+"harga": 5000,
+"stok": 42,
+"satuan": "pcs"
+},
+{
+"id": "P760213",
+"nama": "Narmada tanggung",
+"kategori": "Minuman",
+"harga": 3000,
+"stok": 71,
+"satuan": "pcs"
+},
+{
+"id": "P777446",
+"nama": "Mizone",
+"kategori": "Minuman",
+"harga": 8000,
+"stok": 1,
+"satuan": "pcs"
+},
+{
+"id": "P797615",
+"nama": "Adem sari Kaleng",
+"kategori": "Minuman",
+"harga": 8000,
+"stok": 3,
+"satuan": "pcs"
+},
+{
+"id": "P809583",
+"nama": "Lasegar",
+"kategori": "Minuman",
+"harga": 8000,
+"stok": 11,
+"satuan": "pcs"
+},
+{
+"id": "P852853",
+"nama": "Bearbrand",
+"kategori": "Minuman",
+"harga": 12000,
+"stok": 12,
+"satuan": "pcs"
+},
+{
+"id": "P864689",
+"nama": "Tujuh Kurma",
+"kategori": "Minuman",
+"harga": 12000,
+"stok": 6,
+"satuan": "pcs"
+},
+{
+"id": "P887107",
+"nama": "Larutan cap kaki 3",
+"kategori": "Minuman",
+"harga": 5000,
+"stok": 7,
+"satuan": "pcs"
+},
+{
+"id": "P922809",
+"nama": "Pocari besar",
+"kategori": "Minuman",
+"harga": 9000,
+"stok": 2,
+"satuan": "pcs"
+},
+{
+"id": "P935890",
+"nama": "Pocari kecil",
+"kategori": "Minuman",
+"harga": 7000,
+"stok": 6,
+"satuan": "pcs"
+},
+{
+"id": "P947596",
+"nama": "Teh pucuk",
+"kategori": "Minuman",
+"harga": 5000,
+"stok": 24,
+"satuan": "pcs"
+},
+{
+"id": "P966482",
+"nama": "Teh kotak",
+"kategori": "Minuman",
+"harga": 5000,
+"stok": 21,
+"satuan": "pcs"
+},
+{
+"id": "P981233",
+"nama": "Ultramilk",
+"kategori": "Minuman",
+"harga": 6000,
+"stok": 7,
+"satuan": "pcs"
+},
+{
+"id": "P004150",
+"nama": "Indomilk kids botol",
+"kategori": "Minuman",
+"harga": 6000,
+"stok": 5,
+"satuan": "pcs"
+},
+{
+"id": "P019603",
+"nama": "Indomilk kids kotak",
+"kategori": "Minuman",
+"harga": 4000,
+"stok": 6,
+"satuan": "pcs"
+},
+{
+"id": "P036455",
+"nama": "Nipis madu",
+"kategori": "Minuman",
+"harga": 6000,
+"stok": 12,
+"satuan": "pcs"
+},
+{
+"id": "P052854",
+"nama": "Milku",
+"kategori": "Minuman",
+"harga": 5000,
+"stok": 9,
+"satuan": "pcs"
+},
+{
+"id": "P092327",
+"nama": "Golda kopi",
+"kategori": "Minuman",
+"harga": 5000,
+"stok": 9,
+"satuan": "pcs"
+},
+{
+"id": "P108527",
+"nama": "Pulpi Orange",
+"kategori": "Minuman",
+"harga": 7000,
+"stok": 0,
+"satuan": "pcs"
+},
+{
+"id": "P117594",
+"nama": "Floridina",
+"kategori": "Minuman",
+"harga": 4000,
+"stok": 0,
+"satuan": "pcs"
+},
+{
+"id": "P131778",
+"nama": "Sprite Kaleng",
+"kategori": "Minuman",
+"harga": 8000,
+"stok": 6,
+"satuan": "pcs"
+},
+{
+"id": "P146049",
+"nama": "Cola cola kaleng",
+"kategori": "Minuman",
+"harga": 8000,
+"stok": 1,
+"satuan": "pcs"
+},
+{
+"id": "P201503",
+"nama": "Kanzler",
+"kategori": "Makanan",
+"harga": 10000,
+"stok": 34,
+"satuan": "pcs"
+},
+{
+"id": "P218586",
+"nama": "Larutan anak",
+"kategori": "Minuman",
+"harga": 7000,
+"stok": 5,
+"satuan": "pcs"
+},
+{
+"id": "P304512",
+"nama": "Milkuat",
+"kategori": "Minuman",
+"harga": 3000,
+"stok": 6,
+"satuan": "pcs"
+},
+{
+"id": "P326199",
+"nama": "Cimori botol kecil",
+"kategori": "Minuman",
+"harga": 3000,
+"stok": 4,
+"satuan": "pcs"
+},
+{
+"id": "P338765",
+"nama": "Cimori drink",
+"kategori": "Minuman",
+"harga": 4000,
+"stok": 4,
+"satuan": "pcs"
+},
+{
+"id": "P363801",
+"nama": "Frisian Flag",
+"kategori": "Minuman",
+"harga": 3000,
+"stok": 2,
+"satuan": "pcs"
+},
+{
+"id": "P377685",
+"nama": "Minuman 2000",
+"kategori": "Minuman",
+"harga": 2000,
+"stok": 96,
+"satuan": "pcs"
+},
+{
+"id": "P389182",
+"nama": "Minuman 1500",
+"kategori": "Minuman",
+"harga": 1500,
+"stok": 0,
+"satuan": "pcs"
+},
+{
+"id": "P597189",
+"nama": "Lifebouy batang kecil",
+"kategori": "Persabunan",
+"harga": 3500,
+"stok": 75,
+"satuan": "pcs"
+},
+{
+"id": "P615590",
+"nama": "Cusson baby batangan",
+"kategori": "Persabunan",
+"harga": 4000,
+"stok": 8,
+"satuan": "pcs"
+},
+{
+"id": "P643444",
+"nama": "Zen",
+"kategori": "Persabunan",
+"harga": 4000,
+"stok": 53,
+"satuan": "pcs"
+},
+{
+"id": "P661295",
+"nama": "Dettol Kecil",
+"kategori": "Persabunan",
+"harga": 5000,
+"stok": 8,
+"satuan": "pcs"
+},
+{
+"id": "P689782",
+"nama": "Harmony",
+"kategori": "Persabunan",
+"harga": 4000,
+"stok": 1,
+"satuan": "pcs"
+},
+{
+"id": "P711098",
+"nama": "Giv",
+"kategori": "Persabunan",
+"harga": 4000,
+"stok": 5,
+"satuan": "pcs"
+},
+{
+"id": "P720983",
+"nama": "Lux",
+"kategori": "Persabunan",
+"harga": 4500,
+"stok": 1,
+"satuan": "pcs"
+},
+{
+"id": "P740736",
+"nama": "Lifebouy besar",
+"kategori": "Persabunan",
+"harga": 5000,
+"stok": 7,
+"satuan": "pcs"
+},
+{
+"id": "P764453",
+"nama": "Shinzui",
+"kategori": "Persabunan",
+"harga": 6000,
+"stok": 55,
+"satuan": "pcs"
+},
+{
+"id": "P775738",
+"nama": "Lervia",
+"kategori": "Persabunan",
+"harga": 6000,
+"stok": 5,
+"satuan": "pcs"
+},
+{
+"id": "P792291",
+"nama": "Dettol Besar",
+"kategori": "Persabunan",
+"harga": 7500,
+"stok": 9,
+"satuan": "pcs"
+},
+{
+"id": "P806341",
+"nama": "Pepsodent kecil",
+"kategori": "Persabunan",
+"harga": 3000,
+"stok": 7,
+"satuan": "pcs"
+},
+{
+"id": "P818026",
+"nama": "Pepsodent Tanggung",
+"kategori": "Persabunan",
+"harga": 6000,
+"stok": 15,
+"satuan": "pcs"
+},
+{
+"id": "P828627",
+"nama": "Pepsodent besar",
+"kategori": "Persabunan",
+"harga": 16000,
+"stok": 14,
+"satuan": "pcs"
+},
+{
+"id": "P855595",
+"nama": "Pepsodent siwak",
+"kategori": "Persabunan",
+"harga": 11000,
+"stok": 1,
+"satuan": "pcs"
+},
+{
+"id": "P870365",
+"nama": "Pepsodent herbal",
+"kategori": "Persabunan",
+"harga": 22000,
+"stok": 8,
+"satuan": "pcs"
+},
+{
+"id": "P896100",
+"nama": "Close up tanggung",
+"kategori": "Persabunan",
+"harga": 7000,
+"stok": 1,
+"satuan": "pcs"
+},
+{
+"id": "P906650",
+"nama": "Close up Besar",
+"kategori": "Persabunan",
+"harga": 17000,
+"stok": 1,
+"satuan": "pcs"
+},
+{
+"id": "P925502",
+"nama": "My baby odol",
+"kategori": "Persabunan",
+"harga": 8000,
+"stok": 1,
+"satuan": "pcs"
+},
+{
+"id": "P941387",
+"nama": "Kodomo sikat gigi anak",
+"kategori": "Persabunan",
+"harga": 12000,
+"stok": 2,
+"satuan": "pcs"
+},
+{
+"id": "P954388",
+"nama": "Shampo Bayi",
+"kategori": "Persabunan",
+"harga": 5000,
+"stok": 4,
+"satuan": "pcs"
+},
+{
+"id": "P975623",
+"nama": "Sikat gigi Formula",
+"kategori": "Persabunan",
+"harga": 4000,
+"stok": 3,
+"satuan": "pcs"
+},
+{
+"id": "P994825",
+"nama": "Sikat gigi Oral B",
+"kategori": "Persabunan",
+"harga": 4000,
+"stok": 6,
+"satuan": "pcs"
+},
+{
+"id": "P011493",
+"nama": "Sikat gigi pepsodent",
+"kategori": "Persabunan",
+"harga": 4000,
+"stok": 3,
+"satuan": "pcs"
+},
+{
+"id": "P039912",
+"nama": "Lifebouy cair",
+"kategori": "Persabunan",
+"harga": 14000,
+"stok": 17,
+"satuan": "pcs"
+},
+{
+"id": "P057430",
+"nama": "Kispray refill",
+"kategori": "Persabunan",
+"harga": 8000,
+"stok": 6,
+"satuan": "pcs"
+},
+{
+"id": "P071265",
+"nama": "Rapika refill",
+"kategori": "Persabunan",
+"harga": 6000,
+"stok": 8,
+"satuan": "pcs"
+},
+{
+"id": "P088484",
+"nama": "Kispray botol semprot",
+"kategori": "Persabunan",
+"harga": 15000,
+"stok": 4,
+"satuan": "pcs"
+},
+{
+"id": "P133721",
+"nama": "Kispray sachet",
+"kategori": "Persabunan",
+"harga": 500,
+"stok": 140,
+"satuan": "pcs"
+},
+{
+"id": "P410013",
+"nama": "Downy 1000",
+"kategori": "Persabunan",
+"harga": 1000,
+"stok": 230,
+"satuan": "pcs"
+},
+{
+"id": "P477403",
+"nama": "Daia sachet",
+"kategori": "Persabunan",
+"harga": 1000,
+"stok": 22,
+"satuan": "pcs"
+},
+{
+"id": "P595431",
+"nama": "Rinso Sachet",
+"kategori": "Persabunan",
+"harga": 1000,
+"stok": 61,
+"satuan": "pcs"
+},
+{
+"id": "P609530",
+"nama": "Jaz I",
+"kategori": "Persabunan",
+"harga": 1000,
+"stok": 17,
+"satuan": "pcs"
+},
+{
+"id": "P645167",
+"nama": "Rinso Cair Sachet",
+"kategori": "Persabunan",
+"harga": 1000,
+"stok": 39,
+"satuan": "pcs"
+},
+{
+"id": "P709840",
+"nama": "So klin 500",
+"kategori": "Persabunan",
+"harga": 500,
+"stok": 30,
+"satuan": "pcs"
+},
+{
+"id": "P803982",
+"nama": "Gentle gen",
+"kategori": "Persabunan",
+"harga": 1000,
+"stok": 56,
+"satuan": "pcs"
+},
+{
+"id": "P856038",
+"nama": "Sunlight 2000",
+"kategori": "Persabunan",
+"harga": 2000,
+"stok": 69,
+"satuan": "pcs"
+},
+{
+"id": "P892425",
+"nama": "Sunlight 5000",
+"kategori": "Persabunan",
+"harga": 5000,
+"stok": 23,
+"satuan": "pcs"
+},
+{
+"id": "P902674",
+"nama": "Bukrim",
+"kategori": "Persabunan",
+"harga": 2000,
+"stok": 50,
+"satuan": "pcs"
+},
+{
+"id": "P928778",
+"nama": "Jaz I kiloan",
+"kategori": "Persabunan",
+"harga": 20000,
+"stok": 8,
+"satuan": "pcs"
+},
+{
+"id": "P942095",
+"nama": "Daia Kiloan",
+"kategori": "Persabunan",
+"harga": 20000,
+"stok": 1,
+"satuan": "pcs"
+},
+{
+"id": "P962964",
+"nama": "Superklin 5000",
+"kategori": "Persabunan",
+"harga": 5000,
+"stok": 0,
+"satuan": "pcs"
+},
+{
+"id": "P984698",
+"nama": "Jaz I 5k",
+"kategori": "Persabunan",
+"harga": 5500,
+"stok": 7,
+"satuan": "pcs"
+},
+{
+"id": "P022953",
+"nama": "Daia 5500",
+"kategori": "Persabunan",
+"harga": 5500,
+"stok": 15,
+"satuan": "pcs"
+},
+{
+"id": "P039720",
+"nama": "Rinso 5500",
+"kategori": "Persabunan",
+"harga": 5500,
+"stok": 18,
+"satuan": "pcs"
+},
+{
+"id": "P056622",
+"nama": "Sikat kayu",
+"kategori": "Persabunan",
+"harga": 3500,
+"stok": 6,
+"satuan": "pcs"
+},
+{
+"id": "P073540",
+"nama": "Sikat plastik",
+"kategori": "Persabunan",
+"harga": 7000,
+"stok": 6,
+"satuan": "pcs"
+},
+{
+"id": "P101410",
+"nama": "Spons warna warni",
+"kategori": "Persabunan",
+"harga": 3000,
+"stok": 6,
+"satuan": "pcs"
+},
+{
+"id": "P133180",
+"nama": "Spons politeks",
+"kategori": "Persabunan",
+"harga": 4000,
+"stok": 9,
+"satuan": "pcs"
+},
+{
+"id": "P146613",
+"nama": "spons motor",
+"kategori": "Persabunan",
+"harga": 5000,
+"stok": 9,
+"satuan": "pcs"
+},
+{
+"id": "P158782",
+"nama": "sikat besi",
+"kategori": "Persabunan",
+"harga": 4000,
+"stok": 4,
+"satuan": "pcs"
+},
+{
+"id": "P174883",
+"nama": "sikat jala",
+"kategori": "Persabunan",
+"harga": 4000,
+"stok": 17,
+"satuan": "pcs"
+},
+{
+"id": "P194969",
+"nama": "Baygon semprot",
+"kategori": "Persabunan",
+"harga": 21000,
+"stok": 3,
+"satuan": "pcs"
+},
+{
+"id": "P233538",
+"nama": "Baygon bakar jumbo  kotak",
+"kategori": "Lainnya",
+"harga": 8000,
+"stok": 11,
+"satuan": "pcs"
+},
+{
+"id": "P259691",
+"nama": "Tiga roda",
+"kategori": "Lainnya",
+"harga": 5000,
+"stok": 2,
+"satuan": "pcs"
+},
+{
+"id": "P289077",
+"nama": "Superpell",
+"kategori": "Lainnya",
+"harga": 6000,
+"stok": 11,
+"satuan": "pcs"
+},
+{
+"id": "P321647",
+"nama": "Wipol",
+"kategori": "Lainnya",
+"harga": 11000,
+"stok": 8,
+"satuan": "pcs"
+},
+{
+"id": "P337247",
+"nama": "proklin",
+"kategori": "Lainnya",
+"harga": 500,
+"stok": 49,
+"satuan": "pcs"
+},
+{
+"id": "P663662",
+"nama": "Downy 500",
+"kategori": "Lainnya",
+"harga": 500,
+"stok": 512,
+"satuan": "pcs"
+},
+{
+"id": "P081321",
+"nama": "Shampo Head n Shoulders",
+"kategori": "Persabunan",
+"harga": 1000,
+"stok": 124,
+"satuan": "pcs"
+},
+{
+"id": "P124589",
+"nama": "Shampo clear",
+"kategori": "Persabunan",
+"harga": 1000,
+"stok": 205,
+"satuan": "pcs"
+},
+{
+"id": "P247648",
+"nama": "Shampo Rejoice",
+"kategori": "Persabunan",
+"harga": 1000,
+"stok": 98,
+"satuan": "pcs"
+},
+{
+"id": "P345139",
+"nama": "Shampo Pantene",
+"kategori": "Persabunan",
+"harga": 1000,
+"stok": 218,
+"satuan": "pcs"
+},
+{
+"id": "P457467",
+"nama": "Shampo Sunsilk",
+"kategori": "Persabunan",
+"harga": 1000,
+"stok": 270,
+"satuan": "pcs"
+},
+{
+"id": "P560292",
+"nama": "Shampo Lifebouy",
+"kategori": "Persabunan",
+"harga": 1000,
+"stok": 69,
+"satuan": "pcs"
+},
+{
+"id": "P616307",
+"nama": "Shinzui Face Wash",
+"kategori": "Skincare",
+"harga": 33000,
+"stok": 2,
+"satuan": "pcs"
+},
+{
+"id": "P660961",
+"nama": "Garnier Face Wash Bright Complete",
+"kategori": "Skincare",
+"harga": 34000,
+"stok": 5,
+"satuan": "pcs"
+},
+{
+"id": "P683431",
+"nama": "Garnier Face Wash sakura Glow",
+"kategori": "Skincare",
+"harga": 34000,
+"stok": 5,
+"satuan": "pcs"
+},
+{
+"id": "P709552",
+"nama": "Garnier Face Wash Anti Acne",
+"kategori": "Skincare",
+"harga": 40000,
+"stok": 2,
+"satuan": "pcs"
+},
+{
+"id": "P740799",
+"nama": "Glow & Lovely Face Wash",
+"kategori": "Skincare",
+"harga": 42000,
+"stok": 4,
+"satuan": "pcs"
+},
+{
+"id": "P784287",
+"nama": "Pond's Face Wash Active Charcoal",
+"kategori": "Skincare",
+"harga": 44000,
+"stok": 2,
+"satuan": "pcs"
+},
+{
+"id": "P817541",
+"nama": "Pond's Face Wash Niasorcinol",
+"kategori": "Skincare",
+"harga": 44000,
+"stok": 1,
+"satuan": "pcs"
+},
+{
+"id": "P854678",
+"nama": "Pond's Face Wash Thymo BHA",
+"kategori": "Skincare",
+"harga": 45000,
+"stok": 2,
+"satuan": "pcs"
+},
+{
+"id": "P885366",
+"nama": "Pond\"s Men",
+"kategori": "Skincare",
+"harga": 45000,
+"stok": 2,
+"satuan": "pcs"
+},
+{
+"id": "P904448",
+"nama": "Kahf Face Wash",
+"kategori": "Skincare",
+"harga": 45000,
+"stok": 4,
+"satuan": "pcs"
+},
+{
+"id": "P930617",
+"nama": "G2G Face Wash Gel",
+"kategori": "Skincare",
+"harga": 40000,
+"stok": 2,
+"satuan": "pcs"
+},
+{
+"id": "P952537",
+"nama": "G2G Face Wash Pink",
+"kategori": "Skincare",
+"harga": 50000,
+"stok": 2,
+"satuan": "pcs"
+},
+{
+"id": "P999308",
+"nama": "G2G Moisturizer Hijau",
+"kategori": "Skincare",
+"harga": 45000,
+"stok": 4,
+"satuan": "pcs"
+},
+{
+"id": "P018480",
+"nama": "G2G Masker",
+"kategori": "Skincare",
+"harga": 50000,
+"stok": 3,
+"satuan": "pcs"
+},
+{
+"id": "P043427",
+"nama": "Sunscreen Azarine",
+"kategori": "Skincare",
+"harga": 38000,
+"stok": 8,
+"satuan": "pcs"
+},
+{
+"id": "P069684",
+"nama": "Herborist Body Serum 80ml",
+"kategori": "Skincare",
+"harga": 20000,
+"stok": 3,
+"satuan": "pcs"
+},
+{
+"id": "P137902",
+"nama": "Marina 94ml",
+"kategori": "Skincare",
+"harga": 6000,
+"stok": 14,
+"satuan": "pcs"
+},
+{
+"id": "P162522",
+"nama": "Emeron Lovely 100ml",
+"kategori": "Skincare",
+"harga": 7000,
+"stok": 12,
+"satuan": "pcs"
+},
+{
+"id": "P188041",
+"nama": "Citra 60ml",
+"kategori": "Skincare",
+"harga": 7500,
+"stok": 8,
+"satuan": "pcs"
+},
+{
+"id": "P227061",
+"nama": "Citra Bright Sakura 110ml",
+"kategori": "Skincare",
+"harga": 10000,
+"stok": 2,
+"satuan": "pcs"
+},
+{
+"id": "P255832",
+"nama": "Citra Perfect Bright Bengkoang 110ml",
+"kategori": "Skincare",
+"harga": 8000,
+"stok": 6,
+"satuan": "pcs"
+},
+{
+"id": "P290867",
+"nama": "Marina 185ml",
+"kategori": "Skincare",
+"harga": 12000,
+"stok": 8,
+"satuan": "pcs"
+},
+{
+"id": "P322753",
+"nama": "Shinzui Body Lotion 100ml",
+"kategori": "Skincare",
+"harga": 9000,
+"stok": 7,
+"satuan": "pcs"
+},
+{
+"id": "P347139",
+"nama": "Citra 110ml",
+"kategori": "Skincare",
+"harga": 14000,
+"stok": 2,
+"satuan": "pcs"
+},
+{
+"id": "P367974",
+"nama": "Emeron Lovely 400ml",
+"kategori": "Skincare",
+"harga": 15000,
+"stok": 2,
+"satuan": "pcs"
+},
+{
+"id": "P119359",
+"nama": "Lipstik Zencolor",
+"kategori": "Skincare",
+"harga": 20000,
+"stok": 15,
+"satuan": "pcs"
+},
+{
+"id": "P158845",
+"nama": "Lipstik Dolby",
+"kategori": "Skincare",
+"harga": 15000,
+"stok": 9,
+"satuan": "pcs"
+},
+{
+"id": "P206800",
+"nama": "Bedak Pixy",
+"kategori": "Skincare",
+"harga": 20000,
+"stok": 3,
+"satuan": "pcs"
+},
+{
+"id": "P226853",
+"nama": "Bedak Marina",
+"kategori": "Skincare",
+"harga": 17000,
+"stok": 8,
+"satuan": "pcs"
+},
+{
+"id": "P241854",
+"nama": "Bedak Viva",
+"kategori": "Skincare",
+"harga": 20000,
+"stok": 6,
+"satuan": "pcs"
+},
+{
+"id": "P275139",
+"nama": "Bedak Viva Powder",
+"kategori": "Skincare",
+"harga": 18000,
+"stok": 6,
+"satuan": "pcs"
+},
+{
+"id": "P318246",
+"nama": "Pensil Alis xiu xiu",
+"kategori": "Skincare",
+"harga": 10000,
+"stok": 21,
+"satuan": "pcs"
+},
+{
+"id": "P336462",
+"nama": "masker wajah",
+"kategori": "Skincare",
+"harga": 5000,
+"stok": 4,
+"satuan": "pcs"
+},
+{
+"id": "P371748",
+"nama": "Frescare",
+"kategori": "Obat - Obatan",
+"harga": 12500,
+"stok": 11,
+"satuan": "pcs"
+},
+{
+"id": "P389670",
+"nama": "Parfum 10k",
+"kategori": "Skincare",
+"harga": 10000,
+"stok": 5,
+"satuan": "pcs"
+},
+{
+"id": "P405289",
+"nama": "Parfum Doremi",
+"kategori": "Skincare",
+"harga": 15000,
+"stok": 4,
+"satuan": "pcs"
+},
+{
+"id": "P458190",
+"nama": "Parfum Octarine 50 ml",
+"kategori": "Skincare",
+"harga": 70000,
+"stok": 2,
+"satuan": "pcs"
+},
+{
+"id": "P494898",
+"nama": "Parfum Octarine 20 ml",
+"kategori": "Skincare",
+"harga": 40000,
+"stok": 1,
+"satuan": "pcs"
+},
+{
+"id": "P715329",
+"nama": "Parfum Fresh",
+"kategori": "Skincare",
+"harga": 17000,
+"stok": 6,
+"satuan": "pcs"
+},
+{
+"id": "P732048",
+"nama": "Parfum 15k",
+"kategori": "Skincare",
+"harga": 15000,
+"stok": 1,
+"satuan": "pcs"
+},
+{
+"id": "P748200",
+"nama": "Parfum 20k",
+"kategori": "Skincare",
+"harga": 20000,
+"stok": 18,
+"satuan": "pcs"
+},
+{
+"id": "P855328",
+"nama": "Bros lucu",
+"kategori": "Lainnya",
+"harga": 1500,
+"stok": 57,
+"satuan": "pcs"
+},
+{
+"id": "P893532",
+"nama": "Deodorant marina",
+"kategori": "Skincare",
+"harga": 20000,
+"stok": 4,
+"satuan": "pcs"
+},
+{
+"id": "P913502",
+"nama": "deodorant rexona",
+"kategori": "Skincare",
+"harga": 20000,
+"stok": 23,
+"satuan": "pcs"
+},
+{
+"id": "P941770",
+"nama": "nivea deodorant men",
+"kategori": "Skincare",
+"harga": 23000,
+"stok": 8,
+"satuan": "pcs"
+},
+{
+"id": "P958804",
+"nama": "nivea deodorant women",
+"kategori": "Skincare",
+"harga": 23000,
+"stok": 6,
+"satuan": "pcs"
+},
+{
+"id": "P986774",
+"nama": "kutek brasov",
+"kategori": "Skincare",
+"harga": 10000,
+"stok": 17,
+"satuan": "pcs"
+},
+{
+"id": "P999972",
+"nama": "Lipstik OMG",
+"kategori": "Skincare",
+"harga": 25000,
+"stok": 2,
+"satuan": "pcs"
+},
+{
+"id": "P022524",
+"nama": "Pembersih Kutek CDA",
+"kategori": "Skincare",
+"harga": 5000,
+"stok": 12,
+"satuan": "pcs"
+},
+{
+"id": "P054046",
+"nama": "Inai Kuku",
+"kategori": "Skincare",
+"harga": 25000,
+"stok": 6,
+"satuan": "pcs"
+},
+{
+"id": "P096314",
+"nama": "ikat rambut 1k",
+"kategori": "aksesoris",
+"harga": 1000,
+"stok": 32,
+"satuan": "pcs"
+},
+{
+"id": "P138118",
+"nama": "elips",
+"kategori": "Skincare",
+"harga": 2000,
+"stok": 19,
+"satuan": "pcs"
+},
+{
+"id": "P152402",
+"nama": "Kapas Wajah",
+"kategori": "Skincare",
+"harga": 8000,
+"stok": 1,
+"satuan": "pcs"
+},
+{
+"id": "P178425",
+"nama": "Viva Milk cleanser",
+"kategori": "Skincare",
+"harga": 8500,
+"stok": 10,
+"satuan": "pcs"
+},
+{
+"id": "P211483",
+"nama": "Viva Milk cleanser lemon",
+"kategori": "Skincare",
+"harga": 8500,
+"stok": 4,
+"satuan": "pcs"
+},
+{
+"id": "P232760",
+"nama": "Viva Milk cleanser spirulina",
+"kategori": "Skincare",
+"harga": 9000,
+"stok": 5,
+"satuan": "pcs"
+},
+{
+"id": "P249215",
+"nama": "Viva air mawar",
+"kategori": "Skincare",
+"harga": 8000,
+"stok": 4,
+"satuan": "pcs"
+},
+{
+"id": "P268452",
+"nama": "viva Face tonik lemon",
+"kategori": "Skincare",
+"harga": 7000,
+"stok": 5,
+"satuan": "pcs"
+},
+{
+"id": "P288937",
+"nama": "Viva face tonik spirulina",
+"kategori": "Skincare",
+"harga": 9000,
+"stok": 6,
+"satuan": "pcs"
+},
+{
+"id": "P308802",
+"nama": "Viva liquid foundation",
+"kategori": "Skincare",
+"harga": 9000,
+"stok": 6,
+"satuan": "pcs"
+},
+{
+"id": "P320888",
+"nama": "Viva Pelembab",
+"kategori": "Skincare",
+"harga": 10000,
+"stok": 6,
+"satuan": "pcs"
+},
+{
+"id": "P350123",
+"nama": "Sisir gagang coklat",
+"kategori": "aksesoris",
+"harga": 3000,
+"stok": 10,
+"satuan": "pcs"
+},
+{
+"id": "P396665",
+"nama": "sisir serit kutu",
+"kategori": "aksesoris",
+"harga": 4000,
+"stok": 20,
+"satuan": "pcs"
+},
+{
+"id": "P440318",
+"nama": "bando",
+"kategori": "aksesoris",
+"harga": 10000,
+"stok": 11,
+"satuan": "pcs"
+},
+{
+"id": "P562946",
+"nama": "Ikat Rambut tyle",
+"kategori": "aksesoris",
+"harga": 10000,
+"stok": 10,
+"satuan": "pcs"
+},
+{
+"id": "P606245",
+"nama": "Ikat rambut glossy 10k",
+"kategori": "aksesoris",
+"harga": 10000,
+"stok": 8,
+"satuan": "pcs"
+},
+{
+"id": "P646316",
+"nama": "ikat rambut 8k",
+"kategori": "aksesoris",
+"harga": 8000,
+"stok": 8,
+"satuan": "pcs"
+},
+{
+"id": "P682190",
+"nama": "Ikat rambut  kain 5k",
+"kategori": "aksesoris",
+"harga": 5000,
+"stok": 9,
+"satuan": "pcs"
+},
+{
+"id": "P707808",
+"nama": "Ikat rambut bulu 5k",
+"kategori": "aksesoris",
+"harga": 5000,
+"stok": 12,
+"satuan": "pcs"
+},
+{
+"id": "P754458",
+"nama": "Ikat rambut bulat warna warni",
+"kategori": "aksesoris",
+"harga": 5000,
+"stok": 10,
+"satuan": "pcs"
+},
+{
+"id": "P900953",
+"nama": "rexona sachet men",
+"kategori": "Skincare",
+"harga": 3000,
+"stok": 41,
+"satuan": "pcs"
+},
+{
+"id": "P929577",
+"nama": "Rexona Sachet Women hijab",
+"kategori": "Skincare",
+"harga": 3000,
+"stok": 32,
+"satuan": "pcs"
+},
+{
+"id": "P963094",
+"nama": "Rexona Sachet cewek",
+"kategori": "Skincare",
+"harga": 3000,
+"stok": 22,
+"satuan": "pcs"
+},
+{
+"id": "P997050",
+"nama": "fair n lovely sachet",
+"kategori": "Skincare",
+"harga": 5000,
+"stok": 13,
+"satuan": "pcs"
+},
+{
+"id": "P064502",
+"nama": "Garnier Sachet kuning",
+"kategori": "Skincare",
+"harga": 5000,
+"stok": 15,
+"satuan": "pcs"
+},
+{
+"id": "P173783",
+"nama": "Garnier Sachet Pink",
+"kategori": "Skincare",
+"harga": 5000,
+"stok": 127,
+"satuan": "pcs"
+},
+{
+"id": "P214100",
+"nama": "Tisue Paseo",
+"kategori": "Skincare",
+"harga": 16000,
+"stok": 7,
+"satuan": "pcs"
+},
+{
+"id": "P244752",
+"nama": "Tisue Jolly besar",
+"kategori": "Skincare",
+"harga": 10000,
+"stok": 1,
+"satuan": "pcs"
+},
+{
+"id": "P256707",
+"nama": "Tisue Lovely",
+"kategori": "Skincare",
+"harga": 9000,
+"stok": 6,
+"satuan": "pcs"
+},
+{
+"id": "P269843",
+"nama": "Tisue Jolly Kecil",
+"kategori": "Skincare",
+"harga": 6000,
+"stok": 4,
+"satuan": "pcs"
+},
+{
+"id": "P322494",
+"nama": "Tisue montis saku",
+"kategori": "Skincare",
+"harga": 3000,
+"stok": 25,
+"satuan": "pcs"
+},
+{
+"id": "P351834",
+"nama": "Tisue Basah cusson baby",
+"kategori": "Skincare",
+"harga": 9000,
+"stok": 4,
+"satuan": "pcs"
+},
+{
+"id": "P426807",
+"nama": "Pampers Tanggung S",
+"kategori": "Perlengkapan Bayi",
+"harga": 20000,
+"stok": 3,
+"satuan": "pcs"
+},
+{
+"id": "P486825",
+"nama": "Pampers Tanggung M",
+"kategori": "Perlengkapan Bayi",
+"harga": 20000,
+"stok": 3,
+"satuan": "pcs"
+},
+{
+"id": "P504775",
+"nama": "Pampers Tanggung L",
+"kategori": "Perlengkapan Bayi",
+"harga": 20000,
+"stok": 3,
+"satuan": "pcs"
+},
+{
+"id": "P519966",
+"nama": "Pampers Tanggung XL",
+"kategori": "Perlengkapan Bayi",
+"harga": 20000,
+"stok": 3,
+"satuan": "pcs"
+},
+{
+"id": "P805378",
+"nama": "Clasmild",
+"kategori": "Rokok",
+"harga": 30000,
+"stok": 5,
+"satuan": "pcs"
+},
+{
+"id": "P839522",
+"nama": "Surya 12",
+"kategori": "Rokok",
+"harga": 29000,
+"stok": 10,
+"satuan": "pcs"
+},
+{
+"id": "P873498",
+"nama": "Scorpion 20",
+"kategori": "Rokok",
+"harga": 31000,
+"stok": 8,
+"satuan": "pcs"
+},
+{
+"id": "P970452",
+"nama": "Dunhill 16",
+"kategori": "Rokok",
+"harga": 32000,
+"stok": 0,
+"satuan": "Bungkus"
+},
+{
+"id": "P983707",
+"nama": "Dunhill 20",
+"kategori": "Rokok",
+"harga": 40000,
+"stok": 5,
+"satuan": "pcs"
+},
+{
+"id": "P098452",
+"nama": "Pembalut softex daun sirih hijau",
+"kategori": "Keperluan wanita",
+"harga": 8000,
+"stok": 3,
+"satuan": "Pack"
+},
+{
+"id": "P131718",
+"nama": "Pembalut protex ungu",
+"kategori": "Keperluan wanita",
+"harga": 5000,
+"stok": 7,
+"satuan": "Pack"
+},
+{
+"id": "P161757",
+"nama": "Pembalut charm safe night",
+"kategori": "Keperluan wanita",
+"harga": 3500,
+"stok": 25,
+"satuan": "pcs"
+},
+{
+"id": "P210173",
+"nama": "pembalut charm orange",
+"kategori": "Keperluan wanita",
+"harga": 2000,
+"stok": 20,
+"satuan": "pcs"
+},
+{
+"id": "P675850",
+"nama": "Pampers Renteng XL",
+"kategori": "Perlengkapan Bayi",
+"harga": 3500,
+"stok": 10,
+"satuan": "pcs"
+},
+{
+"id": "P723242",
+"nama": "Pampers Renteng M",
+"kategori": "Perlengkapan Bayi",
+"harga": 2500,
+"stok": 13,
+"satuan": "pcs"
+},
+{
+"id": "P748558",
+"nama": "Pampers renteng S",
+"kategori": "Perlengkapan Bayi",
+"harga": 2500,
+"stok": 17,
+"satuan": "pcs"
+},
+{
+"id": "P895303",
+"nama": "telon lang kecil",
+"kategori": "Perlengkapan Bayi",
+"harga": 5000,
+"stok": 11,
+"satuan": "pcs"
+},
+{
+"id": "P913138",
+"nama": "Telon lang sedang",
+"kategori": "Perlengkapan Bayi",
+"harga": 10000,
+"stok": 10,
+"satuan": "pcs"
+},
+{
+"id": "P953293",
+"nama": "Telon lang besar",
+"kategori": "Perlengkapan Bayi",
+"harga": 20000,
+"stok": 22,
+"satuan": "pcs"
+},
+{
+"id": "P986398",
+"nama": "kayu putih kecil",
+"kategori": "Perlengkapan Bayi",
+"harga": 12000,
+"stok": 12,
+"satuan": "pcs"
+},
+{
+"id": "P008902",
+"nama": "kayu putih sedang",
+"kategori": "Perlengkapan Bayi",
+"harga": 23000,
+"stok": 7,
+"satuan": "pcs"
+},
+{
+"id": "P033753",
+"nama": "kayu putih besar",
+"kategori": "Perlengkapan Bayi",
+"harga": 44000,
+"stok": 14,
+"satuan": "pcs"
+},
+{
+"id": "P065752",
+"nama": "Lap tisue kompor",
+"kategori": "Lainnya",
+"harga": 9000,
+"stok": 2,
+"satuan": "Pack"
+},
+{
+"id": "P111528",
+"nama": "sensi pad",
+"kategori": "Lainnya",
+"harga": 5000,
+"stok": 15,
+"satuan": "pcs"
+},
+{
+"id": "P128926",
+"nama": "Minyak Sumbawa",
+"kategori": "Lainnya",
+"harga": 40000,
+"stok": 2,
+"satuan": "pcs"
+},
+{
+"id": "P142593",
+"nama": "Tusuk gigi",
+"kategori": "Lainnya",
+"harga": 3000,
+"stok": 2,
+"satuan": "pcs"
+},
+{
+"id": "P184301",
+"nama": "cutton bud besar",
+"kategori": "Lainnya",
+"harga": 3000,
+"stok": 11,
+"satuan": "pcs"
+},
+{
+"id": "P196248",
+"nama": "cutton bud kecil",
+"kategori": "Lainnya",
+"harga": 2500,
+"stok": 4,
+"satuan": "pcs"
+},
+{
+"id": "P244186",
+"nama": "lem lalat",
+"kategori": "Lainnya",
+"harga": 6000,
+"stok": 10,
+"satuan": "pcs"
+},
+{
+"id": "P318503",
+"nama": "Kapur semut",
+"kategori": "Lainnya",
+"harga": 3500,
+"stok": 34,
+"satuan": "pcs"
+},
+{
+"id": "P477795",
+"nama": "shampo motor KIT",
+"kategori": "Lainnya",
+"harga": 2000,
+"stok": 46,
+"satuan": "pcs"
+},
+{
+"id": "P547451",
+"nama": "soffel",
+"kategori": "Lainnya",
+"harga": 1000,
+"stok": 4,
+"satuan": "pcs"
+},
+{
+"id": "P755656",
+"nama": "Gas",
+"kategori": "Sembako",
+"harga": 22000,
+"stok": 0,
+"satuan": "pcs"
+},
+{
+"id": "P793503",
+"nama": "Galon Narmada",
+"kategori": "Sembako",
+"harga": 20000,
+"stok": 3,
+"satuan": "pcs"
+},
+{
+"id": "P843712",
+"nama": "rafa gelas",
+"kategori": "Sembako",
+"harga": 19000,
+"stok": 3,
+"satuan": "Pack"
+},
+{
+"id": "P860660",
+"nama": "Narmada Gelas",
+"kategori": "Sembako",
+"harga": 23000,
+"stok": 0,
+"satuan": "Pack"
+},
+{
+"id": "P924331",
+"nama": "Kobe pisang krispy",
+"kategori": "Sembako",
+"harga": 3000,
+"stok": 3,
+"satuan": "pcs"
+},
+{
+"id": "P953150",
+"nama": "bumbu racik",
+"kategori": "Sembako",
+"harga": 3000,
+"stok": 7,
+"satuan": "pcs"
+},
+{
+"id": "P058976",
+"nama": "bumbu sajiku nasgor",
+"kategori": "Sembako",
+"harga": 3000,
+"stok": 23,
+"satuan": "pcs"
+},
+{
+"id": "P082384",
+"nama": "bumbu sajiku",
+"kategori": "Sembako",
+"harga": 3000,
+"stok": 15,
+"satuan": "pcs"
+},
+{
+"id": "P273636",
+"nama": "bumbu 1000an",
+"kategori": "Sembako",
+"harga": 1000,
+"stok": 96,
+"satuan": "pcs"
+},
+{
+"id": "P296899",
+"nama": "roma kelapa cream",
+"kategori": "Makanan",
+"harga": 12000,
+"stok": 3,
+"satuan": "pcs"
+},
+{
+"id": "P315517",
+"nama": "slay olay besar",
+"kategori": "Makanan",
+"harga": 11000,
+"stok": 2,
+"satuan": "pcs"
+},
+{
+"id": "P328702",
+"nama": "crispy creakers",
+"kategori": "Makanan",
+"harga": 9000,
+"stok": 1,
+"satuan": "pcs"
+},
+{
+"id": "P351771",
+"nama": "gery salut malkiest",
+"kategori": "Makanan",
+"harga": 8000,
+"stok": 1,
+"satuan": "pcs"
+},
+{
+"id": "P390911",
+"nama": "bisquit rose",
+"kategori": "Makanan",
+"harga": 8000,
+"stok": 2,
+"satuan": "pcs"
+},
+{
+"id": "P405708",
+"nama": "bisquit durian",
+"kategori": "Makanan",
+"harga": 8000,
+"stok": 1,
+"satuan": "pcs"
+},
+{
+"id": "P428331",
+"nama": "bisquit kangguru",
+"kategori": "Makanan",
+"harga": 8000,
+"stok": 1,
+"satuan": "pcs"
+},
+{
+"id": "P447833",
+"nama": "bisquit gabin UBM",
+"kategori": "Makanan",
+"harga": 12000,
+"stok": 1,
+"satuan": "pcs"
+},
+{
+"id": "P498611",
+"nama": "desaku marinasi",
+"kategori": "Sembako",
+"harga": 3500,
+"stok": 15,
+"satuan": "pcs"
+},
+{
+"id": "P918707",
+"nama": "Rambo",
+"kategori": "Pertanian",
+"harga": 90000,
+"stok": 3,
+"satuan": "pcs"
+},
+{
+"id": "P947278",
+"nama": "Kanon",
+"kategori": "Pertanian",
+"harga": 75000,
+"stok": 12,
+"satuan": "pcs"
+},
+{
+"id": "P979581",
+"nama": "Green Tonik 500ml",
+"kategori": "Pertanian",
+"harga": 15000,
+"stok": 1,
+"satuan": "pcs"
+},
+{
+"id": "P025849",
+"nama": "Green Tonik 1L",
+"kategori": "Pertanian",
+"harga": 25000,
+"stok": 1,
+"satuan": "pcs"
+},
+{
+"id": "P043802",
+"nama": "Alami",
+"kategori": "Pertanian",
+"harga": 25000,
+"stok": 1,
+"satuan": "pcs"
+},
+{
+"id": "P085670",
+"nama": "Antracol",
+"kategori": "Pertanian",
+"harga": 50000,
+"stok": 2,
+"satuan": "pcs"
+},
+{
+"id": "P159232",
+"nama": "Marshal",
+"kategori": "Pertanian",
+"harga": 30000,
+"stok": 2,
+"satuan": "pcs"
+},
+{
+"id": "P178933",
+"nama": "Score",
+"kategori": "Pertanian",
+"harga": 60000,
+"stok": 1,
+"satuan": "pcs"
+},
+{
+"id": "P206750",
+"nama": "Curacron",
+"kategori": "Pertanian",
+"harga": 95000,
+"stok": 3,
+"satuan": "pcs"
+},
+{
+"id": "P297323",
+"nama": "Amistartop",
+"kategori": "Pertanian",
+"harga": 60000,
+"stok": 6,
+"satuan": "pcs"
+},
+{
+"id": "P311692",
+"nama": "Vertako",
+"kategori": "Pertanian",
+"harga": 65000,
+"stok": 3,
+"satuan": "pcs"
+},
+{
+"id": "P382619",
+"nama": "Prevathon 100ml",
+"kategori": "Pertanian",
+"harga": 82000,
+"stok": 1,
+"satuan": "pcs"
+},
+{
+"id": "P423356",
+"nama": "Prevathon 250ml",
+"kategori": "Pertanian",
+"harga": 106000,
+"stok": 2,
+"satuan": "pcs"
+},
+{
+"id": "P450508",
+"nama": "Demolish",
+"kategori": "Pertanian",
+"harga": 50000,
+"stok": 9,
+"satuan": "pcs"
+},
+{
+"id": "P487124",
+"nama": "MKP",
+"kategori": "Pertanian",
+"harga": 65000,
+"stok": 2,
+"satuan": "pcs"
+},
+{
+"id": "P514093",
+"nama": "Dupont Lanate",
+"kategori": "Pertanian",
+"harga": 50000,
+"stok": 2,
+"satuan": "pcs"
+},
+{
+"id": "P578803",
+"nama": "Gandasil B Kecil",
+"kategori": "Pertanian",
+"harga": 12000,
+"stok": 8,
+"satuan": "pcs"
+},
+{
+"id": "P608836",
+"nama": "Gandasil B Besar",
+"kategori": "Pertanian",
+"harga": 22000,
+"stok": 6,
+"satuan": "pcs"
+},
+{
+"id": "P627370",
+"nama": "Gandasil D Besar",
+"kategori": "Pertanian",
+"harga": 22000,
+"stok": 2,
+"satuan": "pcs"
+},
+{
+"id": "P762273",
+"nama": "Kopiah Anak Bergambar",
+"kategori": "Lainnya",
+"harga": 15000,
+"stok": 2,
+"satuan": "pcs"
+},
+{
+"id": "P798303",
+"nama": "Kopiah Dewasa Motif",
+"kategori": "Lainnya",
+"harga": 20000,
+"stok": 4,
+"satuan": "pcs"
+},
+{
+"id": "P821205",
+"nama": "Kopiah Anak Motif",
+"kategori": "Lainnya",
+"harga": 15000,
+"stok": 3,
+"satuan": "pcs"
+},
+{
+"id": "P838956",
+"nama": "Kopiah Wadimor",
+"kategori": "Lainnya",
+"harga": 30000,
+"stok": 1,
+"satuan": "pcs"
+},
+{
+"id": "P931219",
+"nama": "Map Kantor",
+"kategori": "Lainnya",
+"harga": 2000,
+"stok": 32,
+"satuan": "pcs"
+},
+{
+"id": "P023894",
+"nama": "Kertas Rokok Pelor",
+"kategori": "Rokok",
+"harga": 1000,
+"stok": 206,
+"satuan": "pcs"
+},
+{
+"id": "P109119",
+"nama": "Lampu Hakamitsu 5w",
+"kategori": "Lainnya",
+"harga": 15500,
+"stok": 1,
+"satuan": "pcs"
+},
+{
+"id": "P130399",
+"nama": "Lampu Hakamitsu 7w",
+"kategori": "Lainnya",
+"harga": 18000,
+"stok": 3,
+"satuan": "pcs"
+},
+{
+"id": "P150052",
+"nama": "Lampu Hakamitsu 9w",
+"kategori": "Lainnya",
+"harga": 22000,
+"stok": 2,
+"satuan": "pcs"
+},
+{
+"id": "P172340",
+"nama": "Lampu Hakamitsu 12w",
+"kategori": "Lainnya",
+"harga": 25000,
+"stok": 3,
+"satuan": "pcs"
+},
+{
+"id": "P222975",
+"nama": "Korek kayu",
+"kategori": "Lainnya",
+"harga": 500,
+"stok": 101,
+"satuan": "pcs"
+},
+{
+"id": "P252933",
+"nama": "Korek Gas 5k",
+"kategori": "Lainnya",
+"harga": 5000,
+"stok": 2,
+"satuan": "pcs"
+},
+{
+"id": "P264782",
+"nama": "Korek gas 3k",
+"kategori": "Lainnya",
+"harga": 3000,
+"stok": 0,
+"satuan": "pcs"
+},
+{
+"id": "P278852",
+"nama": "Korek Gas 2,5k",
+"kategori": "Lainnya",
+"harga": 2500,
+"stok": 0,
+"satuan": "pcs"
+},
+{
+"id": "P290714",
+"nama": "Korek Gas 2k",
+"kategori": "Lainnya",
+"harga": 2000,
+"stok": 0,
+"satuan": "pcs"
+},
+{
+"id": "P644483",
+"nama": "Telur",
+"kategori": "Sembako",
+"harga": 2500,
+"stok": 10,
+"satuan": "pcs"
+},
+{
+"id": "P698000",
+"nama": "Telur 1Tray",
+"kategori": "Sembako",
+"harga": 60000,
+"stok": 0,
+"satuan": "pcs"
+},
+{
+"id": "P051265",
+"nama": "Lampu Electra Kuning",
+"kategori": "Lainnya",
+"harga": 12000,
+"stok": 7,
+"satuan": "pcs"
+},
+{
+"id": "P113872",
+"nama": "Philips LED 7,5w",
+"kategori": "Lainnya",
+"harga": 98000,
+"stok": 3,
+"satuan": "pcs"
+},
+{
+"id": "P851790",
+"nama": "M Jess",
+"kategori": "Rokok",
+"harga": 12000,
+"stok": 4,
+"satuan": "pcs"
+},
+{
+"id": "P232742",
+"nama": "Jepit Rambut Bunga 10k",
+"kategori": "aksesoris",
+"harga": 10000,
+"stok": 35,
+"satuan": "pcs"
+},
+{
+"id": "P264578",
+"nama": "Jepit Rambuk 5k",
+"kategori": "aksesoris",
+"harga": 5000,
+"stok": 14,
+"satuan": "pcs"
+},
+{
+"id": "P307049",
+"nama": "Roll Rambut Besar",
+"kategori": "aksesoris",
+"harga": 5000,
+"stok": 6,
+"satuan": "pcs"
+},
+{
+"id": "P352870",
+"nama": "Roll Rambut kecil",
+"kategori": "aksesoris",
+"harga": 3500,
+"stok": 6,
+"satuan": "pcs"
+},
+{
+"id": "P540671",
+"nama": "Ikat Rambut Warna Warni 3k",
+"kategori": "aksesoris",
+"harga": 3000,
+"stok": 9,
+"satuan": "pcs"
+},
+{
+"id": "P685317",
+"nama": "Stiker",
+"kategori": "aksesoris",
+"harga": 2000,
+"stok": 12,
+"satuan": "pcs"
+},
+{
+"id": "P712102",
+"nama": "Gelang",
+"kategori": "aksesoris",
+"harga": 5000,
+"stok": 1,
+"satuan": "pcs"
+},
+{
+"id": "P747022",
+"nama": "Gantungan HP 7k",
+"kategori": "aksesoris",
+"harga": 7000,
+"stok": 5,
+"satuan": "pcs"
+},
+{
+"id": "P766192",
+"nama": "Gantungan HP 10k",
+"kategori": "aksesoris",
+"harga": 10000,
+"stok": 4,
+"satuan": "pcs"
+},
+{
+"id": "P786714",
+"nama": "Gantungan Tas Labubu",
+"kategori": "aksesoris",
+"harga": 10000,
+"stok": 10,
+"satuan": "pcs"
+},
+{
+"id": "P985995",
+"nama": "Gantungan Tas Melody",
+"kategori": "aksesoris",
+"harga": 10000,
+"stok": 12,
+"satuan": "pcs"
+},
+{
+"id": "P013113",
+"nama": "Penjepit Bulu Mata",
+"kategori": "aksesoris",
+"harga": 10000,
+"stok": 1,
+"satuan": "pcs"
+},
+{
+"id": "P039220",
+"nama": "Gunting M2000",
+"kategori": "aksesoris",
+"harga": 15000,
+"stok": 1,
+"satuan": "pcs"
+},
+{
+"id": "P068802",
+"nama": "Sisir Gagang karakter",
+"kategori": "aksesoris",
+"harga": 7000,
+"stok": 11,
+"satuan": "pcs"
+},
+{
+"id": "P117627",
+"nama": "Jepit Rambut Anak kecil",
+"kategori": "aksesoris",
+"harga": 2000,
+"stok": 5,
+"satuan": "pcs"
+},
+{
+"id": "P136814",
+"nama": "Jepitan Buah",
+"kategori": "aksesoris",
+"harga": 2000,
+"stok": 8,
+"satuan": "pcs"
+},
+{
+"id": "P167031",
+"nama": "Bros Gucci",
+"kategori": "aksesoris",
+"harga": 3000,
+"stok": 15,
+"satuan": "pcs"
+},
+{
+"id": "P188679",
+"nama": "Bros Kebaya",
+"kategori": "aksesoris",
+"harga": 15000,
+"stok": 4,
+"satuan": "pcs"
+},
+{
+"id": "P219436",
+"nama": "Gunting 12k",
+"kategori": "aksesoris",
+"harga": 12000,
+"stok": 0,
+"satuan": "pcs"
+},
+{
+"id": "P242057",
+"nama": "Orlee cukur kumis",
+"kategori": "aksesoris",
+"harga": 3500,
+"stok": 6,
+"satuan": "pcs"
+},
+{
+"id": "P294478",
+"nama": "Cutter 3,5k",
+"kategori": "aksesoris",
+"harga": 3500,
+"stok": 22,
+"satuan": "pcs"
+},
+{
+"id": "P308511",
+"nama": "Silet 500",
+"kategori": "aksesoris",
+"harga": 500,
+"stok": 1,
+"satuan": "pcs"
+},
+{
+"id": "P358145",
+"nama": "Vicks Inhaler",
+"kategori": "Obat - Obatan",
+"harga": 23000,
+"stok": 1,
+"satuan": "pcs"
+},
+{
+"id": "P377863",
+"nama": "Lang Inhaler",
+"kategori": "Obat - Obatan",
+"harga": 12000,
+"stok": 3,
+"satuan": "pcs"
+},
+{
+"id": "P413487",
+"nama": "Kinoki",
+"kategori": "Obat - Obatan",
+"harga": 5000,
+"stok": 10,
+"satuan": "Pack"
+},
+{
+"id": "P448486",
+"nama": "Alteco",
+"kategori": "ATK",
+"harga": 6000,
+"stok": 9,
+"satuan": "Pack"
+},
+{
+"id": "P353503",
+"nama": "Kertas kado",
+"kategori": "ATK",
+"harga": 2000,
+"stok": 4,
+"satuan": "pcs"
+},
+{
+"id": "P687504",
+"nama": "masker hijab duckbill",
+"kategori": "Lainnya",
+"harga": 1000,
+"stok": 26,
+"satuan": "pcs"
+},
+{
+"id": "P198255",
+"nama": "kancing baju",
+"kategori": "aksesoris",
+"harga": 3000,
+"stok": 9,
+"satuan": "pcs"
+},
+{
+"id": "P286405",
+"nama": "Kertas manila",
+"kategori": "ATK",
+"harga": 4000,
+"stok": 15,
+"satuan": "pcs"
+},
+{
+"id": "P326975",
+"nama": "Tali Rafia 2k",
+"kategori": "Lainnya",
+"harga": 2000,
+"stok": 3,
+"satuan": "pcs"
+},
+{
+"id": "P338409",
+"nama": "Tali Rafia 5k",
+"kategori": "Lainnya",
+"harga": 5000,
+"stok": 1,
+"satuan": "pcs"
+},
+{
+"id": "P422137",
+"nama": "Buku Campus A4",
+"kategori": "ATK",
+"harga": 7000,
+"stok": 47,
+"satuan": "pcs"
+},
+{
+"id": "P470720",
+"nama": "Buku Tulis halus Sidu",
+"kategori": "ATK",
+"harga": 5000,
+"stok": 82,
+"satuan": "pcs"
+},
+{
+"id": "P506963",
+"nama": "SIDU 58 lbr",
+"kategori": "ATK",
+"harga": 6000,
+"stok": 10,
+"satuan": "pcs"
+},
+{
+"id": "P584267",
+"nama": "SIDU 38 lbr",
+"kategori": "ATK",
+"harga": 5000,
+"stok": 10,
+"satuan": "pcs"
+},
+{
+"id": "P666690",
+"nama": "SIDU 32 lbr",
+"kategori": "ATK",
+"harga": 4000,
+"stok": 42,
+"satuan": "pcs"
+},
+{
+"id": "P693175",
+"nama": "Buku Siswa",
+"kategori": "ATK",
+"harga": 3500,
+"stok": 5,
+"satuan": "pcs"
+},
+{
+"id": "P737734",
+"nama": "Stiker label / lmbr",
+"kategori": "ATK",
+"harga": 2500,
+"stok": 17,
+"satuan": "pcs"
+},
+{
+"id": "P753719",
+"nama": "stiky note",
+"kategori": "ATK",
+"harga": 5000,
+"stok": 2,
+"satuan": "pcs"
+},
+{
+"id": "P794484",
+"nama": "Kertas kado pack",
+"kategori": "ATK",
+"harga": 100000,
+"stok": 2,
+"satuan": "Pack"
+},
+{
+"id": "P829323",
+"nama": "Buku Gambar SIDU A3",
+"kategori": "ATK",
+"harga": 9000,
+"stok": 5,
+"satuan": "pcs"
+},
+{
+"id": "P864995",
+"nama": "Buku gambar sidu A4",
+"kategori": "ATK",
+"harga": 5000,
+"stok": 1,
+"satuan": "pcs"
+},
+{
+"id": "P891080",
+"nama": "Buku gambar A4 gelatik",
+"kategori": "ATK",
+"harga": 5000,
+"stok": 17,
+"satuan": "pcs"
+},
+{
+"id": "P938897",
+"nama": "Buku Gambar tipis",
+"kategori": "ATK",
+"harga": 3000,
+"stok": 35,
+"satuan": "pcs"
+},
+{
+"id": "P973234",
+"nama": "Origami 14x14",
+"kategori": "ATK",
+"harga": 6000,
+"stok": 12,
+"satuan": "pcs"
+},
+{
+"id": "P991807",
+"nama": "Origami 12x12",
+"kategori": "ATK",
+"harga": 4000,
+"stok": 20,
+"satuan": "pcs"
+},
+{
+"id": "P005723",
+"nama": "Nota kontan",
+"kategori": "ATK",
+"harga": 4000,
+"stok": 9,
+"satuan": "pcs"
+},
+{
+"id": "P071827",
+"nama": "Buku son 38lbr",
+"kategori": "ATK",
+"harga": 5000,
+"stok": 17,
+"satuan": "pcs"
+},
+{
+"id": "P207988",
+"nama": "Buku yuvi 38 lbr",
+"kategori": "ATK",
+"harga": 5000,
+"stok": 16,
+"satuan": "pcs"
+},
+{
+"id": "P248575",
+"nama": "Buku polio oakey kecil",
+"kategori": "ATK",
+"harga": 7000,
+"stok": 2,
+"satuan": "pcs"
+},
+{
+"id": "P270496",
+"nama": "buku polio gelatik besar",
+"kategori": "ATK",
+"harga": 20000,
+"stok": 2,
+"satuan": "pcs"
+},
+{
+"id": "P282046",
+"nama": "Lem cina",
+"kategori": "ATK",
+"harga": 10000,
+"stok": 8,
+"satuan": "pcs"
+},
+{
+"id": "P308048",
+"nama": "Baterai ABC",
+"kategori": "ATK",
+"harga": 3000,
+"stok": 16,
+"satuan": "pcs"
+},
+{
+"id": "P338655",
+"nama": "Baterai ABC A3",
+"kategori": "ATK",
+"harga": 3000,
+"stok": 7,
+"satuan": "pcs"
+},
+{
+"id": "P388455",
+"nama": "Baterai diamante",
+"kategori": "ATK",
+"harga": 3000,
+"stok": 32,
+"satuan": "pcs"
+},
+{
+"id": "P416743",
+"nama": "Baterai everedy",
+"kategori": "ATK",
+"harga": 6000,
+"stok": 5,
+"satuan": "pcs"
+},
+{
+"id": "P432343",
+"nama": "Lem castol",
+"kategori": "ATK",
+"harga": 8000,
+"stok": 7,
+"satuan": "pcs"
+},
+{
+"id": "P489086",
+"nama": "Lilin bintang terang putih",
+"kategori": "Lainnya",
+"harga": 2500,
+"stok": 5,
+"satuan": "pcs"
+},
+{
+"id": "P518023",
+"nama": "Lilin cakrawala bening",
+"kategori": "Lainnya",
+"harga": 3500,
+"stok": 8,
+"satuan": "pcs"
+},
+{
+"id": "P562006",
+"nama": "Lilin bulat kecil",
+"kategori": "Lainnya",
+"harga": 2000,
+"stok": 4,
+"satuan": "pcs"
+},
+{
+"id": "P582712",
+"nama": "Domino",
+"kategori": "Lainnya",
+"harga": 5000,
+"stok": 5,
+"satuan": "pcs"
+},
+{
+"id": "P631232",
+"nama": "Kartu remi",
+"kategori": "Lainnya",
+"harga": 8000,
+"stok": 8,
+"satuan": "pcs"
+},
+{
+"id": "P652572",
+"nama": "Kalkulator",
+"kategori": "ATK",
+"harga": 80000,
+"stok": 4,
+"satuan": "pcs"
+},
+{
+"id": "P691717",
+"nama": "Gunting kuku hitam besar",
+"kategori": "Lainnya",
+"harga": 8000,
+"stok": 7,
+"satuan": "pcs"
+},
+{
+"id": "P733192",
+"nama": "Gunting kuku kecil",
+"kategori": "Lainnya",
+"harga": 4000,
+"stok": 41,
+"satuan": "pcs"
+},
+{
+"id": "P896002",
+"nama": "silet sigul",
+"kategori": "Lainnya",
+"harga": 5000,
+"stok": 38,
+"satuan": "Pack"
+},
+{
+"id": "P974097",
+"nama": "silet sdi kecil",
+"kategori": "Lainnya",
+"harga": 1000,
+"stok": 34,
+"satuan": "pcs"
+},
+{
+"id": "P002864",
+"nama": "isi steples kecil kangguru",
+"kategori": "Lainnya",
+"harga": 3500,
+"stok": 11,
+"satuan": "pcs"
+},
+{
+"id": "P037454",
+"nama": "isi steplees besar onaga",
+"kategori": "Lainnya",
+"harga": 5000,
+"stok": 21,
+"satuan": "pcs"
+},
+{
+"id": "P055688",
+"nama": "paku payung",
+"kategori": "Lainnya",
+"harga": 2000,
+"stok": 1,
+"satuan": "Pack"
+},
+{
+"id": "P074623",
+"nama": "Steples",
+"kategori": "Lainnya",
+"harga": 8000,
+"stok": 8,
+"satuan": "pcs"
+},
+{
+"id": "P121276",
+"nama": "Benang extra",
+"kategori": "Lainnya",
+"harga": 2000,
+"stok": 61,
+"satuan": "pcs"
+},
+{
+"id": "P157116",
+"nama": "Isolasi hitam listrik merk star",
+"kategori": "Lainnya",
+"harga": 2000,
+"stok": 18,
+"satuan": "pcs"
+},
+{
+"id": "P180811",
+"nama": "Isolasi bening kecil",
+"kategori": "ATK",
+"harga": 2000,
+"stok": 3,
+"satuan": "pcs"
+},
+{
+"id": "P247768",
+"nama": "Lakban coklat besar",
+"kategori": "ATK",
+"harga": 8000,
+"stok": 1,
+"satuan": "pcs"
+},
+{
+"id": "P271270",
+"nama": "isolasi listrik national",
+"kategori": "ATK",
+"harga": 7000,
+"stok": 5,
+"satuan": "pcs"
+},
+{
+"id": "P315328",
+"nama": "benang yamalon",
+"kategori": "ATK",
+"harga": 3000,
+"stok": 25,
+"satuan": "pcs"
+},
+{
+"id": "P345497",
+"nama": "senter matsugi kecil",
+"kategori": "ATK",
+"harga": 30000,
+"stok": 2,
+"satuan": "pcs"
+},
+{
+"id": "P358566",
+"nama": "senter matsugi sedang",
+"kategori": "ATK",
+"harga": 32000,
+"stok": 1,
+"satuan": "pcs"
+},
+{
+"id": "P372913",
+"nama": "senter surya sedang",
+"kategori": "ATK",
+"harga": 30000,
+"stok": 3,
+"satuan": "pcs"
+},
+{
+"id": "P387762",
+"nama": "senter surya besar",
+"kategori": "ATK",
+"harga": 42000,
+"stok": 1,
+"satuan": "pcs"
+},
+{
+"id": "P406282",
+"nama": "kaos kaki SMA",
+"kategori": "ATK",
+"harga": 10000,
+"stok": 6,
+"satuan": "pcs"
+},
+{
+"id": "P440602",
+"nama": "kaos kaki SMP",
+"kategori": "ATK",
+"harga": 10000,
+"stok": 12,
+"satuan": "pcs"
+},
+{
+"id": "P458336",
+"nama": "Kaos kaki SD",
+"kategori": "ATK",
+"harga": 5000,
+"stok": 9,
+"satuan": "pcs"
+},
+{
+"id": "P499291",
+"nama": "Kabel hypercom",
+"kategori": "ATK",
+"harga": 41000,
+"stok": 2,
+"satuan": "pcs"
+},
+{
+"id": "P523047",
+"nama": "cokrol big venus 20m",
+"kategori": "ATK",
+"harga": 74000,
+"stok": 1,
+"satuan": "pcs"
+},
+{
+"id": "P541049",
+"nama": "benang gudang",
+"kategori": "ATK",
+"harga": 5000,
+"stok": 12,
+"satuan": "pcs"
+},
+{
+"id": "P562297",
+"nama": "Jala Net",
+"kategori": "ATK",
+"harga": 100000,
+"stok": 0,
+"satuan": "pcs"
+},
+{
+"id": "P580020",
+"nama": "Jas hujan",
+"kategori": "ATK",
+"harga": 10000,
+"stok": 11,
+"satuan": "pcs"
+},
+{
+"id": "P623303",
+"nama": "tali jahit",
+"kategori": "Lainnya",
+"harga": 3000,
+"stok": 10,
+"satuan": "pcs"
+},
+{
+"id": "P462636",
+"nama": "amplop KW",
+"kategori": "ATK",
+"harga": 250,
+"stok": 118,
+"satuan": "pcs"
+},
+{
+"id": "P497574",
+"nama": "Amplop paperline kecil",
+"kategori": "ATK",
+"harga": 500,
+"stok": 2,
+"satuan": "pcs"
+},
+{
+"id": "P538146",
+"nama": "Amplop paperline kecil pck",
+"kategori": "ATK",
+"harga": 30000,
+"stok": 1,
+"satuan": "Pack"
+},
+{
+"id": "P588097",
+"nama": "amplop paperline besar",
+"kategori": "ATK",
+"harga": 500,
+"stok": 190,
+"satuan": "pcs"
+},
+{
+"id": "P681139",
+"nama": "Map  busines file",
+"kategori": "ATK",
+"harga": 5000,
+"stok": 12,
+"satuan": "pcs"
+},
+{
+"id": "P694490",
+"nama": "Map kancing",
+"kategori": "ATK",
+"harga": 5000,
+"stok": 12,
+"satuan": "pcs"
+},
+{
+"id": "P718560",
+"nama": "tinta isi ulang white board",
+"kategori": "ATK",
+"harga": 15500,
+"stok": 12,
+"satuan": "pcs"
+},
+{
+"id": "P734327",
+"nama": "tinta isi ulang permanent",
+"kategori": "ATK",
+"harga": 11000,
+"stok": 12,
+"satuan": "pcs"
+},
+{
+"id": "P761818",
+"nama": "tipe x montana",
+"kategori": "ATK",
+"harga": 7000,
+"stok": 8,
+"satuan": "pcs"
+},
+{
+"id": "P781557",
+"nama": "tipe x kantor",
+"kategori": "ATK",
+"harga": 10000,
+"stok": 5,
+"satuan": "pcs"
+},
+{
+"id": "P798050",
+"nama": "tipe x joyco merah",
+"kategori": "ATK",
+"harga": 5000,
+"stok": 10,
+"satuan": "pcs"
+},
+{
+"id": "P817936",
+"nama": "tipe x lonjong",
+"kategori": "ATK",
+"harga": 5000,
+"stok": 16,
+"satuan": "pcs"
+},
+{
+"id": "P882340",
+"nama": "stabilo lingko",
+"kategori": "ATK",
+"harga": 4000,
+"stok": 9,
+"satuan": "pcs"
+},
+{
+"id": "P906398",
+"nama": "lem stik",
+"kategori": "ATK",
+"harga": 4000,
+"stok": 13,
+"satuan": "pcs"
+},
+{
+"id": "P964098",
+"nama": "pensil plus penghapus hewan",
+"kategori": "ATK",
+"harga": 4000,
+"stok": 16,
+"satuan": "pcs"
+},
+{
+"id": "P017887",
+"nama": "polpen karakter lucu",
+"kategori": "ATK",
+"harga": 5000,
+"stok": 24,
+"satuan": "pcs"
+},
+{
+"id": "P062775",
+"nama": "spidol kecil",
+"kategori": "ATK",
+"harga": 2500,
+"stok": 25,
+"satuan": "pcs"
+},
+{
+"id": "P085744",
+"nama": "faster",
+"kategori": "ATK",
+"harga": 4000,
+"stok": 29,
+"satuan": "pcs"
+},
+{
+"id": "P222406",
+"nama": "snowman vision8 warna warni",
+"kategori": "ATK",
+"harga": 5000,
+"stok": 5,
+"satuan": "pcs"
+},
+{
+"id": "P299382",
+"nama": "polpen queen c6000",
+"kategori": "ATK",
+"harga": 2500,
+"stok": 10,
+"satuan": "pcs"
+},
+{
+"id": "P335403",
+"nama": "polpen 1500",
+"kategori": "ATK",
+"harga": 1500,
+"stok": 25,
+"satuan": "pcs"
+},
+{
+"id": "P430598",
+"nama": "pensil 3500",
+"kategori": "ATK",
+"harga": 3500,
+"stok": 19,
+"satuan": "pcs"
+},
+{
+"id": "P522803",
+"nama": "pensil 3000",
+"kategori": "ATK",
+"harga": 3000,
+"stok": 26,
+"satuan": "pcs"
+},
+{
+"id": "P649461",
+"nama": "polpen labubu n apple",
+"kategori": "ATK",
+"harga": 3000,
+"stok": 14,
+"satuan": "pcs"
+},
+{
+"id": "P688048",
+"nama": "spidol boardmarker",
+"kategori": "ATK",
+"harga": 10000,
+"stok": 29,
+"satuan": "pcs"
+},
+{
+"id": "P716051",
+"nama": "spidol permanen marker",
+"kategori": "ATK",
+"harga": 10000,
+"stok": 21,
+"satuan": "pcs"
+},
+{
+"id": "P797324",
+"nama": "snowman V1",
+"kategori": "ATK",
+"harga": 4000,
+"stok": 62,
+"satuan": "pcs"
+},
+{
+"id": "P936636",
+"nama": "boxy",
+"kategori": "ATK",
+"harga": 10000,
+"stok": 33,
+"satuan": "pcs"
+},
+{
+"id": "P067422",
+"nama": "pengerok big",
+"kategori": "ATK",
+"harga": 2000,
+"stok": 82,
+"satuan": "pcs"
+},
+{
+"id": "P084021",
+"nama": "pensil warna kecil",
+"kategori": "ATK",
+"harga": 5000,
+"stok": 5,
+"satuan": "pcs"
+},
+{
+"id": "P097019",
+"nama": "pensil warna besar",
+"kategori": "ATK",
+"harga": 8000,
+"stok": 10,
+"satuan": "pcs"
+},
+{
+"id": "P137427",
+"nama": "pensil puber castel",
+"kategori": "ATK",
+"harga": 7000,
+"stok": 41,
+"satuan": "pcs"
+},
+{
+"id": "P163075",
+"nama": "penghapus fuber castel",
+"kategori": "ATK",
+"harga": 4000,
+"stok": 80,
+"satuan": "pcs"
+},
+{
+"id": "P326412",
+"nama": "penghapus 2000",
+"kategori": "ATK",
+"harga": 2000,
+"stok": 78,
+"satuan": "pcs"
+},
+{
+"id": "P345946",
+"nama": "penggaris zrm",
+"kategori": "ATK",
+"harga": 2000,
+"stok": 3,
+"satuan": "pcs"
+},
+{
+"id": "P389850",
+"nama": "penggaris buterfly",
+"kategori": "ATK",
+"harga": 4000,
+"stok": 6,
+"satuan": "pcs"
+},
+{
+"id": "P420381",
+"nama": "penggaris besi",
+"kategori": "ATK",
+"harga": 7000,
+"stok": 12,
+"satuan": "pcs"
+},
+{
+"id": "P451573",
+"nama": "lukisan mainan",
+"kategori": "Lainnya",
+"harga": 3000,
+"stok": 5,
+"satuan": "pcs"
+},
+{
+"id": "P730963",
+"nama": "cok T 6k",
+"kategori": "Lainnya",
+"harga": 6000,
+"stok": 5,
+"satuan": "pcs"
+},
+{
+"id": "P750564",
+"nama": "cok T 12k",
+"kategori": "Lainnya",
+"harga": 12000,
+"stok": 4,
+"satuan": "pcs"
+},
+{
+"id": "P944363",
+"nama": "masker duckbill non hijab",
+"kategori": "Lainnya",
+"harga": 1000,
+"stok": 6,
+"satuan": "pcs"
+},
+{
+"id": "P043491",
+"nama": "masker mouson KF94",
+"kategori": "Lainnya",
+"harga": 2000,
+"stok": 16,
+"satuan": "pcs"
+},
+{
+"id": "P124831",
+"nama": "masker anak",
+"kategori": "Lainnya",
+"harga": 1000,
+"stok": 17,
+"satuan": "pcs"
+},
+{
+"id": "P256440",
+"nama": "masker duckbill warna warni non hijab",
+"kategori": "Lainnya",
+"harga": 1000,
+"stok": 43,
+"satuan": "pcs"
+},
+{
+"id": "P429791",
+"nama": "masker medical non hijab",
+"kategori": "Lainnya",
+"harga": 1000,
+"stok": 18,
+"satuan": "pcs"
+},
+{
+"id": "P555268",
+"nama": "masker medical hijab",
+"kategori": "Lainnya",
+"harga": 1000,
+"stok": 42,
+"satuan": "pcs"
+},
+{
+"id": "P953469",
+"nama": "jarum jahit  lonjong warna warni",
+"kategori": "Lainnya",
+"harga": 3500,
+"stok": 11,
+"satuan": "pcs"
+},
+{
+"id": "P985927",
+"nama": "Jarum pentul",
+"kategori": "Lainnya",
+"harga": 5000,
+"stok": 2,
+"satuan": "pcs"
+},
+{
+"id": "P094983",
+"nama": "jarum merah royal crown",
+"kategori": "Lainnya",
+"harga": 5000,
+"stok": 4,
+"satuan": "pcs"
+},
+{
+"id": "P217033",
+"nama": "jarum jahit needles 20 count",
+"kategori": "Lainnya",
+"harga": 7000,
+"stok": 3,
+"satuan": "pcs"
+},
+{
+"id": "P246754",
+"nama": "jarum jahit needles 12 count",
+"kategori": "Lainnya",
+"harga": 8500,
+"stok": 2,
+"satuan": "pcs"
+},
+{
+"id": "P281067",
+"nama": "Jarum jahit needles 6 count",
+"kategori": "Lainnya",
+"harga": 9000,
+"stok": 2,
+"satuan": "pcs"
+},
+{
+"id": "P361079",
+"nama": "jarum jahit magic biru",
+"kategori": "Lainnya",
+"harga": 5000,
+"stok": 4,
+"satuan": "pcs"
+},
+{
+"id": "P401632",
+"nama": "jarum jahit bulat kuning",
+"kategori": "Lainnya",
+"harga": 3000,
+"stok": 1,
+"satuan": "pcs"
+},
+{
+"id": "P638702",
+"nama": "bodrex  biasa",
+"kategori": "Obat - Obatan",
+"harga": 1000,
+"stok": 40,
+"satuan": "pcs"
+},
+{
+"id": "P677677",
+"nama": "bodrex migra",
+"kategori": "Obat - Obatan",
+"harga": 1000,
+"stok": 18,
+"satuan": "pcs"
+},
+{
+"id": "P703623",
+"nama": "bodrex extra",
+"kategori": "Obat - Obatan",
+"harga": 1000,
+"stok": 16,
+"satuan": "pcs"
+},
+{
+"id": "P739380",
+"nama": "bodrex flu dan batuk",
+"kategori": "Obat - Obatan",
+"harga": 1000,
+"stok": 21,
+"satuan": "pcs"
+},
+{
+"id": "P794164",
+"nama": "vitacimin",
+"kategori": "Obat - Obatan",
+"harga": 1000,
+"stok": 36,
+"satuan": "pcs"
+},
+{
+"id": "P853736",
+"nama": "ibuprofen",
+"kategori": "Obat - Obatan",
+"harga": 1000,
+"stok": 100,
+"satuan": "pcs"
+},
+{
+"id": "P935065",
+"nama": "diapet",
+"kategori": "Obat - Obatan",
+"harga": 1000,
+"stok": 96,
+"satuan": "pcs"
+},
+{
+"id": "P053325",
+"nama": "komix",
+"kategori": "Obat - Obatan",
+"harga": 2000,
+"stok": 44,
+"satuan": "pcs"
+},
+{
+"id": "P126177",
+"nama": "Ketoconazole salep",
+"kategori": "Obat - Obatan",
+"harga": 14000,
+"stok": 6,
+"satuan": "pcs"
+},
+{
+"id": "P179132",
+"nama": "Karung",
+"kategori": "Lainnya",
+"harga": 4000,
+"stok": 147,
+"satuan": "pcs"
+},
+{
+"id": "P215192",
+"nama": "Miconazole salep",
+"kategori": "Obat - Obatan",
+"harga": 14000,
+"stok": 8,
+"satuan": "pcs"
+},
+{
+"id": "P236754",
+"nama": "Betametasone salep",
+"kategori": "Obat - Obatan",
+"harga": 12000,
+"stok": 11,
+"satuan": "pcs"
+},
+{
+"id": "P274196",
+"nama": "Reevaro Sandal",
+"kategori": "Lainnya",
+"harga": 16000,
+"stok": 4,
+"satuan": "pcs"
+},
+{
+"id": "P300376",
+"nama": "Bodrexin",
+"kategori": "Obat - Obatan",
+"harga": 1000,
+"stok": 32,
+"satuan": "pcs"
+},
+{
+"id": "P328646",
+"nama": "Glanzton Sandal Wanita",
+"kategori": "Lainnya",
+"harga": 27000,
+"stok": 2,
+"satuan": "pcs"
+},
+{
+"id": "P409258",
+"nama": "Paramex",
+"kategori": "Obat - Obatan",
+"harga": 1000,
+"stok": 200,
+"satuan": "pcs"
+},
+{
+"id": "P429609",
+"nama": "Sun Swallow Sandal",
+"kategori": "Lainnya",
+"harga": 15000,
+"stok": 6,
+"satuan": "pcs"
+},
+{
+"id": "P458199",
+"nama": "Yeye Girl Sandal",
+"kategori": "Lainnya",
+"harga": 12000,
+"stok": 6,
+"satuan": "pcs"
+},
+{
+"id": "P480659",
+"nama": "Swallow sandal anak",
+"kategori": "Lainnya",
+"harga": 13000,
+"stok": 3,
+"satuan": "pcs"
+},
+{
+"id": "P496266",
+"nama": "skyway kecil",
+"kategori": "Lainnya",
+"harga": 11000,
+"stok": 2,
+"satuan": "pcs"
+},
+{
+"id": "P505033",
+"nama": "Ando",
+"kategori": "Lainnya",
+"harga": 35000,
+"stok": 0,
+"satuan": "pcs"
+},
+{
+"id": "P525035",
+"nama": "Promag",
+"kategori": "Obat - Obatan",
+"harga": 1000,
+"stok": 39,
+"satuan": "pcs"
+},
+{
+"id": "P549989",
+"nama": "Ardilles dan lainnya",
+"kategori": "Lainnya",
+"harga": 13000,
+"stok": 11,
+"satuan": "pcs"
+},
+{
+"id": "P564472",
+"nama": "Popeye Anak",
+"kategori": "Lainnya",
+"harga": 12000,
+"stok": 6,
+"satuan": "pcs"
+},
+{
+"id": "P577552",
+"nama": "Slop anak",
+"kategori": "Lainnya",
+"harga": 25000,
+"stok": 6,
+"satuan": "pcs"
+},
+{
+"id": "P592861",
+"nama": "Sandal Batman",
+"kategori": "Lainnya",
+"harga": 10000,
+"stok": 1,
+"satuan": "pcs"
+},
+{
+"id": "P606410",
+"nama": "Procold",
+"kategori": "Obat - Obatan",
+"harga": 1000,
+"stok": 118,
+"satuan": "pcs"
+},
+{
+"id": "P633971",
+"nama": "Antangin",
+"kategori": "Obat - Obatan",
+"harga": 4000,
+"stok": 9,
+"satuan": "pcs"
+},
+{
+"id": "P705731",
+"nama": "Salonpas",
+"kategori": "Obat - Obatan",
+"harga": 12000,
+"stok": 8,
+"satuan": "pcs"
+},
+{
+"id": "P745034",
+"nama": "Salonpas Hot",
+"kategori": "Obat - Obatan",
+"harga": 10000,
+"stok": 11,
+"satuan": "pcs"
+},
+{
+"id": "P943706",
+"nama": "Etabion",
+"kategori": "Obat - Obatan",
+"harga": 2000,
+"stok": 95,
+"satuan": "pcs"
+},
+{
+"id": "P028630",
+"nama": "Antimo",
+"kategori": "Obat - Obatan",
+"harga": 1000,
+"stok": 76,
+"satuan": "pcs"
+},
+{
+"id": "P070704",
+"nama": "Paracetamol",
+"kategori": "Obat - Obatan",
+"harga": 1000,
+"stok": 28,
+"satuan": "pcs"
+},
+{
+"id": "P090382",
+"nama": "Amoxilin",
+"kategori": "Obat - Obatan",
+"harga": 1000,
+"stok": 7,
+"satuan": "pcs"
+},
+{
+"id": "P589085",
+"nama": "Kertas nasi bulat",
+"kategori": "Plastik",
+"harga": 8500,
+"stok": 5,
+"satuan": "pcs"
+},
+{
+"id": "P651988",
+"nama": "Sedotan Warna Warni",
+"kategori": "Plastik",
+"harga": 3000,
+"stok": 4,
+"satuan": "Pack"
+},
+{
+"id": "P676169",
+"nama": "Plastik laundry",
+"kategori": "Plastik",
+"harga": 750,
+"stok": 400,
+"satuan": "pcs"
+},
+{
+"id": "P705775",
+"nama": "Sedotan golden straw",
+"kategori": "Plastik",
+"harga": 36000,
+"stok": 1,
+"satuan": "Pack"
+},
+{
+"id": "P736978",
+"nama": "Sedotan Boba",
+"kategori": "Plastik",
+"harga": 32000,
+"stok": 1,
+"satuan": "Pack"
+},
+{
+"id": "P756947",
+"nama": "Plastik pentol",
+"kategori": "Plastik",
+"harga": 5000,
+"stok": 7,
+"satuan": "Pack"
+},
+{
+"id": "P782017",
+"nama": "Plastik simpang pentiol",
+"kategori": "Plastik",
+"harga": 8500,
+"stok": 10,
+"satuan": "Pack"
+},
+{
+"id": "P815271",
+"nama": "Plastik Ayam Jago 6",
+"kategori": "Plastik",
+"harga": 8000,
+"stok": 7,
+"satuan": "Pack"
+},
+{
+"id": "P847822",
+"nama": "Plastik Betul 1/2kg",
+"kategori": "Plastik",
+"harga": 16000,
+"stok": 8,
+"satuan": "Pack"
+},
+{
+"id": "P874743",
+"nama": "Plastik Betul 1/4kg",
+"kategori": "Plastik",
+"harga": 14000,
+"stok": 11,
+"satuan": "Pack"
+},
+{
+"id": "P902530",
+"nama": "Plastik jerapah 9",
+"kategori": "Plastik",
+"harga": 7500,
+"stok": 6,
+"satuan": "Pack"
+},
+{
+"id": "P927391",
+"nama": "Plastik Jerapah 12",
+"kategori": "Plastik",
+"harga": 9000,
+"stok": 12,
+"satuan": "Pack"
+},
+{
+"id": "P959779",
+"nama": "Plastik jerapah 10",
+"kategori": "Plastik",
+"harga": 8000,
+"stok": 1,
+"satuan": "Pack"
+},
+{
+"id": "P988970",
+"nama": "Tusuk Sate",
+"kategori": "Plastik",
+"harga": 8000,
+"stok": 10,
+"satuan": "Pack"
+},
+{
+"id": "P010949",
+"nama": "Plastik Wrap",
+"kategori": "Plastik",
+"harga": 23000,
+"stok": 1,
+"satuan": "Pack"
+},
+{
+"id": "P025342",
+"nama": "Sumpit",
+"kategori": "Plastik",
+"harga": 2000,
+"stok": 31,
+"satuan": "Pack"
+},
+{
+"id": "P050175",
+"nama": "Plastik Loreng",
+"kategori": "Plastik",
+"harga": 15000,
+"stok": 8,
+"satuan": "Pack"
+},
+{
+"id": "P081893",
+"nama": "Plastik mancing",
+"kategori": "Plastik",
+"harga": 5000,
+"stok": 16,
+"satuan": "pcs"
+},
+{
+"id": "P112546",
+"nama": "Plastik OPP 11",
+"kategori": "Plastik",
+"harga": 6000,
+"stok": 10,
+"satuan": "Pack"
+},
+{
+"id": "P139318",
+"nama": "Plastik Tanggung Hitam",
+"kategori": "Plastik",
+"harga": 12000,
+"stok": 3,
+"satuan": "pcs"
+},
+{
+"id": "P161435",
+"nama": "Plastik Paskai Tanggung",
+"kategori": "Plastik",
+"harga": 12000,
+"stok": 4,
+"satuan": "pcs"
+},
+{
+"id": "P211122",
+"nama": "Plastik Daviki Tanggung",
+"kategori": "Plastik",
+"harga": 12000,
+"stok": 7,
+"satuan": "pcs"
+},
+{
+"id": "P233171",
+"nama": "Plastik Sniper sia",
+"kategori": "Plastik",
+"harga": 8000,
+"stok": 7,
+"satuan": "pcs"
+},
+{
+"id": "P265044",
+"nama": "Plastik Daviki sia",
+"kategori": "Plastik",
+"harga": 8000,
+"stok": 6,
+"satuan": "pcs"
+},
+{
+"id": "P285346",
+"nama": "tisu toply",
+"kategori": "Plastik",
+"harga": 6000,
+"stok": 3,
+"satuan": "Pack"
+},
+{
+"id": "P312827",
+"nama": "Plastik Besar",
+"kategori": "Plastik",
+"harga": 2000,
+"stok": 8,
+"satuan": "pcs"
+},
+{
+"id": "P360831",
+"nama": "Plastik Jumbo 1k",
+"kategori": "Plastik",
+"harga": 1000,
+"stok": 121,
+"satuan": "pcs"
+},
+{
+"id": "P394301",
+"nama": "Plastik Sniper Jumbo",
+"kategori": "Plastik",
+"harga": 1000,
+"stok": 35,
+"satuan": "pcs"
+},
+{
+"id": "P444725",
+"nama": "Plastik Palapa",
+"kategori": "Plastik",
+"harga": 1000,
+"stok": 199,
+"satuan": "pcs"
+},
+{
+"id": "P481775",
+"nama": "Thin Wall 300ml",
+"kategori": "Plastik",
+"harga": 20000,
+"stok": 1,
+"satuan": "pcs"
+},
+{
+"id": "P510829",
+"nama": "Cup Super Buble",
+"kategori": "Plastik",
+"harga": 16000,
+"stok": 3,
+"satuan": "Pack"
+},
+{
+"id": "P529686",
+"nama": "Cup RJM",
+"kategori": "Plastik",
+"harga": 19000,
+"stok": 3,
+"satuan": "Pack"
+},
+{
+"id": "P547302",
+"nama": "Cup raja ljr",
+"kategori": "Plastik",
+"harga": 12000,
+"stok": 8,
+"satuan": "pcs"
+},
+{
+"id": "P572917",
+"nama": "Sendok Jelly",
+"kategori": "Plastik",
+"harga": 8000,
+"stok": 3,
+"satuan": "Pack"
+},
+{
+"id": "P604620",
+"nama": "sendok primer",
+"kategori": "Plastik",
+"harga": 13000,
+"stok": 2,
+"satuan": "Pack"
+},
+{
+"id": "P652176",
+"nama": "Sendok Bebek",
+"kategori": "Plastik",
+"harga": 5000,
+"stok": 7,
+"satuan": "Pack"
+},
+{
+"id": "P668660",
+"nama": "Sendok Suapi",
+"kategori": "Plastik",
+"harga": 16000,
+"stok": 1,
+"satuan": "Pack"
+},
+{
+"id": "P715314",
+"nama": "Plastik OPP 10",
+"kategori": "Plastik",
+"harga": 14500,
+"stok": 1,
+"satuan": "Pack"
+},
+{
+"id": "P738983",
+"nama": "Plastik OPP 8",
+"kategori": "Plastik",
+"harga": 3000,
+"stok": 20,
+"satuan": "pcs"
+},
+{
+"id": "P769837",
+"nama": "Mika 1 Jajan",
+"kategori": "Plastik",
+"harga": 20000,
+"stok": 1,
+"satuan": "Pack"
+},
+{
+"id": "P793656",
+"nama": "Mika 3 jajan",
+"kategori": "Plastik",
+"harga": 28000,
+"stok": 9,
+"satuan": "Pack"
+},
+{
+"id": "P819953",
+"nama": "Kertas Nasi",
+"kategori": "Plastik",
+"harga": 12000,
+"stok": 6,
+"satuan": "Pack"
+},
+{
+"id": "P847818",
+"nama": "Kertas Nasi",
+"kategori": "Plastik",
+"harga": 250,
+"stok": 50,
+"satuan": "pcs"
+},
+{
+"id": "P864798",
+"nama": "Kotak Pizza",
+"kategori": "Plastik",
+"harga": 3000,
+"stok": 20,
+"satuan": "pcs"
+},
+{
+"id": "P879549",
+"nama": "Klip Bumbu",
+"kategori": "Plastik",
+"harga": 500,
+"stok": 45,
+"satuan": "pcs"
+},
+{
+"id": "P906712",
+"nama": "Snack 2,5k",
+"kategori": "Snack",
+"harga": 2500,
+"stok": 29,
+"satuan": "pcs"
+},
+{
+"id": "P931044",
+"nama": "Snack 2k",
+"kategori": "Snack",
+"harga": 2000,
+"stok": 342,
+"satuan": "pcs"
+},
+{
+"id": "P946281",
+"nama": "Snack 1k",
+"kategori": "Snack",
+"harga": 1000,
+"stok": 402,
+"satuan": "pcs"
+},
+{
+"id": "P970085",
+"nama": "Snack 500",
+"kategori": "Snack",
+"harga": 500,
+"stok": 409,
+"satuan": "pcs"
+},
+{
+"id": "P988765",
+"nama": "Permen",
+"kategori": "Snack",
+"harga": 500,
+"stok": 801,
+"satuan": "pcs"
+},
+{
+"id": "P048940",
+"nama": "Es Cimory",
+"kategori": "Eskrim",
+"harga": 3000,
+"stok": 150,
+"satuan": "pcs"
+},
+{
+"id": "P202473",
+"nama": "Eskrim 2000",
+"kategori": "Eskrim",
+"harga": 2000,
+"stok": 136,
+"satuan": "pcs"
+},
+{
+"id": "P544114",
+"nama": "Eskrim 3000",
+"kategori": "Eskrim",
+"harga": 3000,
+"stok": 34,
+"satuan": "pcs"
+},
+{
+"id": "P560883",
+"nama": "Eskrim 4000",
+"kategori": "Eskrim",
+"harga": 4000,
+"stok": 0,
+"satuan": "pcs"
+},
+{
+"id": "P584022",
+"nama": "Eskrim 5000",
+"kategori": "Eskrim",
+"harga": 5000,
+"stok": 60,
+"satuan": "pcs"
+},
+{
+"id": "P498757",
+"nama": "Bayar Hutang",
+"kategori": "Bayar Hutang",
+"harga": 1000,
+"stok": 99999378,
+"satuan": "pcs"
+},
+{
+"id": "P585871",
+"nama": "Transfer",
+"kategori": "Lainnya",
+"harga": 1000,
+"stok": 1998640,
+"satuan": "pcs"
+},
+{
+"id": "P135009",
+"nama": "cutton bud besar yukinawa",
+"kategori": "Lainnya",
+"harga": 5000,
+"stok": 12,
+"satuan": "Pack"
+},
+{
+"id": "P206435",
+"nama": "Balon emoji kuning",
+"kategori": "Lainnya",
+"harga": 2000,
+"stok": 5,
+"satuan": "pcs"
+},
+{
+"id": "P265343",
+"nama": "KIT BLACK MAGIC TIRE GEL",
+"kategori": "Lainnya",
+"harga": 5000,
+"stok": 12,
+"satuan": "pcs"
+},
+{
+"id": "P342267",
+"nama": "Korek gas Neolite bening",
+"kategori": "Lainnya",
+"harga": 2000,
+"stok": 50,
+"satuan": "pcs"
+},
+{
+"id": "P377785",
+"nama": "korek kayu pelangi",
+"kategori": "Lainnya",
+"harga": 500,
+"stok": 100,
+"satuan": "pcs"
+},
+{
+"id": "P418756",
+"nama": "Korek gas Exia Magnet",
+"kategori": "Lainnya",
+"harga": 3000,
+"stok": 50,
+"satuan": "pcs"
+},
+{
+"id": "P464896",
+"nama": "Polpen Gell Zuixua",
+"kategori": "ATK",
+"harga": 5000,
+"stok": 12,
+"satuan": "pcs"
+},
+{
+"id": "P745174",
+"nama": "OKEPLAST",
+"kategori": "Obat - Obatan",
+"harga": 500,
+"stok": 29,
+"satuan": "pcs"
+},
+{
+"id": "P904679",
+"nama": "bihun",
+"kategori": "Sembako",
+"harga": 7000,
+"stok": 9,
+"satuan": "pcs"
+},
+{
+"id": "P295046",
+"nama": "Korek gas 2k",
+"kategori": "Lainnya",
+"harga": 2000,
+"stok": 49,
+"satuan": "pcs"
+},
+{
+"id": "P314138",
+"nama": "Korek gas 3k",
+"kategori": "Lainnya",
+"harga": 3000,
+"stok": 50,
+"satuan": "pcs"
+},
+{
+"id": "P326943",
+"nama": "Token Listrik 20k",
+"kategori": "Pulsa Listrik",
+"harga": 25000,
+"stok": 999,
+"satuan": "pcs"
+},
+{
+"id": "P430283",
+"nama": "Token listrik 5k",
+"kategori": "Pulsa Listrik",
+"harga": 10000,
+"stok": 1000,
+"satuan": "pcs"
+},
+{
+"id": "P473992",
+"nama": "Token Listrik 10k",
+"kategori": "Pulsa Listrik",
+"harga": 15000,
+"stok": 1000,
+"satuan": "pcs"
+},
+{
+"id": "P505454",
+"nama": "Token listrik 15k",
+"kategori": "Pulsa Listrik",
+"harga": 20000,
+"stok": 1000,
+"satuan": "pcs"
+},
+{
+"id": "P526563",
+"nama": "Token listrik 25k",
+"kategori": "Pulsa Listrik",
+"harga": 30000,
+"stok": 1000,
+"satuan": "pcs"
+},
+{
+"id": "P541628",
+"nama": "Token Listrik 50k",
+"kategori": "Pulsa Listrik",
+"harga": 55000,
+"stok": 1000,
+"satuan": "pcs"
+},
+{
+"id": "P557537",
+"nama": "Token listrik 100k",
+"kategori": "Pulsa Listrik",
+"harga": 105000,
+"stok": 1000,
+"satuan": "pcs"
+},
+{
+"id": "P577454",
+"nama": "Token listrik 200k",
+"kategori": "Pulsa Listrik",
+"harga": 205000,
+"stok": 1000,
+"satuan": "pcs"
+},
+{
+"id": "P595440",
+"nama": "Token listrik 500k",
+"kategori": "Pulsa Listrik",
+"harga": 505000,
+"stok": 1000,
+"satuan": "pcs"
+},
+{
+"id": "P649736",
+"nama": "Token listrik 1jt",
+"kategori": "Pulsa Listrik",
+"harga": 1005000,
+"stok": 1000,
+"satuan": "pcs"
+},
+{
+"id": "P702198",
+"nama": "Pulsa  5k",
+"kategori": "pulsa hp",
+"harga": 7000,
+"stok": 1000,
+"satuan": "pcs"
+},
+{
+"id": "P718610",
+"nama": "Pulsa  10k",
+"kategori": "pulsa hp",
+"harga": 12000,
+"stok": 1000,
+"satuan": "pcs"
+},
+{
+"id": "P745084",
+"nama": "Pulsa 15k",
+"kategori": "pulsa hp",
+"harga": 17000,
+"stok": 1000,
+"satuan": "pcs"
+},
+{
+"id": "P913711",
+"nama": "Pulsa 20k",
+"kategori": "pulsa hp",
+"harga": 23000,
+"stok": 1000,
+"satuan": "pcs"
+},
+{
+"id": "P930345",
+"nama": "pulsa 25k",
+"kategori": "pulsa hp",
+"harga": 28000,
+"stok": 1000,
+"satuan": "pcs"
+},
+{
+"id": "P946035",
+"nama": "Pulsa 30k",
+"kategori": "pulsa hp",
+"harga": 33000,
+"stok": 1000,
+"satuan": "pcs"
+},
+{
+"id": "P965287",
+"nama": "Pulsa 35k",
+"kategori": "pulsa hp",
+"harga": 38000,
+"stok": 1000,
+"satuan": "pcs"
+},
+{
+"id": "P986936",
+"nama": "pulsa 40k",
+"kategori": "pulsa hp",
+"harga": 43000,
+"stok": 1000,
+"satuan": "pcs"
+},
+{
+"id": "P006487",
+"nama": "pulsa 45k",
+"kategori": "pulsa hp",
+"harga": 48000,
+"stok": 1000,
+"satuan": "pcs"
+},
+{
+"id": "P027951",
+"nama": "pulsa 50k",
+"kategori": "pulsa hp",
+"harga": 53000,
+"stok": 1000,
+"satuan": "pcs"
+},
+{
+"id": "P052424",
+"nama": "pulsa 55k",
+"kategori": "pulsa hp",
+"harga": 58000,
+"stok": 1000,
+"satuan": "pcs"
+},
+{
+"id": "P068042",
+"nama": "pulsa 60k",
+"kategori": "pulsa hp",
+"harga": 63000,
+"stok": 1000,
+"satuan": "pcs"
+},
+{
+"id": "P137265",
+"nama": "pulsa 65k",
+"kategori": "pulsa hp",
+"harga": 68000,
+"stok": 1000,
+"satuan": "pcs"
+},
+{
+"id": "P152717",
+"nama": "pulsa 70k",
+"kategori": "pulsa hp",
+"harga": 73000,
+"stok": 1000,
+"satuan": "pcs"
+},
+{
+"id": "P168572",
+"nama": "pulsa 75k",
+"kategori": "pulsa hp",
+"harga": 78000,
+"stok": 1000,
+"satuan": "pcs"
+},
+{
+"id": "P182974",
+"nama": "pulsa 80k",
+"kategori": "pulsa hp",
+"harga": 83000,
+"stok": 1000,
+"satuan": "pcs"
+},
+{
+"id": "P196787",
+"nama": "pulsa 85k",
+"kategori": "pulsa hp",
+"harga": 88000,
+"stok": 1000,
+"satuan": "pcs"
+},
+{
+"id": "P210521",
+"nama": "pulsa 90k",
+"kategori": "pulsa hp",
+"harga": 93000,
+"stok": 1000,
+"satuan": "pcs"
+},
+{
+"id": "P225289",
+"nama": "pulsa 95k",
+"kategori": "pulsa hp",
+"harga": 98000,
+"stok": 1000,
+"satuan": "pcs"
+},
+{
+"id": "P239810",
+"nama": "pulsa 100k",
+"kategori": "pulsa hp",
+"harga": 105000,
+"stok": 1000,
+"satuan": "pcs"
+},
+{
+"id": "P821326",
+"nama": "WIFI",
+"kategori": "wifi",
+"harga": 1000,
+"stok": 10000000,
+"satuan": "pcs"
+},
+{
+"id": "P939994",
+"nama": "Kuota",
+"kategori": "kuota",
+"harga": 1000,
+"stok": 10000000,
+"satuan": "pcs"
+},
+{
+"id": "P398169",
+"nama": "Fair lovely glow n lovely 23 g",
+"kategori": "Skincare",
+"harga": 20000,
+"stok": 12,
+"satuan": "pcs"
+},
+{
+"id": "P896856",
+"nama": "Kecap ABC botol",
+"kategori": "Sembako",
+"harga": 12500,
+"stok": 3,
+"satuan": "pcs"
+},
+{
+"id": "P224580",
+"nama": "My babi sabun",
+"kategori": "Persabunan",
+"harga": 4500,
+"stok": 4,
+"satuan": "pcs"
+},
+{
+"id": "P586254",
+"nama": "Yoho kiko",
+"kategori": "Minuman",
+"harga": 1000,
+"stok": 64,
+"satuan": "pcs"
+},
+{
+"id": "P067782",
+"nama": "Pampers Renteng L",
+"kategori": "Perlengkapan Bayi",
+"harga": 2500,
+"stok": 10,
+"satuan": "pcs"
+},
+{
+"id": "P157500",
+"nama": "Energen beng beng",
+"kategori": "Minuman",
+"harga": 3500,
+"stok": 11,
+"satuan": "pcs"
+}
+];
     localStorage.setItem(DB_PRODUK, JSON.stringify(def));
   }
   // Init multiple admins
@@ -97,11 +5185,3415 @@ function initData() {
   if (!localStorage.getItem(DB_KATEGORI)) {
     localStorage.setItem(
       DB_KATEGORI,
-      JSON.stringify(["Makanan", "Minuman", "Snack", "Lainnya"]),
+      JSON.stringify([
+"Rokok",
+"Sembako",
+"Bahan Kue",
+"Minuman",
+"Makanan",
+"Persabunan",
+"Lainnya",
+"Skincare",
+"Obat - Obatan",
+"aksesoris",
+"Perlengkapan Bayi",
+"Keperluan wanita",
+"Pertanian",
+"ATK",
+"Plastik",
+"Snack",
+"Eskrim",
+"Bayar Hutang",
+"Pulsa Listrik",
+"pulsa hp",
+"wifi",
+"kuota"
+]),
     );
   }
   if (!localStorage.getItem(DB_HUTANG)) {
-    localStorage.setItem(DB_HUTANG, JSON.stringify([]));
+    localStorage.setItem(DB_HUTANG, JSON.stringify([
+{
+"id": "HT-1775988107191",
+"pembeli": "Mama",
+"waktu": "12/4/2026, 18.01.47",
+"total": 141500,
+"status": "Belum Lunas",
+"catatan": ""
+},
+{
+"id": "HT-1775908428714",
+"pembeli": "sapok",
+"waktu": "11/4/2026, 19.53.48",
+"total": 35000,
+"status": "Belum Lunas",
+"catatan": "Scorpion"
+},
+{
+"id": "HT-1775901928463",
+"pembeli": "ita",
+"waktu": "11/4/2026, 18.05.28",
+"total": 40000,
+"status": "Belum Lunas",
+"catatan": "tisue, parfum, penjepit bulu mata"
+},
+{
+"id": "HT-1775478055932",
+"pembeli": "Anci",
+"waktu": "6/4/2026, 20.20.55",
+"total": 2000,
+"status": "Belum Lunas",
+"catatan": "ntuk gula"
+},
+{
+"id": "HT-1775456608962",
+"pembeli": "Andika",
+"waktu": "6/4/2026, 14.23.28",
+"total": 30000,
+"status": "Belum Lunas",
+"catatan": "rokok surya"
+},
+{
+"id": "HT-1775379886879",
+"pembeli": "Inan Ratnip",
+"waktu": "5/4/2026, 17.04.46",
+"total": 4000,
+"status": "Belum Lunas",
+"catatan": "mie"
+},
+{
+"id": "HT-1775266998010",
+"pembeli": "Pak Sur",
+"waktu": "4/4/2026, 09.43.18",
+"total": 5000,
+"status": "Belum Lunas",
+"catatan": "voucher"
+},
+{
+"id": "HT-1775266976759",
+"pembeli": "Kak Sur",
+"waktu": "4/4/2026, 09.42.56",
+"total": 277000,
+"status": "Belum Lunas",
+"catatan": "minjem n rokok sampoerna"
+},
+{
+"id": "HT-1775266859216",
+"pembeli": "Bibi Alim",
+"waktu": "4/4/2026, 09.40.59",
+"total": 35000,
+"status": "Belum Lunas",
+"catatan": "gula, karet jahit"
+},
+{
+"id": "HT-1775266830444",
+"pembeli": "Atini",
+"waktu": "4/4/2026, 09.40.30",
+"total": 210000,
+"status": "Belum Lunas",
+"catatan": "sendal, daia, dettol, pep herbal, terasi udang, freshcare, alis, inai kuku, lem cina, gula"
+},
+{
+"id": "HT-1775266707099",
+"pembeli": "Bibi Sar",
+"waktu": "4/4/2026, 09.38.27",
+"total": 78000,
+"status": "Belum Lunas",
+"catatan": "telur, forvita, sikat kayu, masako, ntuk gula, mie kuah"
+},
+{
+"id": "HT-1775266306614",
+"pembeli": "Gating",
+"waktu": "4/4/2026, 09.31.46",
+"total": 15000,
+"status": "Belum Lunas",
+"catatan": "ntuk sabun muka kafh"
+},
+{
+"id": "HT-1775266276994",
+"pembeli": "Al Fattah",
+"waktu": "4/4/2026, 09.31.16",
+"total": 75000,
+"status": "Belum Lunas",
+"catatan": "manila, tali rafia, scorpion, lampu 5w, narmada"
+},
+{
+"id": "HT-1775266095294",
+"pembeli": "Inaq Pendi",
+"waktu": "4/4/2026, 09.28.15",
+"total": 15000,
+"status": "Belum Lunas",
+"catatan": "sabun dettol"
+},
+{
+"id": "HT-1775266031511",
+"pembeli": "Bibi Pur",
+"waktu": "4/4/2026, 09.27.11",
+"total": 151000,
+"status": "Belum Lunas",
+"catatan": "sisa hutang, rinso, sabun mandi, minyak 2L, kispray, ntuk rokok, gas"
+},
+{
+"id": "HT-1775265946429",
+"pembeli": "inaq  Jinon",
+"waktu": "4/4/2026, 09.25.46",
+"total": 63000,
+"status": "Belum Lunas",
+"catatan": "Telur"
+}
+]));
+  }
+  if (!localStorage.getItem(DB_RIWAYAT)) {
+    localStorage.setItem(DB_RIWAYAT, JSON.stringify([
+{
+"id": "TRX-1776089507915",
+"waktu": "13/4/2026, 22.11.47",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 34000,
+"diskon": 0
+},
+{
+"id": "TRX-1776086789849",
+"waktu": "13/4/2026, 21.26.29",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 5000,
+"diskon": 0
+},
+{
+"id": "TRX-1776085886721",
+"waktu": "13/4/2026, 21.11.26",
+"pembeli": "gating",
+"metode": "Cash",
+"total": 30000,
+"diskon": 15000
+},
+{
+"id": "TRX-1776085768909",
+"waktu": "13/4/2026, 21.09.28",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 64000,
+"diskon": 0
+},
+{
+"id": "TRX-1776085698732",
+"waktu": "13/4/2026, 21.08.18",
+"pembeli": "gating",
+"metode": "Cash",
+"total": 10000,
+"diskon": 0
+},
+{
+"id": "TRX-1776085610042",
+"waktu": "13/4/2026, 21.06.50",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 29000,
+"diskon": 0
+},
+{
+"id": "TRX-1776084925577",
+"waktu": "13/4/2026, 20.55.25",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 7000,
+"diskon": 500
+},
+{
+"id": "TRX-1776083524186",
+"waktu": "13/4/2026, 20.32.04",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 7000,
+"diskon": 0
+},
+{
+"id": "TRX-1776082984517",
+"waktu": "13/4/2026, 20.23.04",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 4000,
+"diskon": 0
+},
+{
+"id": "TRX-1776082511696",
+"waktu": "13/4/2026, 20.15.11",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 3000,
+"diskon": 0
+},
+{
+"id": "TRX-1776081470881",
+"waktu": "13/4/2026, 19.57.50",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 5000,
+"diskon": 0
+},
+{
+"id": "TRX-1776067050355",
+"waktu": "13/4/2026, 15.57.30",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 3000,
+"diskon": 0
+},
+{
+"id": "TRX-1776065436751",
+"waktu": "13/4/2026, 15.30.36",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 3000,
+"diskon": 0
+},
+{
+"id": "TRX-1776064786913",
+"waktu": "13/4/2026, 15.19.46",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 5000,
+"diskon": 0
+},
+{
+"id": "TRX-1776063868461",
+"waktu": "13/4/2026, 15.04.28",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 4000,
+"diskon": 0
+},
+{
+"id": "TRX-1776063766570",
+"waktu": "13/4/2026, 15.02.46",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 22000,
+"diskon": 0
+},
+{
+"id": "TRX-1776062511455",
+"waktu": "13/4/2026, 14.41.51",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 4000,
+"diskon": 0
+},
+{
+"id": "TRX-1776062292133",
+"waktu": "13/4/2026, 14.38.12",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 4000,
+"diskon": 0
+},
+{
+"id": "TRX-1776062218244",
+"waktu": "13/4/2026, 14.36.58",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 12000,
+"diskon": 0
+},
+{
+"id": "TRX-1776061779184",
+"waktu": "13/4/2026, 14.29.39",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 5000,
+"diskon": 0
+},
+{
+"id": "TRX-1776061507631",
+"waktu": "13/4/2026, 14.25.07",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 5000,
+"diskon": 0
+},
+{
+"id": "TRX-1776061381635",
+"waktu": "13/4/2026, 14.23.01",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 2500,
+"diskon": 0
+},
+{
+"id": "TRX-1776061278396",
+"waktu": "13/4/2026, 14.21.18",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 2000,
+"diskon": 0
+},
+{
+"id": "TRX-1776060863339",
+"waktu": "13/4/2026, 14.14.23",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 6000,
+"diskon": 0
+},
+{
+"id": "TRX-1776060678369",
+"waktu": "13/4/2026, 14.11.18",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 10000,
+"diskon": 0
+},
+{
+"id": "TRX-1776060542754",
+"waktu": "13/4/2026, 14.09.02",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 22000,
+"diskon": 0
+},
+{
+"id": "TRX-1776059806925",
+"waktu": "13/4/2026, 13.56.46",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 8000,
+"diskon": 0
+},
+{
+"id": "TRX-1776059442208",
+"waktu": "13/4/2026, 13.50.42",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 1000,
+"diskon": 0
+},
+{
+"id": "TRX-1776058761142",
+"waktu": "13/4/2026, 13.39.21",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 2000,
+"diskon": 0
+},
+{
+"id": "TRX-1776058605480",
+"waktu": "13/4/2026, 13.36.45",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 2000,
+"diskon": 0
+},
+{
+"id": "TRX-1776058558040",
+"waktu": "13/4/2026, 13.35.58",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 1000,
+"diskon": 0
+},
+{
+"id": "TRX-1776057696749",
+"waktu": "13/4/2026, 13.21.36",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 2000,
+"diskon": 0
+},
+{
+"id": "TRX-1776057171483",
+"waktu": "13/4/2026, 13.12.51",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 17000,
+"diskon": 0
+},
+{
+"id": "TRX-1776056041394",
+"waktu": "13/4/2026, 12.54.01",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 4000,
+"diskon": 0
+},
+{
+"id": "TRX-1776054508286",
+"waktu": "13/4/2026, 12.28.28",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 2000,
+"diskon": 0
+},
+{
+"id": "TRX-1776052753264",
+"waktu": "13/4/2026, 11.59.13",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 4000,
+"diskon": 0
+},
+{
+"id": "TRX-1776051869862",
+"waktu": "13/4/2026, 11.44.29",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 4000,
+"diskon": 0
+},
+{
+"id": "TRX-1776051715632",
+"waktu": "13/4/2026, 11.41.55",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 2000,
+"diskon": 0
+},
+{
+"id": "TRX-1776050530064",
+"waktu": "13/4/2026, 11.22.10",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 2000,
+"diskon": 0
+},
+{
+"id": "TRX-1776048561852",
+"waktu": "13/4/2026, 10.49.21",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 2000,
+"diskon": 0
+},
+{
+"id": "TRX-1776045747006",
+"waktu": "13/4/2026, 10.02.27",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 2000,
+"diskon": 0
+},
+{
+"id": "TRX-1776044956633",
+"waktu": "13/4/2026, 09.49.16",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 16500,
+"diskon": 0
+},
+{
+"id": "TRX-1776043359410",
+"waktu": "13/4/2026, 09.22.39",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 4000,
+"diskon": 0
+},
+{
+"id": "TRX-1776043160304",
+"waktu": "13/4/2026, 09.19.20",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 4000,
+"diskon": 0
+},
+{
+"id": "TRX-1776042748109",
+"waktu": "13/4/2026, 09.12.28",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 2000,
+"diskon": 0
+},
+{
+"id": "TRX-1776042101451",
+"waktu": "13/4/2026, 09.01.41",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 22000,
+"diskon": 0
+},
+{
+"id": "TRX-1776041078484",
+"waktu": "13/4/2026, 08.44.38",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 2000,
+"diskon": 0
+},
+{
+"id": "TRX-1776040880028",
+"waktu": "13/4/2026, 08.41.20",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 2000,
+"diskon": 0
+},
+{
+"id": "TRX-1776039878152",
+"waktu": "13/4/2026, 08.24.38",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 5000,
+"diskon": 0
+},
+{
+"id": "TRX-1776037638625",
+"waktu": "13/4/2026, 07.47.18",
+"pembeli": "Pembeli pertama sawan candiatip",
+"metode": "Cash",
+"total": 22000,
+"diskon": 0
+},
+{
+"id": "TRX-1775999336565",
+"waktu": "12/4/2026, 21.08.56",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 6000,
+"diskon": 0
+},
+{
+"id": "TRX-1775999161127",
+"waktu": "12/4/2026, 21.06.01",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 2000,
+"diskon": 0
+},
+{
+"id": "TRX-1775998952402",
+"waktu": "12/4/2026, 21.02.32",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 16000,
+"diskon": 0
+},
+{
+"id": "TRX-1775998761192",
+"waktu": "12/4/2026, 20.59.21",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 2000,
+"diskon": 0
+},
+{
+"id": "TRX-1775996605947",
+"waktu": "12/4/2026, 20.23.25",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 5000,
+"diskon": 0
+},
+{
+"id": "TRX-1775995992477",
+"waktu": "12/4/2026, 20.13.12",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 5000,
+"diskon": 0
+},
+{
+"id": "TRX-1775995424281",
+"waktu": "12/4/2026, 20.03.44",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 7000,
+"diskon": 1000
+},
+{
+"id": "TRX-1775991248723",
+"waktu": "12/4/2026, 18.54.08",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 2000,
+"diskon": 0
+},
+{
+"id": "TRX-1775990720775",
+"waktu": "12/4/2026, 18.45.20",
+"pembeli": "kadus sri menganti",
+"metode": "Cash",
+"total": 38000,
+"diskon": 0
+},
+{
+"id": "TRX-1775990108174",
+"waktu": "12/4/2026, 18.35.08",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 2000,
+"diskon": 0
+},
+{
+"id": "TRX-1775989629158",
+"waktu": "12/4/2026, 18.27.09",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 7000,
+"diskon": 0
+},
+{
+"id": "TRX-1775989427273",
+"waktu": "12/4/2026, 18.23.47",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 2000,
+"diskon": 0
+},
+{
+"id": "TRX-1775989229755",
+"waktu": "12/4/2026, 18.20.29",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 11000,
+"diskon": 0
+},
+{
+"id": "TRX-1775988107190",
+"waktu": "12/4/2026, 18.01.47",
+"pembeli": "Mama",
+"metode": "Hutang",
+"total": 141500,
+"diskon": 0
+},
+{
+"id": "TRX-1775987903317",
+"waktu": "12/4/2026, 17.58.23",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 10000,
+"diskon": 0
+},
+{
+"id": "TRX-1775987557690",
+"waktu": "12/4/2026, 17.52.37",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 2000,
+"diskon": 0
+},
+{
+"id": "TRX-1775987007636",
+"waktu": "12/4/2026, 17.43.27",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 2000,
+"diskon": 0
+},
+{
+"id": "TRX-1775986596251",
+"waktu": "12/4/2026, 17.36.36",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 38000,
+"diskon": 0
+},
+{
+"id": "TRX-1775984768397",
+"waktu": "12/4/2026, 17.06.08",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 5000,
+"diskon": 0
+},
+{
+"id": "TRX-1775984376049",
+"waktu": "12/4/2026, 16.59.36",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 25000,
+"diskon": 0
+},
+{
+"id": "TRX-1775984248734",
+"waktu": "12/4/2026, 16.57.28",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 15000,
+"diskon": 0
+},
+{
+"id": "TRX-1775983637198",
+"waktu": "12/4/2026, 16.47.17",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 2000,
+"diskon": 0
+},
+{
+"id": "TRX-1775983580879",
+"waktu": "12/4/2026, 16.46.20",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 5000,
+"diskon": 0
+},
+{
+"id": "TRX-1775983225623",
+"waktu": "12/4/2026, 16.40.25",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 2000,
+"diskon": 0
+},
+{
+"id": "TRX-1775982998558",
+"waktu": "12/4/2026, 16.36.38",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 19000,
+"diskon": 0
+},
+{
+"id": "TRX-1775982476345",
+"waktu": "12/4/2026, 16.27.56",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 2000,
+"diskon": 0
+},
+{
+"id": "TRX-1775982240924",
+"waktu": "12/4/2026, 16.24.00",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 6000,
+"diskon": 0
+},
+{
+"id": "TRX-1775982060859",
+"waktu": "12/4/2026, 16.21.00",
+"pembeli": "KADUS SRI MENGANTI",
+"metode": "Hutang",
+"total": 38000,
+"diskon": 0
+},
+{
+"id": "TRX-1775981347392",
+"waktu": "12/4/2026, 16.09.07",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 16000,
+"diskon": 0
+},
+{
+"id": "TRX-1775980812104",
+"waktu": "12/4/2026, 16.00.12",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 2000,
+"diskon": 0
+},
+{
+"id": "TRX-1775980775073",
+"waktu": "12/4/2026, 15.59.35",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 3000,
+"diskon": 0
+},
+{
+"id": "TRX-1775980660196",
+"waktu": "12/4/2026, 15.57.40",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 2000,
+"diskon": 0
+},
+{
+"id": "TRX-1775980458842",
+"waktu": "12/4/2026, 15.54.18",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 4000,
+"diskon": 0
+},
+{
+"id": "TRX-1775979866489",
+"waktu": "12/4/2026, 15.44.26",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 4000,
+"diskon": 0
+},
+{
+"id": "TRX-1775979293823",
+"waktu": "12/4/2026, 15.34.53",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 11000,
+"diskon": 0
+},
+{
+"id": "TRX-1775978686309",
+"waktu": "12/4/2026, 15.24.46",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 5000,
+"diskon": 0
+},
+{
+"id": "TRX-1775978354396",
+"waktu": "12/4/2026, 15.19.14",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 5000,
+"diskon": 0
+},
+{
+"id": "TRX-1775978230402",
+"waktu": "12/4/2026, 15.17.10",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 4000,
+"diskon": 0
+},
+{
+"id": "TRX-1775978046824",
+"waktu": "12/4/2026, 15.14.06",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 4000,
+"diskon": 0
+},
+{
+"id": "TRX-1775977709971",
+"waktu": "12/4/2026, 15.08.29",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 1000,
+"diskon": 0
+},
+{
+"id": "TRX-1775977663332",
+"waktu": "12/4/2026, 15.07.43",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 2000,
+"diskon": 0
+},
+{
+"id": "TRX-1775977487922",
+"waktu": "12/4/2026, 15.04.47",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 9000,
+"diskon": 0
+},
+{
+"id": "TRX-1775977288532",
+"waktu": "12/4/2026, 15.01.28",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 5000,
+"diskon": 0
+},
+{
+"id": "TRX-1775976978354",
+"waktu": "12/4/2026, 14.56.18",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 15000,
+"diskon": 0
+},
+{
+"id": "TRX-1775976511617",
+"waktu": "12/4/2026, 14.48.31",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 6500,
+"diskon": 0
+},
+{
+"id": "TRX-1775975805649",
+"waktu": "12/4/2026, 14.36.45",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 4000,
+"diskon": 0
+},
+{
+"id": "TRX-1775975611062",
+"waktu": "12/4/2026, 14.33.31",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 16000,
+"diskon": 0
+},
+{
+"id": "TRX-1775975011508",
+"waktu": "12/4/2026, 14.23.31",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 4000,
+"diskon": 0
+},
+{
+"id": "TRX-1775974979771",
+"waktu": "12/4/2026, 14.22.59",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 3000,
+"diskon": 0
+},
+{
+"id": "TRX-1775974624122",
+"waktu": "12/4/2026, 14.17.04",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 7000,
+"diskon": 500
+},
+{
+"id": "TRX-1775974267346",
+"waktu": "12/4/2026, 14.11.07",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 4000,
+"diskon": 0
+},
+{
+"id": "TRX-1775973420510",
+"waktu": "12/4/2026, 13.57.00",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 2000,
+"diskon": 0
+},
+{
+"id": "TRX-1775973252267",
+"waktu": "12/4/2026, 13.54.12",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 8000,
+"diskon": 0
+},
+{
+"id": "TRX-1775972898864",
+"waktu": "12/4/2026, 13.48.18",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 8000,
+"diskon": 0
+},
+{
+"id": "TRX-1775972741134",
+"waktu": "12/4/2026, 13.45.41",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 6000,
+"diskon": 0
+},
+{
+"id": "TRX-1775972460408",
+"waktu": "12/4/2026, 13.41.00",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 10000,
+"diskon": 0
+},
+{
+"id": "TRX-1775972032852",
+"waktu": "12/4/2026, 13.33.52",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 62000,
+"diskon": 0
+},
+{
+"id": "TRX-1775971492225",
+"waktu": "12/4/2026, 13.24.52",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 2000,
+"diskon": 0
+},
+{
+"id": "TRX-1775970882068",
+"waktu": "12/4/2026, 13.14.42",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 23000,
+"diskon": 500
+},
+{
+"id": "TRX-1775970622695",
+"waktu": "12/4/2026, 13.10.22",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 7000,
+"diskon": 0
+},
+{
+"id": "TRX-1775970459996",
+"waktu": "12/4/2026, 13.07.39",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 6000,
+"diskon": 0
+},
+{
+"id": "TRX-1775969773600",
+"waktu": "12/4/2026, 12.56.13",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 2000,
+"diskon": 0
+},
+{
+"id": "TRX-1775969401952",
+"waktu": "12/4/2026, 12.50.01",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 2000,
+"diskon": 0
+},
+{
+"id": "TRX-1775969236223",
+"waktu": "12/4/2026, 12.47.16",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 6000,
+"diskon": 0
+},
+{
+"id": "TRX-1775969204666",
+"waktu": "12/4/2026, 12.46.44",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 6000,
+"diskon": 0
+},
+{
+"id": "TRX-1775968669578",
+"waktu": "12/4/2026, 12.37.49",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 13000,
+"diskon": 0
+},
+{
+"id": "TRX-1775968091543",
+"waktu": "12/4/2026, 12.28.11",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 5000,
+"diskon": 0
+},
+{
+"id": "TRX-1775967960832",
+"waktu": "12/4/2026, 12.26.00",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 59000,
+"diskon": 0
+},
+{
+"id": "TRX-1775967051214",
+"waktu": "12/4/2026, 12.10.51",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 6000,
+"diskon": 0
+},
+{
+"id": "TRX-1775966787612",
+"waktu": "12/4/2026, 12.06.27",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 62000,
+"diskon": 0
+},
+{
+"id": "TRX-1775966534516",
+"waktu": "12/4/2026, 12.02.14",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 6000,
+"diskon": 0
+},
+{
+"id": "TRX-1775966118567",
+"waktu": "12/4/2026, 11.55.18",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 7500,
+"diskon": 0
+},
+{
+"id": "TRX-1775965992901",
+"waktu": "12/4/2026, 11.53.12",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 2000,
+"diskon": 0
+},
+{
+"id": "TRX-1775965947402",
+"waktu": "12/4/2026, 11.52.27",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 8000,
+"diskon": 0
+},
+{
+"id": "TRX-1775965824202",
+"waktu": "12/4/2026, 11.50.24",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 2000,
+"diskon": 0
+},
+{
+"id": "TRX-1775965227238",
+"waktu": "12/4/2026, 11.40.27",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 7000,
+"diskon": 0
+},
+{
+"id": "TRX-1775965039366",
+"waktu": "12/4/2026, 11.37.19",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 3000,
+"diskon": 0
+},
+{
+"id": "TRX-1775965010212",
+"waktu": "12/4/2026, 11.36.50",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 9000,
+"diskon": 0
+},
+{
+"id": "TRX-1775964933410",
+"waktu": "12/4/2026, 11.35.33",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 4000,
+"diskon": 0
+},
+{
+"id": "TRX-1775964740420",
+"waktu": "12/4/2026, 11.32.20",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 33000,
+"diskon": 0
+},
+{
+"id": "TRX-1775963794757",
+"waktu": "12/4/2026, 11.16.34",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 1000,
+"diskon": 0
+},
+{
+"id": "TRX-1775963729764",
+"waktu": "12/4/2026, 11.15.29",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 4000,
+"diskon": 0
+},
+{
+"id": "TRX-1775963493294",
+"waktu": "12/4/2026, 11.11.33",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 4000,
+"diskon": 0
+},
+{
+"id": "TRX-1775963359295",
+"waktu": "12/4/2026, 11.09.19",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 8500,
+"diskon": 0
+},
+{
+"id": "TRX-1775963036820",
+"waktu": "12/4/2026, 11.03.56",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 22000,
+"diskon": 0
+},
+{
+"id": "TRX-1775962729637",
+"waktu": "12/4/2026, 10.58.49",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 29000,
+"diskon": 0
+},
+{
+"id": "TRX-1775962337942",
+"waktu": "12/4/2026, 10.52.17",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 5000,
+"diskon": 0
+},
+{
+"id": "TRX-1775962126503",
+"waktu": "12/4/2026, 10.48.46",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 10000,
+"diskon": 0
+},
+{
+"id": "TRX-1775961347830",
+"waktu": "12/4/2026, 10.35.47",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 8000,
+"diskon": 0
+},
+{
+"id": "TRX-1775960600596",
+"waktu": "12/4/2026, 10.23.20",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 2000,
+"diskon": 0
+},
+{
+"id": "TRX-1775960144653",
+"waktu": "12/4/2026, 10.15.44",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 2500,
+"diskon": 0
+},
+{
+"id": "TRX-1775959779090",
+"waktu": "12/4/2026, 10.09.39",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 1000,
+"diskon": 0
+},
+{
+"id": "TRX-1775959668411",
+"waktu": "12/4/2026, 10.07.48",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 20000,
+"diskon": 0
+},
+{
+"id": "TRX-1775959277545",
+"waktu": "12/4/2026, 10.01.17",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 6000,
+"diskon": 0
+},
+{
+"id": "TRX-1775959107465",
+"waktu": "12/4/2026, 09.58.27",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 3000,
+"diskon": 0
+},
+{
+"id": "TRX-1775958934912",
+"waktu": "12/4/2026, 09.55.34",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 3000,
+"diskon": 0
+},
+{
+"id": "TRX-1775958791709",
+"waktu": "12/4/2026, 09.53.11",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 7000,
+"diskon": 0
+},
+{
+"id": "TRX-1775958576852",
+"waktu": "12/4/2026, 09.49.36",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 15000,
+"diskon": 0
+},
+{
+"id": "TRX-1775958231412",
+"waktu": "12/4/2026, 09.43.51",
+"pembeli": "amaq ogah",
+"metode": "Cash",
+"total": 29000,
+"diskon": 0
+},
+{
+"id": "TRX-1775958078186",
+"waktu": "12/4/2026, 09.41.18",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 6000,
+"diskon": 0
+},
+{
+"id": "TRX-1775957983727",
+"waktu": "12/4/2026, 09.39.43",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 10000,
+"diskon": 0
+},
+{
+"id": "TRX-1775956889744",
+"waktu": "12/4/2026, 09.21.29",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 4000,
+"diskon": 0
+},
+{
+"id": "TRX-1775956424117",
+"waktu": "12/4/2026, 09.13.44",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 4000,
+"diskon": 0
+},
+{
+"id": "TRX-1775955878988",
+"waktu": "12/4/2026, 09.04.38",
+"pembeli": "transaksi pertama",
+"metode": "Cash",
+"total": 19000,
+"diskon": 0
+},
+{
+"id": "TRX-1775912848448",
+"waktu": "11/4/2026, 21.07.28",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 10000,
+"diskon": 0
+},
+{
+"id": "TRX-1775911982163",
+"waktu": "11/4/2026, 20.53.02",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 1000,
+"diskon": 0
+},
+{
+"id": "TRX-1775911708294",
+"waktu": "11/4/2026, 20.48.28",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 2000,
+"diskon": 0
+},
+{
+"id": "TRX-1775911615329",
+"waktu": "11/4/2026, 20.46.55",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 2000,
+"diskon": 0
+},
+{
+"id": "TRX-1775911211866",
+"waktu": "11/4/2026, 20.40.11",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 6000,
+"diskon": 0
+},
+{
+"id": "TRX-1775911008875",
+"waktu": "11/4/2026, 20.36.48",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 8000,
+"diskon": 0
+},
+{
+"id": "TRX-1775910740738",
+"waktu": "11/4/2026, 20.32.20",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 7000,
+"diskon": 0
+},
+{
+"id": "TRX-1775910526398",
+"waktu": "11/4/2026, 20.28.46",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 10000,
+"diskon": 0
+},
+{
+"id": "TRX-1775910314467",
+"waktu": "11/4/2026, 20.25.14",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 20000,
+"diskon": 0
+},
+{
+"id": "TRX-1775909944636",
+"waktu": "11/4/2026, 20.19.04",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 2000,
+"diskon": 0
+},
+{
+"id": "TRX-1775909616364",
+"waktu": "11/4/2026, 20.13.36",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 15000,
+"diskon": 500
+},
+{
+"id": "TRX-1775908817497",
+"waktu": "11/4/2026, 20.00.17",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 1500,
+"diskon": 0
+},
+{
+"id": "TRX-1775908570992",
+"waktu": "11/4/2026, 19.56.10",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 93000,
+"diskon": 0
+},
+{
+"id": "TRX-1775908428713",
+"waktu": "11/4/2026, 19.53.48",
+"pembeli": "sapok",
+"metode": "Hutang",
+"total": 31000,
+"diskon": 0
+},
+{
+"id": "TRX-1775908113195",
+"waktu": "11/4/2026, 19.48.33",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 3000,
+"diskon": 0
+},
+{
+"id": "TRX-1775905434203",
+"waktu": "11/4/2026, 19.03.54",
+"pembeli": "bambang",
+"metode": "Cash",
+"total": 29000,
+"diskon": 0
+},
+{
+"id": "TRX-1775905394286",
+"waktu": "11/4/2026, 19.03.14",
+"pembeli": "atini",
+"metode": "Hutang",
+"total": 22000,
+"diskon": 0
+},
+{
+"id": "TRX-1775903967533",
+"waktu": "11/4/2026, 18.39.27",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 7000,
+"diskon": 0
+},
+{
+"id": "TRX-1775903597636",
+"waktu": "11/4/2026, 18.33.17",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 8000,
+"diskon": 0
+},
+{
+"id": "TRX-1775902761393",
+"waktu": "11/4/2026, 18.19.21",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 2000,
+"diskon": 0
+},
+{
+"id": "TRX-1775902506201",
+"waktu": "11/4/2026, 18.15.06",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 3000,
+"diskon": 0
+},
+{
+"id": "TRX-1775902442582",
+"waktu": "11/4/2026, 18.14.02",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 70000,
+"diskon": 0
+},
+{
+"id": "TRX-1775896275580",
+"waktu": "11/4/2026, 16.31.15",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 2000,
+"diskon": 0
+},
+{
+"id": "TRX-1775896146856",
+"waktu": "11/4/2026, 16.29.06",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 2000,
+"diskon": 0
+},
+{
+"id": "TRX-1775895271444",
+"waktu": "11/4/2026, 16.14.31",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 4000,
+"diskon": 0
+},
+{
+"id": "TRX-1775894976317",
+"waktu": "11/4/2026, 16.09.36",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 25000,
+"diskon": 0
+},
+{
+"id": "TRX-1775893189317",
+"waktu": "11/4/2026, 15.39.49",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 2000,
+"diskon": 0
+},
+{
+"id": "TRX-1775892797563",
+"waktu": "11/4/2026, 15.33.17",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 41000,
+"diskon": 0
+},
+{
+"id": "TRX-1775890896462",
+"waktu": "11/4/2026, 15.01.36",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 3000,
+"diskon": 0
+},
+{
+"id": "TRX-1775890608931",
+"waktu": "11/4/2026, 14.56.48",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 7000,
+"diskon": 0
+},
+{
+"id": "TRX-1775888450884",
+"waktu": "11/4/2026, 14.20.50",
+"pembeli": "RADINAL",
+"metode": "Cash",
+"total": 12000,
+"diskon": 0
+},
+{
+"id": "TRX-1775877776698",
+"waktu": "11/4/2026, 11.22.56",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 3000,
+"diskon": 0
+},
+{
+"id": "TRX-1775877190541",
+"waktu": "11/4/2026, 11.13.10",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 3000,
+"diskon": 0
+},
+{
+"id": "TRX-1775876496266",
+"waktu": "11/4/2026, 11.01.36",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 8000,
+"diskon": 0
+},
+{
+"id": "TRX-1775874862900",
+"waktu": "11/4/2026, 10.34.22",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 29000,
+"diskon": 0
+},
+{
+"id": "TRX-1775874705935",
+"waktu": "11/4/2026, 10.31.45",
+"pembeli": "Transaksi tanggal 10 april 2026",
+"metode": "Cash",
+"total": 274000,
+"diskon": 1000
+},
+{
+"id": "TRX-1775873720706",
+"waktu": "11/4/2026, 10.15.20",
+"pembeli": "Transaksi tanggal 09 april 2026",
+"metode": "Cash",
+"total": 82500,
+"diskon": 2000
+},
+{
+"id": "TRX-1775873516397",
+"waktu": "11/4/2026, 10.11.56",
+"pembeli": "Transaksi tanggal 08 april 2026",
+"metode": "Cash",
+"total": 203000,
+"diskon": 0
+},
+{
+"id": "TRX-1775872866296",
+"waktu": "11/4/2026, 10.01.06",
+"pembeli": "transaksi tgl 07 april 2026",
+"metode": "Cash",
+"total": 474500,
+"diskon": 1000
+},
+{
+"id": "TRX-1775491500344",
+"waktu": "7/4/2026, 00.05.00",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 16000,
+"diskon": 0
+},
+{
+"id": "TRX-1775480722090",
+"waktu": "6/4/2026, 21.05.22",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 50000,
+"diskon": 0
+},
+{
+"id": "TRX-1775478479323",
+"waktu": "6/4/2026, 20.27.59",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 8000,
+"diskon": 0
+},
+{
+"id": "TRX-1775478183271",
+"waktu": "6/4/2026, 20.23.03",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 27000,
+"diskon": 0
+},
+{
+"id": "TRX-1775478026178",
+"waktu": "6/4/2026, 20.20.26",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 20000,
+"diskon": 2000
+},
+{
+"id": "TRX-1775477795830",
+"waktu": "6/4/2026, 20.16.35",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 17000,
+"diskon": 0
+},
+{
+"id": "TRX-1775477156713",
+"waktu": "6/4/2026, 20.05.56",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 3000,
+"diskon": 0
+},
+{
+"id": "TRX-1775477092350",
+"waktu": "6/4/2026, 20.04.52",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 8000,
+"diskon": 0
+},
+{
+"id": "TRX-1775476140396",
+"waktu": "6/4/2026, 19.49.00",
+"pembeli": "inan agir",
+"metode": "Cash",
+"total": 22000,
+"diskon": 0
+},
+{
+"id": "TRX-1775475028684",
+"waktu": "6/4/2026, 19.30.28",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 15000,
+"diskon": 0
+},
+{
+"id": "TRX-1775474530357",
+"waktu": "6/4/2026, 19.22.10",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 40000,
+"diskon": 1000
+},
+{
+"id": "TRX-1775474214621",
+"waktu": "6/4/2026, 19.16.54",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 5000,
+"diskon": 0
+},
+{
+"id": "TRX-1775473145298",
+"waktu": "6/4/2026, 18.59.05",
+"pembeli": "Bambang + bayar hutang",
+"metode": "Cash",
+"total": 64000,
+"diskon": 0
+},
+{
+"id": "TRX-1775472260379",
+"waktu": "6/4/2026, 18.44.20",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 45000,
+"diskon": 0
+},
+{
+"id": "TRX-1775470586310",
+"waktu": "6/4/2026, 18.16.26",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 2000,
+"diskon": 0
+},
+{
+"id": "TRX-1775469800908",
+"waktu": "6/4/2026, 18.03.20",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 15000,
+"diskon": 0
+},
+{
+"id": "TRX-1775468326827",
+"waktu": "6/4/2026, 17.38.46",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 10000,
+"diskon": 0
+},
+{
+"id": "TRX-1775467932324",
+"waktu": "6/4/2026, 17.32.12",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 7000,
+"diskon": 0
+},
+{
+"id": "TRX-1775467219398",
+"waktu": "6/4/2026, 17.20.19",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 5000,
+"diskon": 0
+},
+{
+"id": "TRX-1775466431092",
+"waktu": "6/4/2026, 17.07.11",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 3000,
+"diskon": 0
+},
+{
+"id": "TRX-1775465936107",
+"waktu": "6/4/2026, 16.58.56",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 5000,
+"diskon": 0
+},
+{
+"id": "TRX-1775463642083",
+"waktu": "6/4/2026, 16.20.42",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 35000,
+"diskon": 0
+},
+{
+"id": "TRX-1775463251829",
+"waktu": "6/4/2026, 16.14.11",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 2000,
+"diskon": 0
+},
+{
+"id": "TRX-1775462601004",
+"waktu": "6/4/2026, 16.03.21",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 4000,
+"diskon": 0
+},
+{
+"id": "TRX-1775462332264",
+"waktu": "6/4/2026, 15.58.52",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 2000,
+"diskon": 0
+},
+{
+"id": "TRX-1775462267408",
+"waktu": "6/4/2026, 15.57.47",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 2000,
+"diskon": 0
+},
+{
+"id": "TRX-1775462169439",
+"waktu": "6/4/2026, 15.56.09",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 4000,
+"diskon": 0
+},
+{
+"id": "TRX-1775461939683",
+"waktu": "6/4/2026, 15.52.19",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 2000,
+"diskon": 0
+},
+{
+"id": "TRX-1775461397171",
+"waktu": "6/4/2026, 15.43.17",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 6000,
+"diskon": 0
+},
+{
+"id": "TRX-1775460986995",
+"waktu": "6/4/2026, 15.36.26",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 3000,
+"diskon": 0
+},
+{
+"id": "TRX-1775460378775",
+"waktu": "6/4/2026, 15.26.18",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 6000,
+"diskon": 0
+},
+{
+"id": "TRX-1775460230450",
+"waktu": "6/4/2026, 15.23.50",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 2000,
+"diskon": 0
+},
+{
+"id": "TRX-1775459977478",
+"waktu": "6/4/2026, 15.19.37",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 5000,
+"diskon": 0
+},
+{
+"id": "TRX-1775459803225",
+"waktu": "6/4/2026, 15.16.43",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 2000,
+"diskon": 0
+},
+{
+"id": "TRX-1775459404273",
+"waktu": "6/4/2026, 15.10.04",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 2000,
+"diskon": 0
+},
+{
+"id": "TRX-1775458993237",
+"waktu": "6/4/2026, 15.03.13",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 7000,
+"diskon": 0
+},
+{
+"id": "TRX-1775457455557",
+"waktu": "6/4/2026, 14.37.35",
+"pembeli": "matio",
+"metode": "Cash",
+"total": 5000,
+"diskon": 0
+},
+{
+"id": "TRX-1775457060223",
+"waktu": "6/4/2026, 14.31.00",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 4000,
+"diskon": 0
+},
+{
+"id": "TRX-1775456608961",
+"waktu": "6/4/2026, 14.23.28",
+"pembeli": "Andika",
+"metode": "Hutang",
+"total": 29000,
+"diskon": 0
+},
+{
+"id": "TRX-1775456568440",
+"waktu": "6/4/2026, 14.22.48",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 123500,
+"diskon": 0
+},
+{
+"id": "TRX-1775456125767",
+"waktu": "6/4/2026, 14.15.25",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 31000,
+"diskon": 0
+},
+{
+"id": "TRX-1775455977104",
+"waktu": "6/4/2026, 14.12.57",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 6000,
+"diskon": 0
+},
+{
+"id": "TRX-1775436008116",
+"waktu": "6/4/2026, 08.40.08",
+"pembeli": "suhel",
+"metode": "Cash",
+"total": 2000,
+"diskon": 0
+},
+{
+"id": "TRX-1775398339451",
+"waktu": "5/4/2026, 22.12.19",
+"pembeli": "bu kadus",
+"metode": "Cash",
+"total": 22000,
+"diskon": 0
+},
+{
+"id": "TRX-1775398112908",
+"waktu": "5/4/2026, 22.08.32",
+"pembeli": "Bapak sap",
+"metode": "Hutang",
+"total": 8000,
+"diskon": 0
+},
+{
+"id": "TRX-1775397764427",
+"waktu": "5/4/2026, 22.02.44",
+"pembeli": "gating",
+"metode": "Cash",
+"total": 10000,
+"diskon": 0
+},
+{
+"id": "TRX-1775397709772",
+"waktu": "5/4/2026, 22.01.49",
+"pembeli": "gating",
+"metode": "Cash",
+"total": 40000,
+"diskon": 0
+},
+{
+"id": "TRX-1775393472146",
+"waktu": "5/4/2026, 20.51.12",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 12000,
+"diskon": 0
+},
+{
+"id": "TRX-1775392984379",
+"waktu": "5/4/2026, 20.43.04",
+"pembeli": "RINA",
+"metode": "Hutang",
+"total": 3000,
+"diskon": 0
+},
+{
+"id": "TRX-1775391824628",
+"waktu": "5/4/2026, 20.23.44",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 2000,
+"diskon": 500
+},
+{
+"id": "TRX-1775391112553",
+"waktu": "5/4/2026, 20.11.52",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 2000,
+"diskon": 0
+},
+{
+"id": "TRX-1775390034241",
+"waktu": "5/4/2026, 19.53.54",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 5000,
+"diskon": 0
+},
+{
+"id": "TRX-1775389840073",
+"waktu": "5/4/2026, 19.50.40",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 10000,
+"diskon": 0
+},
+{
+"id": "TRX-1775389454477",
+"waktu": "5/4/2026, 19.44.14",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 2000,
+"diskon": 0
+},
+{
+"id": "TRX-1775389336577",
+"waktu": "5/4/2026, 19.42.16",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 5000,
+"diskon": 0
+},
+{
+"id": "TRX-1775389194896",
+"waktu": "5/4/2026, 19.39.54",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 2000,
+"diskon": 0
+},
+{
+"id": "TRX-1775388251958",
+"waktu": "5/4/2026, 19.24.11",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 4000,
+"diskon": 0
+},
+{
+"id": "TRX-1775388007141",
+"waktu": "5/4/2026, 19.20.07",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 3500,
+"diskon": 0
+},
+{
+"id": "TRX-1775387770094",
+"waktu": "5/4/2026, 19.16.10",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 1000,
+"diskon": 0
+},
+{
+"id": "TRX-1775387097491",
+"waktu": "5/4/2026, 19.04.57",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 2000,
+"diskon": 0
+},
+{
+"id": "TRX-1775385292491",
+"waktu": "5/4/2026, 18.34.52",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 2000,
+"diskon": 0
+},
+{
+"id": "TRX-1775385096830",
+"waktu": "5/4/2026, 18.31.36",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 3000,
+"diskon": 0
+},
+{
+"id": "TRX-1775384547163",
+"waktu": "5/4/2026, 18.22.27",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 10000,
+"diskon": 0
+},
+{
+"id": "TRX-1775384418478",
+"waktu": "5/4/2026, 18.20.18",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 11000,
+"diskon": 0
+},
+{
+"id": "TRX-1775384221292",
+"waktu": "5/4/2026, 18.17.01",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 3000,
+"diskon": 0
+},
+{
+"id": "TRX-1775384120922",
+"waktu": "5/4/2026, 18.15.20",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 5000,
+"diskon": 0
+},
+{
+"id": "TRX-1775383140712",
+"waktu": "5/4/2026, 17.59.00",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 4000,
+"diskon": 0
+},
+{
+"id": "TRX-1775381641151",
+"waktu": "5/4/2026, 17.34.01",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 7000,
+"diskon": 0
+},
+{
+"id": "TRX-1775381502282",
+"waktu": "5/4/2026, 17.31.42",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 3000,
+"diskon": 0
+},
+{
+"id": "TRX-1775380412035",
+"waktu": "5/4/2026, 17.13.32",
+"pembeli": "Sawan Maed",
+"metode": "Cash",
+"total": 29000,
+"diskon": 0
+},
+{
+"id": "TRX-1775380197655",
+"waktu": "5/4/2026, 17.09.57",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 4000,
+"diskon": 0
+},
+{
+"id": "TRX-1775379886859",
+"waktu": "5/4/2026, 17.04.46",
+"pembeli": "Inan Ratnip",
+"metode": "Hutang",
+"total": 3500,
+"diskon": 0
+},
+{
+"id": "TRX-1775379831602",
+"waktu": "5/4/2026, 17.03.51",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 18000,
+"diskon": 0
+},
+{
+"id": "TRX-1775379245112",
+"waktu": "5/4/2026, 16.54.05",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 6000,
+"diskon": 0
+},
+{
+"id": "TRX-1775378411423",
+"waktu": "5/4/2026, 16.40.11",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 28000,
+"diskon": 2500
+},
+{
+"id": "TRX-1775376777494",
+"waktu": "5/4/2026, 16.12.57",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 3000,
+"diskon": 0
+},
+{
+"id": "TRX-1775376654514",
+"waktu": "5/4/2026, 16.10.54",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 1000,
+"diskon": 0
+},
+{
+"id": "TRX-1775375626374",
+"waktu": "5/4/2026, 15.53.46",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 2000,
+"diskon": 0
+},
+{
+"id": "TRX-1775375543616",
+"waktu": "5/4/2026, 15.52.23",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 31000,
+"diskon": 0
+},
+{
+"id": "TRX-1775375279540",
+"waktu": "5/4/2026, 15.47.59",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 4000,
+"diskon": 0
+},
+{
+"id": "TRX-1775374387866",
+"waktu": "5/4/2026, 15.33.07",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 4000,
+"diskon": 1000
+},
+{
+"id": "TRX-1775372065659",
+"waktu": "5/4/2026, 14.54.25",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 2000,
+"diskon": 0
+},
+{
+"id": "TRX-1775371650252",
+"waktu": "5/4/2026, 14.47.30",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 6000,
+"diskon": 0
+},
+{
+"id": "TRX-1775371481343",
+"waktu": "5/4/2026, 14.44.41",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 20000,
+"diskon": 0
+},
+{
+"id": "TRX-1775371098299",
+"waktu": "5/4/2026, 14.38.18",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 0,
+"diskon": 0
+},
+{
+"id": "TRX-1775371075248",
+"waktu": "5/4/2026, 14.37.55",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 2000,
+"diskon": 0
+},
+{
+"id": "TRX-1775367938454",
+"waktu": "5/4/2026, 13.45.38",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 1000,
+"diskon": 0
+},
+{
+"id": "TRX-1775367171450",
+"waktu": "5/4/2026, 13.32.51",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 10000,
+"diskon": 0
+},
+{
+"id": "TRX-1775366294121",
+"waktu": "5/4/2026, 13.18.14",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 6000,
+"diskon": 0
+},
+{
+"id": "TRX-1775365843723",
+"waktu": "5/4/2026, 13.10.43",
+"pembeli": "upa",
+"metode": "Cash",
+"total": 38000,
+"diskon": 0
+},
+{
+"id": "TRX-1775364166042",
+"waktu": "5/4/2026, 12.42.46",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 1000,
+"diskon": 0
+},
+{
+"id": "TRX-1775363783352",
+"waktu": "5/4/2026, 12.36.23",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 3000,
+"diskon": 0
+},
+{
+"id": "TRX-1775363646099",
+"waktu": "5/4/2026, 12.34.06",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 12000,
+"diskon": 0
+},
+{
+"id": "TRX-1775363109693",
+"waktu": "5/4/2026, 12.25.09",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 5000,
+"diskon": 0
+},
+{
+"id": "TRX-1775362456358",
+"waktu": "5/4/2026, 12.14.16",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 3000,
+"diskon": 0
+},
+{
+"id": "TRX-1775361553299",
+"waktu": "5/4/2026, 11.59.13",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 2000,
+"diskon": 0
+},
+{
+"id": "TRX-1775361368136",
+"waktu": "5/4/2026, 11.56.08",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 500,
+"diskon": 0
+},
+{
+"id": "TRX-1775360057351",
+"waktu": "5/4/2026, 11.34.17",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 15000,
+"diskon": 0
+},
+{
+"id": "TRX-1775359105417",
+"waktu": "5/4/2026, 11.18.25",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 2000,
+"diskon": 0
+},
+{
+"id": "TRX-1775358233557",
+"waktu": "5/4/2026, 11.03.53",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 2000,
+"diskon": 0
+},
+{
+"id": "TRX-1775357931430",
+"waktu": "5/4/2026, 10.58.51",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 9000,
+"diskon": 0
+},
+{
+"id": "TRX-1775357568747",
+"waktu": "5/4/2026, 10.52.48",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 14500,
+"diskon": 0
+},
+{
+"id": "TRX-1775357004335",
+"waktu": "5/4/2026, 10.43.24",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 4000,
+"diskon": 0
+},
+{
+"id": "TRX-1775356723100",
+"waktu": "5/4/2026, 10.38.43",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 10000,
+"diskon": 0
+},
+{
+"id": "TRX-1775356584450",
+"waktu": "5/4/2026, 10.36.24",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 3500,
+"diskon": 0
+},
+{
+"id": "TRX-1775356137831",
+"waktu": "5/4/2026, 10.28.57",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 7000,
+"diskon": 0
+},
+{
+"id": "TRX-1775355766131",
+"waktu": "5/4/2026, 10.22.46",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 19500,
+"diskon": 0
+},
+{
+"id": "TRX-1775355342471",
+"waktu": "5/4/2026, 10.15.42",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 12000,
+"diskon": 0
+},
+{
+"id": "TRX-1775354400279",
+"waktu": "5/4/2026, 10.00.00",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 16000,
+"diskon": 0
+},
+{
+"id": "TRX-1775354063724",
+"waktu": "5/4/2026, 09.54.23",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 1000,
+"diskon": 0
+},
+{
+"id": "TRX-1775353094433",
+"waktu": "5/4/2026, 09.38.14",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 2000,
+"diskon": 0
+},
+{
+"id": "TRX-1775352983475",
+"waktu": "5/4/2026, 09.36.23",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 2000,
+"diskon": 0
+},
+{
+"id": "TRX-1775351706200",
+"waktu": "5/4/2026, 09.15.06",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 4000,
+"diskon": 0
+},
+{
+"id": "TRX-1775351071562",
+"waktu": "5/4/2026, 09.04.31",
+"pembeli": "inaq ker",
+"metode": "Cash",
+"total": 20000,
+"diskon": 0
+},
+{
+"id": "TRX-1775350009158",
+"waktu": "5/4/2026, 08.46.49",
+"pembeli": "bi alim",
+"metode": "Cash",
+"total": 5500,
+"diskon": 0
+},
+{
+"id": "TRX-1775313868254",
+"waktu": "4/4/2026, 22.44.28",
+"pembeli": "MAMAK N RINA",
+"metode": "Hutang",
+"total": 94000,
+"diskon": 0
+},
+{
+"id": "TRX-1775312560610",
+"waktu": "4/4/2026, 22.22.40",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 5000,
+"diskon": 0
+},
+{
+"id": "TRX-1775311754518",
+"waktu": "4/4/2026, 22.09.14",
+"pembeli": "Umum",
+"metode": "Transfer",
+"total": 110000,
+"diskon": 0
+},
+{
+"id": "TRX-1775311034952",
+"waktu": "4/4/2026, 21.57.14",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 29000,
+"diskon": 0
+},
+{
+"id": "TRX-1775308770313",
+"waktu": "4/4/2026, 21.19.30",
+"pembeli": "MAMAK",
+"metode": "Hutang",
+"total": 8000,
+"diskon": 0
+},
+{
+"id": "TRX-1775308728596",
+"waktu": "4/4/2026, 21.18.48",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 4000,
+"diskon": 0
+},
+{
+"id": "TRX-1775307867148",
+"waktu": "4/4/2026, 21.04.27",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 2000,
+"diskon": 0
+},
+{
+"id": "TRX-1775307271177",
+"waktu": "4/4/2026, 20.54.31",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 4000,
+"diskon": 0
+},
+{
+"id": "TRX-1775306252856",
+"waktu": "4/4/2026, 20.37.32",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 5000,
+"diskon": 0
+},
+{
+"id": "TRX-1775304233848",
+"waktu": "4/4/2026, 20.03.53",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 4000,
+"diskon": 0
+},
+{
+"id": "TRX-1775303806860",
+"waktu": "4/4/2026, 19.56.46",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 2000,
+"diskon": 0
+},
+{
+"id": "TRX-1775303767427",
+"waktu": "4/4/2026, 19.56.07",
+"pembeli": "rina",
+"metode": "Hutang",
+"total": 5000,
+"diskon": 0
+},
+{
+"id": "TRX-1775303704384",
+"waktu": "4/4/2026, 19.55.04",
+"pembeli": "Transfer eliza dan admin",
+"metode": "Cash",
+"total": 1360000,
+"diskon": 0
+},
+{
+"id": "TRX-1775303518387",
+"waktu": "4/4/2026, 19.51.58",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 3000,
+"diskon": 0
+},
+{
+"id": "TRX-1775303084451",
+"waktu": "4/4/2026, 19.44.44",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 5000,
+"diskon": 0
+},
+{
+"id": "TRX-1775302804901",
+"waktu": "4/4/2026, 19.40.04",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 2000,
+"diskon": 0
+},
+{
+"id": "TRX-1775302055970",
+"waktu": "4/4/2026, 19.27.35",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 15000,
+"diskon": 500
+},
+{
+"id": "TRX-1775301673819",
+"waktu": "4/4/2026, 19.21.13",
+"pembeli": "bi sar",
+"metode": "Cash",
+"total": 5000,
+"diskon": 1000
+},
+{
+"id": "TRX-1775301152105",
+"waktu": "4/4/2026, 19.12.32",
+"pembeli": "bi sar",
+"metode": "Cash",
+"total": 12000,
+"diskon": 0
+},
+{
+"id": "TRX-1775300179800",
+"waktu": "4/4/2026, 18.56.19",
+"pembeli": "bik pur",
+"metode": "Hutang",
+"total": 22000,
+"diskon": 0
+},
+{
+"id": "TRX-1775300133414",
+"waktu": "4/4/2026, 18.55.33",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 10000,
+"diskon": 0
+},
+{
+"id": "TRX-1775299909569",
+"waktu": "4/4/2026, 18.51.49",
+"pembeli": "Bik Pur",
+"metode": "Hutang",
+"total": 6000,
+"diskon": 0
+},
+{
+"id": "TRX-1775298899664",
+"waktu": "4/4/2026, 18.34.59",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 5000,
+"diskon": 0
+},
+{
+"id": "TRX-1775298299473",
+"waktu": "4/4/2026, 18.24.59",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 2000,
+"diskon": 0
+},
+{
+"id": "TRX-1775298073636",
+"waktu": "4/4/2026, 18.21.13",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 3000,
+"diskon": 0
+},
+{
+"id": "TRX-1775297977627",
+"waktu": "4/4/2026, 18.19.37",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 3000,
+"diskon": 0
+},
+{
+"id": "TRX-1775297333822",
+"waktu": "4/4/2026, 18.08.53",
+"pembeli": "SAPOK  BAYAR  HUTANG",
+"metode": "Cash",
+"total": 50000,
+"diskon": 0
+},
+{
+"id": "TRX-1775297281362",
+"waktu": "4/4/2026, 18.08.01",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 8000,
+"diskon": 0
+},
+{
+"id": "TRX-1775297030273",
+"waktu": "4/4/2026, 18.03.50",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 2000,
+"diskon": 0
+},
+{
+"id": "TRX-1775296798289",
+"waktu": "4/4/2026, 17.59.58",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 2000,
+"diskon": 0
+},
+{
+"id": "TRX-1775295811529",
+"waktu": "4/4/2026, 17.43.31",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 3000,
+"diskon": 0
+},
+{
+"id": "TRX-1775295720745",
+"waktu": "4/4/2026, 17.42.00",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 0,
+"diskon": 0
+},
+{
+"id": "TRX-1775295717437",
+"waktu": "4/4/2026, 17.41.57",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 2000,
+"diskon": 0
+},
+{
+"id": "TRX-1775295335635",
+"waktu": "4/4/2026, 17.35.35",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 10000,
+"diskon": 0
+},
+{
+"id": "TRX-1775294963340",
+"waktu": "4/4/2026, 17.29.23",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 3000,
+"diskon": 0
+},
+{
+"id": "TRX-1775294446088",
+"waktu": "4/4/2026, 17.20.46",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 4000,
+"diskon": 0
+},
+{
+"id": "TRX-1775293961097",
+"waktu": "4/4/2026, 17.12.41",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 6000,
+"diskon": 0
+},
+{
+"id": "TRX-1775293448046",
+"waktu": "4/4/2026, 17.04.08",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 25000,
+"diskon": 0
+},
+{
+"id": "TRX-1775292445571",
+"waktu": "4/4/2026, 16.47.25",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 8000,
+"diskon": 0
+},
+{
+"id": "TRX-1775292388054",
+"waktu": "4/4/2026, 16.46.28",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 7000,
+"diskon": 0
+},
+{
+"id": "TRX-1775290588784",
+"waktu": "4/4/2026, 16.16.28",
+"pembeli": "sogah bayar hutang rokok scorpion",
+"metode": "Cash",
+"total": 31000,
+"diskon": 0
+},
+{
+"id": "TRX-1775290500381",
+"waktu": "4/4/2026, 16.15.00",
+"pembeli": "sogah",
+"metode": "Cash",
+"total": 32000,
+"diskon": 0
+},
+{
+"id": "TRX-1775290269693",
+"waktu": "4/4/2026, 16.11.09",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 5000,
+"diskon": 0
+},
+{
+"id": "TRX-1775289931692",
+"waktu": "4/4/2026, 16.05.31",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 3000,
+"diskon": 0
+},
+{
+"id": "TRX-1775289793063",
+"waktu": "4/4/2026, 16.03.13",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 7500,
+"diskon": 0
+},
+{
+"id": "TRX-1775288007848",
+"waktu": "4/4/2026, 15.33.27",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 2000,
+"diskon": 0
+},
+{
+"id": "TRX-1775282976105",
+"waktu": "4/4/2026, 14.09.36",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 2000,
+"diskon": 0
+},
+{
+"id": "TRX-1775282234738",
+"waktu": "4/4/2026, 13.57.14",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 5000,
+"diskon": 0
+},
+{
+"id": "TRX-1775282066805",
+"waktu": "4/4/2026, 13.54.26",
+"pembeli": "radinal",
+"metode": "Cash",
+"total": 30000,
+"diskon": 0
+},
+{
+"id": "TRX-1775281978832",
+"waktu": "4/4/2026, 13.52.58",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 2000,
+"diskon": 0
+},
+{
+"id": "TRX-1775271301738",
+"waktu": "4/4/2026, 10.55.01",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 27000,
+"diskon": 0
+},
+{
+"id": "TRX-1775270289735",
+"waktu": "4/4/2026, 10.38.09",
+"pembeli": "agas",
+"metode": "Cash",
+"total": 1000,
+"diskon": 0
+},
+{
+"id": "TRX-1775269674457",
+"waktu": "4/4/2026, 10.27.54",
+"pembeli": "Bik pur bayar hutang",
+"metode": "Cash",
+"total": 250000,
+"diskon": 0
+},
+{
+"id": "TRX-1775269417587",
+"waktu": "4/4/2026, 10.23.37",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 2000,
+"diskon": 0
+},
+{
+"id": "TRX-1775269147236",
+"waktu": "4/4/2026, 10.19.07",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 31000,
+"diskon": 0
+},
+{
+"id": "TRX-1775268498120",
+"waktu": "4/4/2026, 10.08.18",
+"pembeli": "inan teo",
+"metode": "Cash",
+"total": 7500,
+"diskon": 0
+},
+{
+"id": "TRX-1775268379175",
+"waktu": "4/4/2026, 10.06.19",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 2000,
+"diskon": 0
+},
+{
+"id": "TRX-1775268255860",
+"waktu": "4/4/2026, 10.04.15",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 2000,
+"diskon": 0
+},
+{
+"id": "TRX-1775267434635",
+"waktu": "4/4/2026, 09.50.34",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 2000,
+"diskon": 0
+},
+{
+"id": "TRX-1775267169627",
+"waktu": "4/4/2026, 09.46.09",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 4000,
+"diskon": 0
+},
+{
+"id": "TRX-1775266612877",
+"waktu": "4/4/2026, 09.36.52",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 10000,
+"diskon": 0
+},
+{
+"id": "TRX-1775265879412",
+"waktu": "4/4/2026, 09.24.39",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 2000,
+"diskon": 0
+},
+{
+"id": "TRX-1775263619634",
+"waktu": "4/4/2026, 08.46.59",
+"pembeli": "ratnip",
+"metode": "Cash",
+"total": 7000,
+"diskon": 0
+},
+{
+"id": "TRX-1775262901730",
+"waktu": "4/4/2026, 08.35.01",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 60000,
+"diskon": 0
+},
+{
+"id": "TRX-1775262679194",
+"waktu": "4/4/2026, 08.31.19",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 7000,
+"diskon": 0
+},
+{
+"id": "TRX-1775262470952",
+"waktu": "4/4/2026, 08.27.50",
+"pembeli": "bambang",
+"metode": "Cash",
+"total": 2000,
+"diskon": 0
+},
+{
+"id": "TRX-1775262395940",
+"waktu": "4/4/2026, 08.26.35",
+"pembeli": "irakasma",
+"metode": "Cash",
+"total": 1000,
+"diskon": 0
+},
+{
+"id": "TRX-1775214852937",
+"waktu": "3/4/2026, 19.14.12",
+"pembeli": "amaq ogah",
+"metode": "Hutang",
+"total": 31000,
+"diskon": 0
+},
+{
+"id": "TRX-1775214560720",
+"waktu": "3/4/2026, 19.09.20",
+"pembeli": "judi",
+"metode": "Cash",
+"total": 20000,
+"diskon": 2000
+},
+{
+"id": "TRX-1775213323656",
+"waktu": "3/4/2026, 18.48.43",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 3000,
+"diskon": 0
+},
+{
+"id": "TRX-1775213128696",
+"waktu": "3/4/2026, 18.45.28",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 5000,
+"diskon": 0
+},
+{
+"id": "TRX-1775211704342",
+"waktu": "3/4/2026, 18.21.44",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 1000,
+"diskon": 0
+},
+{
+"id": "TRX-1775210741426",
+"waktu": "3/4/2026, 18.05.41",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 7000,
+"diskon": 0
+},
+{
+"id": "TRX-1775209325046",
+"waktu": "3/4/2026, 17.42.05",
+"pembeli": "ratnip",
+"metode": "Cash",
+"total": 14000,
+"diskon": 0
+},
+{
+"id": "TRX-1775207780447",
+"waktu": "3/4/2026, 17.16.20",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 5000,
+"diskon": 0
+},
+{
+"id": "TRX-1775207651945",
+"waktu": "3/4/2026, 17.14.11",
+"pembeli": "bibik aya",
+"metode": "Hutang",
+"total": 5000,
+"diskon": 0
+},
+{
+"id": "TRX-1775206148167",
+"waktu": "3/4/2026, 16.49.08",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 5500,
+"diskon": 0
+},
+{
+"id": "TRX-1775204902842",
+"waktu": "3/4/2026, 16.28.22",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 31000,
+"diskon": 0
+},
+{
+"id": "TRX-1775202918821",
+"waktu": "3/4/2026, 15.55.18",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 10000,
+"diskon": 0
+},
+{
+"id": "TRX-1775202605660",
+"waktu": "3/4/2026, 15.50.05",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 1500,
+"diskon": 0
+},
+{
+"id": "TRX-1775202411028",
+"waktu": "3/4/2026, 15.46.51",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 5000,
+"diskon": 0
+},
+{
+"id": "TRX-1775202080199",
+"waktu": "3/4/2026, 15.41.20",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 1000,
+"diskon": 0
+},
+{
+"id": "TRX-1775201686976",
+"waktu": "3/4/2026, 15.34.46",
+"pembeli": "bapak sap",
+"metode": "Hutang",
+"total": 8000,
+"diskon": 0
+},
+{
+"id": "TRX-1775200842321",
+"waktu": "3/4/2026, 15.20.42",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 2000,
+"diskon": 0
+},
+{
+"id": "TRX-1775200359558",
+"waktu": "3/4/2026, 15.12.39",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 1000,
+"diskon": 0
+},
+{
+"id": "TRX-1775198635097",
+"waktu": "3/4/2026, 14.43.55",
+"pembeli": "RINA",
+"metode": "Hutang",
+"total": 4000,
+"diskon": 0
+},
+{
+"id": "TRX-1775198547159",
+"waktu": "3/4/2026, 14.42.27",
+"pembeli": "bibik aya",
+"metode": "Hutang",
+"total": 5000,
+"diskon": 0
+},
+{
+"id": "TRX-1775197665876",
+"waktu": "3/4/2026, 14.27.45",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 13500,
+"diskon": 0
+},
+{
+"id": "TRX-1775196820598",
+"waktu": "3/4/2026, 14.13.40",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 1000,
+"diskon": 0
+},
+{
+"id": "TRX-1775196639037",
+"waktu": "3/4/2026, 14.10.39",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 3000,
+"diskon": 0
+},
+{
+"id": "TRX-1775193677477",
+"waktu": "3/4/2026, 13.21.17",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 4500,
+"diskon": 0
+},
+{
+"id": "TRX-1775192373008",
+"waktu": "3/4/2026, 12.59.33",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 5000,
+"diskon": 0
+},
+{
+"id": "TRX-1775191968287",
+"waktu": "3/4/2026, 12.52.48",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 1500,
+"diskon": 0
+},
+{
+"id": "TRX-1775189434240",
+"waktu": "3/4/2026, 12.10.34",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 19000,
+"diskon": 0
+},
+{
+"id": "TRX-1775187063417",
+"waktu": "3/4/2026, 11.31.03",
+"pembeli": "Umum",
+"metode": "Cash",
+"total": 95000,
+"diskon": 0
+},
+{
+"id": "TRX-1775185705082",
+"waktu": "3/4/2026, 11.08.25",
+"pembeli": "sawan pak maed",
+"metode": "Cash",
+"total": 20000,
+"diskon": 2000
+},
+{
+"id": "TRX-1775180948031",
+"waktu": "3/4/2026, 09.49.08",
+"pembeli": "judi",
+"metode": "Cash",
+"total": 5500,
+"diskon": 0
+},
+{
+"id": "TRX-1775179868898",
+"waktu": "3/4/2026, 09.31.08",
+"pembeli": "irakasma",
+"metode": "Cash",
+"total": 22000,
+"diskon": 0
+}
+]));
   }
   if (!localStorage.getItem(DB_PENGELUARAN)) {
     localStorage.setItem(DB_PENGELUARAN, JSON.stringify([]));
@@ -176,7 +8668,7 @@ function doLogin(e) {
     sessionStorage.setItem("currentAdminUsername", found.username);
     // Sync legacy DB_ADMIN
     localStorage.setItem(DB_ADMIN, JSON.stringify(found));
-    window.location.href = "index.html";
+    window.location.href = "dashboard.html";
   } else {
     showToast("Username atau password salah!", "danger");
     const el = document.getElementById("loginPass");

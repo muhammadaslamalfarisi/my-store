@@ -244,9 +244,17 @@
             <h1><i class="bi bi-box-seam-fill me-2"></i>Manajemen Produk</h1>
             <div class="d-flex gap-2 flex-wrap">
               <span id="statProduk"></span>
-              <label class="btn btn-outline-primary btn-sm mb-0" title="Import Excel">
+              <label
+                class="btn btn-outline-primary btn-sm mb-0"
+                title="Import Excel"
+              >
                 <i class="bi bi-file-earmark-arrow-up me-1"></i>Import Excel
-                <input type="file" accept=".xlsx,.xls" style="display:none" onchange="importProdukExcel(this)">
+                <input
+                  type="file"
+                  accept=".xlsx,.xls"
+                  style="display: none"
+                  onchange="importProdukExcel(this)"
+                />
               </label>
               <button
                 class="btn btn-success btn-sm"
@@ -599,10 +607,5 @@
       document.getElementById("footerYear").textContent =
         new Date().getFullYear();
     </script>
-    <!-- Firebase Realtime Database SDK -->
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
-  <!-- Ming Mart Sync -->
-  <script src="dist/js/sync.js"></script>
-</body>
+  </body>
 </html>

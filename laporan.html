@@ -240,9 +240,17 @@
           <div class="content-header">
             <h1><i class="bi bi-bar-chart-fill me-2"></i>Laporan Penjualan</h1>
             <div class="d-flex gap-2 flex-wrap">
-              <label class="btn btn-outline-primary btn-sm mb-0" title="Import Transaksi dari Excel">
+              <label
+                class="btn btn-outline-primary btn-sm mb-0"
+                title="Import Transaksi dari Excel"
+              >
                 <i class="bi bi-file-earmark-arrow-up me-1"></i>Import Excel
-                <input type="file" accept=".xlsx,.xls" style="display:none" onchange="importLaporanExcel(this)">
+                <input
+                  type="file"
+                  accept=".xlsx,.xls"
+                  style="display: none"
+                  onchange="importLaporanExcel(this)"
+                />
               </label>
               <div class="dropdown">
                 <button
@@ -368,10 +376,20 @@
 
           <!-- Laporan Pendataan Keuangan -->
           <div class="card mb-4 border-0 shadow-sm">
-            <div class="card-header d-flex align-items-center justify-content-between flex-wrap gap-2 bg-body">
-              <span class="fw-semibold"><i class="bi bi-journal-text text-success me-2"></i>Laporan Pendataan Keuangan</span>
+            <div
+              class="card-header d-flex align-items-center justify-content-between flex-wrap gap-2 bg-body"
+            >
+              <span class="fw-semibold"
+                ><i class="bi bi-journal-text text-success me-2"></i>Laporan
+                Pendataan Keuangan</span
+              >
               <div class="d-flex gap-2 align-items-center flex-wrap">
-                <select id="filterPeriodeLaporan" class="form-select form-select-sm" style="width:160px" onchange="renderLaporanKeuangan()">
+                <select
+                  id="filterPeriodeLaporan"
+                  class="form-select form-select-sm"
+                  style="width: 160px"
+                  onchange="renderLaporanKeuangan()"
+                >
                   <option value="semua">Semua Periode</option>
                   <option value="hari_ini">Hari Ini</option>
                   <option value="minggu_ini">Minggu Ini</option>
@@ -385,47 +403,111 @@
               <div class="row g-3 mb-3">
                 <!-- Pemasukan -->
                 <div class="col-md-4">
-                  <div class="p-3 rounded-3 h-100" style="background:rgba(25,135,84,.07); border:1px solid rgba(25,135,84,.2)">
+                  <div
+                    class="p-3 rounded-3 h-100"
+                    style="
+                      background: rgba(25, 135, 84, 0.07);
+                      border: 1px solid rgba(25, 135, 84, 0.2);
+                    "
+                  >
                     <div class="d-flex align-items-center gap-2 mb-2">
-                      <div class="rounded-circle d-flex align-items-center justify-content-center bg-success bg-opacity-10" style="width:38px;height:38px">
-                        <i class="bi bi-arrow-down-circle-fill text-success fs-5"></i>
+                      <div
+                        class="rounded-circle d-flex align-items-center justify-content-center bg-success bg-opacity-10"
+                        style="width: 38px; height: 38px"
+                      >
+                        <i
+                          class="bi bi-arrow-down-circle-fill text-success fs-5"
+                        ></i>
                       </div>
-                      <span class="text-muted small fw-semibold">TOTAL PEMASUKAN</span>
+                      <span class="text-muted small fw-semibold"
+                        >TOTAL PEMASUKAN</span
+                      >
                     </div>
-                    <div class="fw-bold fs-5 text-success" id="lkPemasukan">Rp 0</div>
-                    <div class="text-muted small mt-1" id="lkJmlTransaksi">0 transaksi</div>
+                    <div class="fw-bold fs-5 text-success" id="lkPemasukan">
+                      Rp 0
+                    </div>
+                    <div class="text-muted small mt-1" id="lkJmlTransaksi">
+                      0 transaksi
+                    </div>
                   </div>
                 </div>
                 <!-- Operator minus -->
                 <div class="col-md-4">
-                  <div class="p-3 rounded-3 h-100" style="background:rgba(220,53,69,.07); border:1px solid rgba(220,53,69,.2)">
+                  <div
+                    class="p-3 rounded-3 h-100"
+                    style="
+                      background: rgba(220, 53, 69, 0.07);
+                      border: 1px solid rgba(220, 53, 69, 0.2);
+                    "
+                  >
                     <div class="d-flex align-items-center gap-2 mb-2">
-                      <div class="rounded-circle d-flex align-items-center justify-content-center bg-danger bg-opacity-10" style="width:38px;height:38px">
-                        <i class="bi bi-arrow-up-circle-fill text-danger fs-5"></i>
+                      <div
+                        class="rounded-circle d-flex align-items-center justify-content-center bg-danger bg-opacity-10"
+                        style="width: 38px; height: 38px"
+                      >
+                        <i
+                          class="bi bi-arrow-up-circle-fill text-danger fs-5"
+                        ></i>
                       </div>
-                      <span class="text-muted small fw-semibold">TOTAL PENGELUARAN</span>
+                      <span class="text-muted small fw-semibold"
+                        >TOTAL PENGELUARAN</span
+                      >
                     </div>
-                    <div class="fw-bold fs-5 text-danger" id="lkPengeluaran">Rp 0</div>
-                    <div class="text-muted small mt-1" id="lkJmlPengeluaran">0 pos pengeluaran</div>
+                    <div class="fw-bold fs-5 text-danger" id="lkPengeluaran">
+                      Rp 0
+                    </div>
+                    <div class="text-muted small mt-1" id="lkJmlPengeluaran">
+                      0 pos pengeluaran
+                    </div>
                   </div>
                 </div>
                 <!-- Pendapatan Bersih -->
                 <div class="col-md-4">
-                  <div class="p-3 rounded-3 h-100" id="lkBersihCard" style="background:rgba(13,110,253,.07); border:1px solid rgba(13,110,253,.2)">
+                  <div
+                    class="p-3 rounded-3 h-100"
+                    id="lkBersihCard"
+                    style="
+                      background: rgba(13, 110, 253, 0.07);
+                      border: 1px solid rgba(13, 110, 253, 0.2);
+                    "
+                  >
                     <div class="d-flex align-items-center gap-2 mb-2">
-                      <div class="rounded-circle d-flex align-items-center justify-content-center bg-primary bg-opacity-10" style="width:38px;height:38px">
-                        <i class="bi bi-wallet2 text-primary fs-5" id="lkBersihIcon"></i>
+                      <div
+                        class="rounded-circle d-flex align-items-center justify-content-center bg-primary bg-opacity-10"
+                        style="width: 38px; height: 38px"
+                      >
+                        <i
+                          class="bi bi-wallet2 text-primary fs-5"
+                          id="lkBersihIcon"
+                        ></i>
                       </div>
-                      <span class="text-muted small fw-semibold">PENDAPATAN BERSIH</span>
+                      <span class="text-muted small fw-semibold"
+                        >PENDAPATAN BERSIH</span
+                      >
                     </div>
-                    <div class="fw-bold fs-5" id="lkPendapatanBersih" style="color:var(--lk-bersih-color, #0d6efd)">Rp 0</div>
-                    <div class="small mt-1" id="lkStatusBersih" style="color:var(--lk-bersih-color, #0d6efd)">Pemasukan − Pengeluaran</div>
+                    <div
+                      class="fw-bold fs-5"
+                      id="lkPendapatanBersih"
+                      style="color: var(--lk-bersih-color, #0d6efd)"
+                    >
+                      Rp 0
+                    </div>
+                    <div
+                      class="small mt-1"
+                      id="lkStatusBersih"
+                      style="color: var(--lk-bersih-color, #0d6efd)"
+                    >
+                      Pemasukan − Pengeluaran
+                    </div>
                   </div>
                 </div>
               </div>
 
               <!-- Rumus visual -->
-              <div class="d-flex align-items-center justify-content-center gap-2 flex-wrap p-3 rounded-3" style="background:rgba(0,0,0,.03)">
+              <div
+                class="d-flex align-items-center justify-content-center gap-2 flex-wrap p-3 rounded-3"
+                style="background: rgba(0, 0, 0, 0.03)"
+              >
                 <div class="text-center">
                   <div class="text-muted small">Pemasukan</div>
                   <div class="fw-bold text-success" id="lkFormulaA">Rp 0</div>
@@ -438,7 +520,13 @@
                 <span class="fs-4 text-muted">=</span>
                 <div class="text-center">
                   <div class="text-muted small">Pendapatan Bersih</div>
-                  <div class="fw-bold fs-5" id="lkFormulaC" style="color:var(--lk-bersih-color, #0d6efd)">Rp 0</div>
+                  <div
+                    class="fw-bold fs-5"
+                    id="lkFormulaC"
+                    style="color: var(--lk-bersih-color, #0d6efd)"
+                  >
+                    Rp 0
+                  </div>
                 </div>
               </div>
             </div>
@@ -771,71 +859,112 @@
       });
 
       function renderLaporanKeuangan() {
-        const periode = document.getElementById("filterPeriodeLaporan")?.value || "semua";
+        const periode =
+          document.getElementById("filterPeriodeLaporan")?.value || "semua";
         const now = new Date();
 
         // --- Filter riwayat (pemasukan) ---
         let riwayat = JSON.parse(localStorage.getItem("pos_riwayat")) || [];
         if (periode === "hari_ini") {
           const today = now.toLocaleDateString("id-ID");
-          riwayat = riwayat.filter(t => new Date(t.waktu).toLocaleDateString("id-ID") === today);
+          riwayat = riwayat.filter(
+            (t) => new Date(t.waktu).toLocaleDateString("id-ID") === today,
+          );
         } else if (periode === "minggu_ini") {
-          const startWeek = new Date(now); startWeek.setDate(now.getDate() - now.getDay()); startWeek.setHours(0,0,0,0);
-          riwayat = riwayat.filter(t => new Date(t.waktu) >= startWeek);
+          const startWeek = new Date(now);
+          startWeek.setDate(now.getDate() - now.getDay());
+          startWeek.setHours(0, 0, 0, 0);
+          riwayat = riwayat.filter((t) => new Date(t.waktu) >= startWeek);
         } else if (periode === "bulan_ini") {
-          riwayat = riwayat.filter(t => { const d = new Date(t.waktu); return d.getMonth()===now.getMonth() && d.getFullYear()===now.getFullYear(); });
+          riwayat = riwayat.filter((t) => {
+            const d = new Date(t.waktu);
+            return (
+              d.getMonth() === now.getMonth() &&
+              d.getFullYear() === now.getFullYear()
+            );
+          });
         } else if (periode === "tahun_ini") {
-          riwayat = riwayat.filter(t => new Date(t.waktu).getFullYear() === now.getFullYear());
+          riwayat = riwayat.filter(
+            (t) => new Date(t.waktu).getFullYear() === now.getFullYear(),
+          );
         }
         const totalPemasukan = riwayat.reduce((s, t) => s + (t.total || 0), 0);
 
         // --- Filter pengeluaran ---
-        let pengeluaran = JSON.parse(localStorage.getItem("pos_pengeluaran")) || [];
+        let pengeluaran =
+          JSON.parse(localStorage.getItem("pos_pengeluaran")) || [];
         if (periode === "hari_ini") {
           const today = now.toLocaleDateString("id-ID");
-          pengeluaran = pengeluaran.filter(p => new Date(p.tanggal).toLocaleDateString("id-ID") === today);
+          pengeluaran = pengeluaran.filter(
+            (p) => new Date(p.tanggal).toLocaleDateString("id-ID") === today,
+          );
         } else if (periode === "minggu_ini") {
-          const startWeek = new Date(now); startWeek.setDate(now.getDate() - now.getDay()); startWeek.setHours(0,0,0,0);
-          pengeluaran = pengeluaran.filter(p => new Date(p.tanggal) >= startWeek);
+          const startWeek = new Date(now);
+          startWeek.setDate(now.getDate() - now.getDay());
+          startWeek.setHours(0, 0, 0, 0);
+          pengeluaran = pengeluaran.filter(
+            (p) => new Date(p.tanggal) >= startWeek,
+          );
         } else if (periode === "bulan_ini") {
-          pengeluaran = pengeluaran.filter(p => { const d = new Date(p.tanggal); return d.getMonth()===now.getMonth() && d.getFullYear()===now.getFullYear(); });
+          pengeluaran = pengeluaran.filter((p) => {
+            const d = new Date(p.tanggal);
+            return (
+              d.getMonth() === now.getMonth() &&
+              d.getFullYear() === now.getFullYear()
+            );
+          });
         } else if (periode === "tahun_ini") {
-          pengeluaran = pengeluaran.filter(p => new Date(p.tanggal).getFullYear() === now.getFullYear());
+          pengeluaran = pengeluaran.filter(
+            (p) => new Date(p.tanggal).getFullYear() === now.getFullYear(),
+          );
         }
-        const totalPengeluaran = pengeluaran.reduce((s, p) => s + (p.jumlah || 0), 0);
+        const totalPengeluaran = pengeluaran.reduce(
+          (s, p) => s + (p.jumlah || 0),
+          0,
+        );
 
         const bersih = totalPemasukan - totalPengeluaran;
-        const fmt = n => `Rp ${Math.abs(n).toLocaleString("id-ID")}`;
-        const fmtSigned = n => (n < 0 ? `−${fmt(n)}` : fmt(n));
+        const fmt = (n) => `Rp ${Math.abs(n).toLocaleString("id-ID")}`;
+        const fmtSigned = (n) => (n < 0 ? `−${fmt(n)}` : fmt(n));
 
         // Warna pendapatan bersih
         const color = bersih >= 0 ? "#198754" : "#dc3545";
         document.documentElement.style.setProperty("--lk-bersih-color", color);
 
         // Update elemen
-        const s = id => document.getElementById(id);
-        if (s("lkPemasukan")) s("lkPemasukan").textContent = fmt(totalPemasukan);
-        if (s("lkJmlTransaksi")) s("lkJmlTransaksi").textContent = `${riwayat.length} transaksi`;
-        if (s("lkPengeluaran")) s("lkPengeluaran").textContent = fmt(totalPengeluaran);
-        if (s("lkJmlPengeluaran")) s("lkJmlPengeluaran").textContent = `${pengeluaran.length} pos pengeluaran`;
-        if (s("lkPendapatanBersih")) s("lkPendapatanBersih").textContent = fmtSigned(bersih);
+        const s = (id) => document.getElementById(id);
+        if (s("lkPemasukan"))
+          s("lkPemasukan").textContent = fmt(totalPemasukan);
+        if (s("lkJmlTransaksi"))
+          s("lkJmlTransaksi").textContent = `${riwayat.length} transaksi`;
+        if (s("lkPengeluaran"))
+          s("lkPengeluaran").textContent = fmt(totalPengeluaran);
+        if (s("lkJmlPengeluaran"))
+          s("lkJmlPengeluaran").textContent =
+            `${pengeluaran.length} pos pengeluaran`;
+        if (s("lkPendapatanBersih"))
+          s("lkPendapatanBersih").textContent = fmtSigned(bersih);
         if (s("lkStatusBersih")) {
           s("lkStatusBersih").textContent = bersih >= 0 ? "✓ Untung" : "⚠ Rugi";
         }
         if (s("lkBersihIcon")) {
-          s("lkBersihIcon").className = bersih >= 0
-            ? "bi bi-graph-up-arrow text-success fs-5"
-            : "bi bi-graph-down-arrow text-danger fs-5";
+          s("lkBersihIcon").className =
+            bersih >= 0
+              ? "bi bi-graph-up-arrow text-success fs-5"
+              : "bi bi-graph-down-arrow text-danger fs-5";
         }
         if (s("lkBersihCard")) {
-          const bg = bersih >= 0 ? "rgba(25,135,84,.07)" : "rgba(220,53,69,.07)";
-          const border = bersih >= 0 ? "rgba(25,135,84,.2)" : "rgba(220,53,69,.2)";
+          const bg =
+            bersih >= 0 ? "rgba(25,135,84,.07)" : "rgba(220,53,69,.07)";
+          const border =
+            bersih >= 0 ? "rgba(25,135,84,.2)" : "rgba(220,53,69,.2)";
           s("lkBersihCard").style.background = bg;
           s("lkBersihCard").style.border = `1px solid ${border}`;
         }
         // Formula bar
         if (s("lkFormulaA")) s("lkFormulaA").textContent = fmt(totalPemasukan);
-        if (s("lkFormulaB")) s("lkFormulaB").textContent = fmt(totalPengeluaran);
+        if (s("lkFormulaB"))
+          s("lkFormulaB").textContent = fmt(totalPengeluaran);
         if (s("lkFormulaC")) s("lkFormulaC").textContent = fmtSigned(bersih);
       }
 
@@ -888,10 +1017,5 @@
       document.getElementById("footerYear").textContent =
         new Date().getFullYear();
     </script>
-    <!-- Firebase Realtime Database SDK -->
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
-  <!-- Ming Mart Sync -->
-  <script src="dist/js/sync.js"></script>
-</body>
+  </body>
 </html>

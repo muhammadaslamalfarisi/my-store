@@ -10566,15 +10566,24 @@ async function cetakPDF(
     else {
       const url = doc.output("bloburl");
       const f = document.createElement("iframe");
+      f.id = "printFrame_" + Date.now();
       f.style.display = "none";
       f.src = url;
       document.body.appendChild(f);
       f.onload = () => {
         f.contentWindow.print();
-        setTimeout(() => f.remove(), 1000);
+        // Keep iframe for repeat printing instead of removing it
+        f.contentWindow.addEventListener("afterprint", () => {
+          console.log(
+            "Print dialog closed, iframe remains for repeat printing",
+          );
+        });
       };
     }
-    showToast("Struk berhasil!", "success");
+    showToast(
+      "Struk berhasil! Dialog cetak bisa digunakan berulang kali.",
+      "success",
+    );
   } catch (e) {
     showToast("Gagal buat struk: " + e.message, "danger");
   }

@@ -543,6 +543,94 @@
             </div>
           </div>
 
+          <!-- Rekapan Transaksi Harian, Mingguan, Bulanan, Tahunan -->
+          <div class="card mb-4 border-0 shadow-sm">
+            <div
+              class="card-header d-flex align-items-center justify-content-between flex-wrap gap-2 bg-body"
+            >
+              <span class="fw-semibold"
+                ><i class="bi bi-graph-up text-info me-2"></i>Rekapan
+                Transaksi</span
+              >
+              <select
+                id="filterRekapan"
+                class="form-select form-select-sm"
+                style="width: 180px"
+                onchange="renderRekapanTransaksi()"
+              >
+                <option value="harian">Rekapan Harian</option>
+                <option value="mingguan">Rekapan Mingguan</option>
+                <option value="bulanan" selected>Rekapan Bulanan</option>
+                <option value="tahunan">Rekapan Tahunan</option>
+              </select>
+            </div>
+            <div class="card-body">
+              <div class="row g-3 mb-4">
+                <div class="col-md-3">
+                  <div
+                    class="p-3 rounded-3"
+                    style="
+                      background: rgba(13, 110, 253, 0.08);
+                      border: 1px solid rgba(13, 110, 253, 0.2);
+                    "
+                  >
+                    <div class="small text-muted mb-1">Total Omzet</div>
+                    <div class="fw-bold fs-5 text-primary" id="rekapOmzet">
+                      Rp 0
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div
+                    class="p-3 rounded-3"
+                    style="
+                      background: rgba(25, 135, 84, 0.08);
+                      border: 1px solid rgba(25, 135, 84, 0.2);
+                    "
+                  >
+                    <div class="small text-muted mb-1">Total Transaksi</div>
+                    <div class="fw-bold fs-5 text-success" id="rekapJmlTrx">
+                      0
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div
+                    class="p-3 rounded-3"
+                    style="
+                      background: rgba(255, 193, 7, 0.08);
+                      border: 1px solid rgba(255, 193, 7, 0.2);
+                    "
+                  >
+                    <div class="small text-muted mb-1">Rata-rata Transaksi</div>
+                    <div class="fw-bold fs-5 text-warning" id="rekapRataTrx">
+                      Rp 0
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div
+                    class="p-3 rounded-3"
+                    style="
+                      background: rgba(220, 53, 69, 0.08);
+                      border: 1px solid rgba(220, 53, 69, 0.2);
+                    "
+                  >
+                    <div class="small text-muted mb-1">Item Terjual</div>
+                    <div class="fw-bold fs-5 text-danger" id="rekapJmlItem">
+                      0
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Grafik Rekapan -->
+              <div style="height: 350px">
+                <canvas id="chartRekapan"></canvas>
+              </div>
+            </div>
+          </div>
+
           <!-- Riwayat Transaksi -->
           <div class="card">
             <div
@@ -856,6 +944,7 @@
         updateThemeBtn(getTheme());
         renderDashboard();
         renderLaporanKeuangan();
+        renderRekapanTransaksi();
       });
 
       function renderLaporanKeuangan() {
@@ -966,6 +1055,193 @@
         if (s("lkFormulaB"))
           s("lkFormulaB").textContent = fmt(totalPengeluaran);
         if (s("lkFormulaC")) s("lkFormulaC").textContent = fmtSigned(bersih);
+      }
+
+      function renderRekapanTransaksi() {
+        const tipe =
+          document.getElementById("filterRekapan")?.value || "bulanan";
+        const riwayat = JSON.parse(localStorage.getItem("pos_riwayat")) || [];
+        const now = new Date();
+        let data = {};
+        let label = "";
+        let totalOmzet = 0;
+        let totalItem = 0;
+
+        if (tipe === "harian") {
+          // Harian: group by jam (00:00-23:00)
+          const today = now.toLocaleDateString("id-ID");
+          const hariIni = riwayat.filter(
+            (t) => new Date(t.waktu).toLocaleDateString("id-ID") === today,
+          );
+          for (let i = 0; i < 24; i++) {
+            const jam = i.toString().padStart(2, "0") + ":00";
+            data[jam] = 0;
+          }
+          hariIni.forEach((t) => {
+            const d = new Date(t.waktu);
+            const jam = d.getHours().toString().padStart(2, "0") + ":00";
+            data[jam] += t.total;
+            totalOmzet += t.total;
+            t.items.forEach((i) => (totalItem += i.qty));
+          });
+          label = `Harian (${today})`;
+        } else if (tipe === "mingguan") {
+          // Mingguan: last 7 days
+          const last7 = [];
+          for (let i = 6; i >= 0; i--) {
+            const d = new Date(now);
+            d.setDate(now.getDate() - i);
+            last7.push(d.toLocaleDateString("id-ID"));
+          }
+          last7.forEach((date) => {
+            const val = riwayat
+              .filter(
+                (t) => new Date(t.waktu).toLocaleDateString("id-ID") === date,
+              )
+              .reduce((s, t) => s + (t.total || 0), 0);
+            data[date] = val;
+            totalOmzet += val;
+          });
+          riwayat.forEach((t) => {
+            const d = new Date(t.waktu);
+            const dateStr = d.toLocaleDateString("id-ID");
+            if (last7.includes(dateStr)) {
+              t.items.forEach((i) => (totalItem += i.qty));
+            }
+          });
+          label = "Mingguan (7 Hari Terakhir)";
+        } else if (tipe === "bulanan") {
+          // Bulanan: by days of current month
+          const daysInMonth = new Date(
+            now.getFullYear(),
+            now.getMonth() + 1,
+            0,
+          ).getDate();
+          for (let day = 1; day <= daysInMonth; day++) {
+            const dateStr = new Date(
+              now.getFullYear(),
+              now.getMonth(),
+              day,
+            ).toLocaleDateString("id-ID");
+            data[dateStr] = 0;
+          }
+          riwayat.forEach((t) => {
+            const d = new Date(t.waktu);
+            if (
+              d.getMonth() === now.getMonth() &&
+              d.getFullYear() === now.getFullYear()
+            ) {
+              const dateStr = d.toLocaleDateString("id-ID");
+              data[dateStr] += t.total;
+              totalOmzet += t.total;
+              t.items.forEach((i) => (totalItem += i.qty));
+            }
+          });
+          label = `Bulanan (${now.toLocaleDateString("id-ID", { month: "long", year: "numeric" })})`;
+        } else if (tipe === "tahunan") {
+          // Tahunan: by months
+          const months = [
+            "Jan",
+            "Feb",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct",
+            "Nov",
+            "Dec",
+          ];
+          months.forEach((m) => {
+            data[m] = 0;
+          });
+          riwayat.forEach((t) => {
+            const d = new Date(t.waktu);
+            if (d.getFullYear() === now.getFullYear()) {
+              const month = months[d.getMonth()];
+              data[month] += t.total;
+              totalOmzet += t.total;
+              t.items.forEach((i) => (totalItem += i.qty));
+            }
+          });
+          label = `Tahunan (${now.getFullYear()})`;
+        }
+
+        // Update stat cards
+        const fmt = (n) => `Rp ${n.toLocaleString("id-ID")}`;
+        const jmlTrx = Object.values(data).filter((v) => v > 0).length;
+        const rataTrx = jmlTrx > 0 ? Math.round(totalOmzet / jmlTrx) : 0;
+
+        const s = (id) => document.getElementById(id);
+        if (s("rekapOmzet")) s("rekapOmzet").textContent = fmt(totalOmzet);
+        if (s("rekapJmlTrx")) s("rekapJmlTrx").textContent = jmlTrx;
+        if (s("rekapRataTrx")) s("rekapRataTrx").textContent = fmt(rataTrx);
+        if (s("rekapJmlItem"))
+          s("rekapJmlItem").textContent = totalItem + " Item";
+
+        // Render chart
+        const canvas = document.getElementById("chartRekapan");
+        if (!canvas || typeof Chart === "undefined") return;
+        if (window._chartRekapan) window._chartRekapan.destroy();
+
+        const labels = Object.keys(data);
+        const values = Object.values(data);
+        const colors = [
+          "#0d6efd",
+          "#198754",
+          "#ffc107",
+          "#dc3545",
+          "#6f42c1",
+          "#0dcaf0",
+          "#fd7e14",
+          "#20c997",
+          "#e83e8c",
+          "#6c757d",
+        ];
+
+        window._chartRekapan = new Chart(canvas, {
+          type: "line",
+          data: {
+            labels,
+            datasets: [
+              {
+                label: "Omzet",
+                data: values,
+                backgroundColor: "rgba(13, 110, 253, 0.1)",
+                borderColor: "#0d6efd",
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4,
+                pointRadius: 6,
+                pointBackgroundColor: "#0d6efd",
+                pointBorderColor: "#fff",
+                pointBorderWidth: 2,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { display: true, labels: { font: { size: 12 } } },
+              title: {
+                display: true,
+                text: label,
+                font: { size: 14, weight: "bold" },
+              },
+            },
+            scales: {
+              y: {
+                beginAtZero: true,
+                ticks: {
+                  callback: (v) => "Rp " + (v / 1000000).toFixed(1) + "M",
+                },
+              },
+            },
+          },
+        });
       }
 
       function filterRiwayat() {

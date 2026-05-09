@@ -8824,9 +8824,8 @@ function loadUserInfo() {
   applyTheme(getTheme(), false);
 }
 
-// ============================================================
 //  KELOLA AKUN ADMIN
-// ============================================================
+
 function openModalAkun() {
   const acc = getCurrentAdmin();
   const el = (id) => document.getElementById(id);
@@ -9102,9 +9101,8 @@ function hapusAdmin(id, username) {
   );
 }
 
-// ============================================================
 //  MANAJEMEN PENGELUARAN
-// ============================================================
+
 function getPengeluaran() {
   return JSON.parse(localStorage.getItem(DB_PENGELUARAN)) || [];
 }
@@ -9353,9 +9351,8 @@ function eksporPengeluaranExcel() {
   showToast("Ekspor Excel pengeluaran berhasil!", "success");
 }
 
-// ============================================================
 //  SINKRON STOK — Helper untuk Pembelian Stok
-// ============================================================
+
 function toggleStokFields(kategori, mode) {
   const panelId = mode === "new" ? "panelStokNew" : "panelStokEdit";
   const panel = document.getElementById(panelId);
@@ -9473,9 +9470,8 @@ function clearStokProduk() {
   inp?.focus();
 }
 
-// ============================================================
 //  IMPORT EXCEL FUNCTIONS
-// ============================================================
+
 function importProdukExcel(input) {
   if (typeof XLSX === "undefined") {
     showToast("Library XLSX tidak tersedia!", "warning");
@@ -9654,9 +9650,8 @@ function importLaporanExcel(input) {
   reader.readAsBinaryString(file);
 }
 
-// ============================================================
 //  PRODUK CRUD
-// ============================================================
+
 let editProdukId = null;
 
 function getProducts() {
@@ -9849,9 +9844,8 @@ function eksporProdukExcel() {
   showToast("Ekspor Excel berhasil!", "success");
 }
 
-// ============================================================
 //  KATEGORI CRUD
-// ============================================================
+
 function renderTabelKategori() {
   const tbody = document.getElementById("bodyKategori");
   if (!tbody) return;
@@ -9946,9 +9940,8 @@ function hapusKategori(idx, nama) {
   });
 }
 
-// ============================================================
 //  KASIR / POS
-// ============================================================
+
 let keranjang = [];
 let diskonGlobal = 0;
 let totalBelanja = 0;
@@ -10422,13 +10415,41 @@ function pilihanCetak() {
   });
 }
 
-// ============================================================
-//  CETAK STRUK
-// ============================================================
+// ================================
+// CETAK STRUK MING MART
+// PDF + PRINT + BLUETOOTH
+// ================================
+
+// Ambil jsPDF
 function getJsPDF() {
   return (window.jspdf && window.jspdf.jsPDF) || window.jsPDF || null;
 }
 
+// ================================
+// TEMPLATE DATA STRUK
+// ================================
+function getReceiptData(total, metode, bayar, pembeli, items, diskon = 0) {
+  const acc = JSON.parse(localStorage.getItem(DB_ADMIN)) || {};
+
+  return {
+    toko: "MING MART",
+    alamat1: "Dusun Batu Menjangkong, Desa Anyar",
+    alamat2: "Kec. Bayan, Kab. Lombok Utara",
+    pembeli,
+    tanggal: new Date().toLocaleString("id-ID"),
+    metode,
+    kasir: acc.username || "admin",
+    items,
+    total,
+    bayar,
+    kembali: bayar - total,
+    diskon,
+  };
+}
+
+// ================================
+// CETAK PDF / PRINT
+// ================================
 async function cetakPDF(
   total,
   metode,
@@ -10440,155 +10461,239 @@ async function cetakPDF(
 ) {
   try {
     showToast("Menyiapkan struk...", "info");
+
     const JsPDF = await new Promise((res, rej) => {
       const t = Date.now();
-      const c = () => {
-        const v = getJsPDF();
-        if (v) res(v);
-        else if (Date.now() - t > 8000) rej();
-        else setTimeout(c, 200);
-      };
-      c();
-    });
-    const acc = JSON.parse(localStorage.getItem(DB_ADMIN)) || {};
-    const kembali = bayar - total;
-    const now = new Date().toLocaleString("id-ID");
-    const doc = new JsPDF({ unit: "mm", format: [80, 240] });
 
-    // === LOGO ===
-    let logoY = 8;
+      const cek = () => {
+        const v = getJsPDF();
+
+        if (v) res(v);
+        else if (Date.now() - t > 8000) rej(new Error("jsPDF gagal dimuat"));
+        else setTimeout(cek, 200);
+      };
+
+      cek();
+    });
+
+    const data = getReceiptData(total, metode, bayar, pembeli, items, diskon);
+
+    const doc = new JsPDF({
+      unit: "mm",
+      format: [80, 240],
+    });
+
+    let y = 8;
+
+    // ================================
+    // LOGO
+    // ================================
     try {
       if (LOGO_TOKO_B64) {
-        doc.addImage(
-          LOGO_TOKO_B64,
-          "PNG",
-          28,
-          logoY,
-          24,
-          24,
-          undefined,
-          "FAST",
-        );
-        logoY = 36;
+        doc.addImage(LOGO_TOKO_B64, "PNG", 28, y, 24, 24, undefined, "FAST");
+
+        y += 28;
       }
     } catch (e) {
-      logoY = 8;
+      console.log("Logo gagal dimuat");
     }
 
-    doc.setFontSize(13);
+    // ================================
+    // HEADER
+    // ================================
     doc.setFont("helvetica", "bold");
-    doc.text("MING MART", 40, logoY + 2, { align: "center" });
-    doc.setFontSize(7);
-    doc.setFont("helvetica", "normal");
-    doc.text("Dusun Batu Menjangkong, Desa Anyar", 40, logoY + 7, {
-      align: "center",
-    });
-    doc.text("Kec. Bayan, Kab. Lombok Utara", 40, logoY + 11, {
-      align: "center",
-    });
-    doc.setLineDashPattern([1, 1], 0);
-    doc.line(5, logoY + 14, 75, logoY + 14);
+    doc.setFontSize(13);
 
-    let y = logoY + 20;
-    [
-      ["Pembeli", pembeli],
-      ["Tanggal", now],
-      ["Pembayaran", metode],
-      ["Kasir", acc.username || "admin"],
-    ].forEach(([l, v]) => {
-      doc.setFontSize(8);
-      doc.text(l, 5, y);
-      doc.text(String(v), 75, y, { align: "right" });
-      y += 5;
+    doc.text(data.toko, 40, y, {
+      align: "center",
     });
-    doc.line(5, y, 75, y);
+
     y += 6;
 
-    items.forEach((item) => {
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(7);
+
+    doc.text(data.alamat1, 40, y, {
+      align: "center",
+    });
+
+    y += 4;
+
+    doc.text(data.alamat2, 40, y, {
+      align: "center",
+    });
+
+    y += 5;
+
+    doc.setLineDashPattern([1, 1], 0);
+
+    doc.line(5, y, 75, y);
+
+    y += 7;
+
+    // ================================
+    // INFO TRANSAKSI
+    // ================================
+    const info = [
+      ["Pembeli", data.pembeli],
+      ["Tanggal", data.tanggal],
+      ["Pembayaran", data.metode],
+      ["Kasir", data.kasir],
+    ];
+
+    doc.setFontSize(8);
+
+    info.forEach(([label, value]) => {
+      doc.text(label, 5, y);
+
+      doc.text(String(value), 75, y, {
+        align: "right",
+      });
+
+      y += 5;
+    });
+
+    doc.line(5, y, 75, y);
+
+    y += 7;
+
+    // ================================
+    // ITEM BELANJA
+    // ================================
+    data.items.forEach((item) => {
       doc.setFont("helvetica", "bold");
       doc.setFontSize(8);
+
       doc.text(item.nama, 5, y);
+
       doc.text(`Rp ${item.subtotal.toLocaleString("id-ID")}`, 75, y, {
         align: "right",
       });
+
       y += 5;
+
       doc.setFont("helvetica", "normal");
       doc.setFontSize(7);
-      doc.text(
-        `  ${item.qty} x Rp ${item.harga.toLocaleString("id-ID")}`,
-        5,
-        y,
-      );
-      y += 6;
+
+      doc.text(`${item.qty} x Rp ${item.harga.toLocaleString("id-ID")}`, 7, y);
+
+      y += 7;
     });
 
     doc.line(5, y - 2, 75, y - 2);
-    y += 4;
-    if (diskon > 0) {
-      doc.setFontSize(8);
-      doc.text("Subtotal", 5, y);
-      doc.text(`Rp ${(total + diskon).toLocaleString("id-ID")}`, 75, y, {
-        align: "right",
-      });
-      y += 5;
-      doc.text("Diskon", 5, y);
-      doc.text(`- Rp ${diskon.toLocaleString("id-ID")}`, 75, y, {
-        align: "right",
-      });
-      y += 5;
-    }
-    doc.setFont("helvetica", "bold");
-    doc.setFontSize(10);
-    doc.text("TOTAL", 5, y);
-    doc.text(`Rp ${total.toLocaleString("id-ID")}`, 75, y, { align: "right" });
+
     y += 6;
-    doc.setFontSize(8);
-    doc.setFont("helvetica", "normal");
-    doc.text("Bayar", 5, y);
-    doc.text(`Rp ${bayar.toLocaleString("id-ID")}`, 75, y, { align: "right" });
-    y += 5;
-    doc.text("Kembali", 5, y);
-    doc.text(`Rp ${kembali.toLocaleString("id-ID")}`, 75, y, {
+
+    // ================================
+    // DISKON
+    // ================================
+    if (data.diskon > 0) {
+      doc.setFontSize(8);
+
+      doc.text("Subtotal", 5, y);
+
+      doc.text(
+        `Rp ${(data.total + data.diskon).toLocaleString("id-ID")}`,
+        75,
+        y,
+        {
+          align: "right",
+        },
+      );
+
+      y += 5;
+
+      doc.text("Diskon", 5, y);
+
+      doc.text(`- Rp ${data.diskon.toLocaleString("id-ID")}`, 75, y, {
+        align: "right",
+      });
+
+      y += 6;
+    }
+
+    // ================================
+    // TOTAL
+    // ================================
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(11);
+
+    doc.text("TOTAL", 5, y);
+
+    doc.text(`Rp ${data.total.toLocaleString("id-ID")}`, 75, y, {
       align: "right",
     });
-    y += 12;
+
+    y += 8;
+
+    doc.setFont("helvetica", "normal");
     doc.setFontSize(8);
+
+    doc.text("Bayar", 5, y);
+
+    doc.text(`Rp ${data.bayar.toLocaleString("id-ID")}`, 75, y, {
+      align: "right",
+    });
+
+    y += 5;
+
+    doc.text("Kembali", 5, y);
+
+    doc.text(`Rp ${data.kembali.toLocaleString("id-ID")}`, 75, y, {
+      align: "right",
+    });
+
+    y += 14;
+
+    // ================================
+    // FOOTER
+    // ================================
+    doc.setFontSize(8);
+
     doc.text("Terima kasih sudah berbelanja di Ming Mart!", 40, y, {
       align: "center",
     });
+
     y += 5;
+
     doc.setFontSize(7);
+
     doc.text("* Simpan struk ini sebagai bukti pembelian *", 40, y, {
       align: "center",
     });
 
-    if (aksi === "simpan") doc.save(`Struk-MingMart-${Date.now()}.pdf`);
-    else {
+    // ================================
+    // AKSI
+    // ================================
+    if (aksi === "simpan") {
+      doc.save(`Struk-MingMart-${Date.now()}.pdf`);
+    } else {
       const url = doc.output("bloburl");
-      const f = document.createElement("iframe");
-      f.id = "printFrame_" + Date.now();
-      f.style.display = "none";
-      f.src = url;
-      document.body.appendChild(f);
-      f.onload = () => {
-        f.contentWindow.print();
-        // Keep iframe for repeat printing instead of removing it
-        f.contentWindow.addEventListener("afterprint", () => {
-          console.log(
-            "Print dialog closed, iframe remains for repeat printing",
-          );
-        });
+
+      const iframe = document.createElement("iframe");
+
+      iframe.style.display = "none";
+      iframe.src = url;
+
+      document.body.appendChild(iframe);
+
+      iframe.onload = () => {
+        iframe.contentWindow.focus();
+        iframe.contentWindow.print();
       };
     }
-    showToast(
-      "Struk berhasil! Dialog cetak bisa digunakan berulang kali.",
-      "success",
-    );
+
+    showToast("Struk berhasil dibuat!", "success");
   } catch (e) {
-    showToast("Gagal buat struk: " + e.message, "danger");
+    console.error(e);
+
+    showToast("Gagal membuat struk : " + e.message, "danger");
   }
 }
 
+// ================================
+// CETAK BLUETOOTH
+// ================================
 async function cetakBluetooth(
   total,
   metode,
@@ -10597,60 +10702,158 @@ async function cetakBluetooth(
   items,
   diskon = 0,
 ) {
-  if (!navigator.bluetooth) {
-    showToast("Browser tidak support Bluetooth", "danger");
-    return;
-  }
   try {
+    if (!navigator.bluetooth) {
+      throw new Error("Browser tidak mendukung Bluetooth");
+    }
+
+    showToast("Menghubungkan printer Bluetooth...", "info");
+
+    const data = getReceiptData(total, metode, bayar, pembeli, items, diskon);
+
+    // ================================
+    // CONNECT BLUETOOTH
+    // ================================
     const device = await navigator.bluetooth.requestDevice({
-      filters: [{ services: ["000018f0-0000-1000-8000-00805f9b34fb"] }],
+      acceptAllDevices: true,
+      optionalServices: ["000018f0-0000-1000-8000-00805f9b34fb"],
     });
+
     const server = await device.gatt.connect();
+
     const service = await server.getPrimaryService(
       "000018f0-0000-1000-8000-00805f9b34fb",
     );
-    const char = await service.getCharacteristic(
+
+    const characteristic = await service.getCharacteristic(
       "00002af1-0000-1000-8000-00805f9b34fb",
     );
-    const teks = buatTeksStruk(total, metode, bayar, pembeli, items, diskon);
-    const data = new TextEncoder().encode(teks);
-    for (let i = 0; i < data.length; i += 20)
-      await char.writeValue(data.slice(i, i + 20));
+
+    // ================================
+    // BUAT TEKS STRUK
+    // ================================
+    const text = buatTeksStrukBluetooth(data);
+
+    const encoder = new TextEncoder();
+
+    const bytes = encoder.encode(text);
+
+    // ================================
+    // KIRIM DATA BERTAHAP
+    // ================================
+    for (let i = 0; i < bytes.length; i += 100) {
+      await characteristic.writeValue(bytes.slice(i, i + 100));
+
+      await new Promise((resolve) => setTimeout(resolve, 50));
+    }
+
+    // ================================
+    // CUT PAPER
+    // ================================
+    await characteristic.writeValue(Uint8Array.from([0x1d, 0x56, 0x41, 0x10]));
+
     device.gatt.disconnect();
+
     showToast("Cetak Bluetooth berhasil!", "success");
   } catch (e) {
-    showToast("Gagal cetak Bluetooth: " + e.message, "danger");
+    console.error(e);
+
+    showToast("Gagal cetak Bluetooth : " + e.message, "danger");
   }
 }
 
-function buatTeksStruk(total, metode, bayar, pembeli, items, diskon) {
-  const acc = JSON.parse(localStorage.getItem(DB_ADMIN)) || {};
-  const kembali = bayar - total;
-  const now = new Date().toLocaleString("id-ID");
+// ================================
+// TEMPLATE STRUK BLUETOOTH
+// ================================
+function buatTeksStrukBluetooth(data) {
   const garis = "--------------------------------\n";
-  const center = (s) =>
-    " ".repeat(Math.max(0, Math.floor((32 - s.length) / 2))) + s + "\n";
-  let t =
-    "\x1B\x40" +
-    center("MING MART") +
-    center("Desa Anyar, Lombok Utara") +
-    garis;
-  t +=
-    `Pembeli : ${pembeli}\nTanggal : ${now}\nKasir   : ${acc.username || "admin"}\nMetode  : ${metode}\n` +
-    garis;
-  items.forEach((i) => {
-    t += `${i.nama.substring(0, 20).padEnd(20)}${`Rp ${i.subtotal.toLocaleString("id-ID")}`.padStart(12)}\n  ${i.qty} x Rp ${i.harga.toLocaleString("id-ID")}\n`;
-  });
+
+  const center = (text) => {
+    const spasi = Math.max(0, Math.floor((32 - text.length) / 2));
+
+    return " ".repeat(spasi) + text + "\n";
+  };
+
+  let t = "";
+
+  // RESET
+  t += "\x1B\x40";
+
+  // CENTER
+  t += "\x1B\x61\x01";
+
+  t += center("MING MART");
+
+  t += center("Dusun Batu Menjangkong, Desa Anyar");
+
+  t += center("Kec. Bayan, Kab. Lombok Utara");
+
   t += garis;
-  if (diskon > 0) {
-    t += `Subtotal  : Rp ${(total + diskon).toLocaleString("id-ID")}\nDiskon    : Rp ${diskon.toLocaleString("id-ID")}\n`;
+
+  // LEFT
+  t += "\x1B\x61\x00";
+
+  t += `Pembeli   : ${data.pembeli}\n`;
+  t += `Tanggal   : ${data.tanggal}\n`;
+  t += `Pembayaran: ${data.metode}\n`;
+  t += `Kasir     : ${data.kasir}\n`;
+
+  t += garis;
+
+  // ================================
+  // ITEM
+  // ================================
+  data.items.forEach((item) => {
+    t += `${item.nama}\n`;
+
+    const kiri = `${item.qty} x Rp ${item.harga.toLocaleString("id-ID")}`;
+
+    const kanan = `Rp ${item.subtotal.toLocaleString("id-ID")}`;
+
+    const spasi = Math.max(1, 32 - kiri.length - kanan.length);
+
+    t += kiri + " ".repeat(spasi) + kanan + "\n\n";
+  });
+
+  t += garis;
+
+  // ================================
+  // DISKON
+  // ================================
+  if (data.diskon > 0) {
+    t += `Subtotal : Rp ${(data.total + data.diskon).toLocaleString(
+      "id-ID",
+    )}\n`;
+
+    t += `Diskon   : Rp ${data.diskon.toLocaleString("id-ID")}\n`;
   }
-  t += `\x1B\x21\x08TOTAL     : Rp ${total.toLocaleString("id-ID")}\n\x1B\x21\x00`;
-  t +=
-    `Bayar     : Rp ${bayar.toLocaleString("id-ID")}\nKembali   : Rp ${kembali.toLocaleString("id-ID")}\n` +
-    garis +
-    center("Terima kasih!") +
-    "\n\n\n\x1D\x56\x41";
+
+  // ================================
+  // TOTAL
+  // ================================
+  t += "\x1B\x45\x01";
+
+  t += `TOTAL    : Rp ${data.total.toLocaleString("id-ID")}\n`;
+
+  t += "\x1B\x45\x00";
+
+  t += `Bayar    : Rp ${data.bayar.toLocaleString("id-ID")}\n`;
+
+  t += `Kembali  : Rp ${data.kembali.toLocaleString("id-ID")}\n`;
+
+  t += garis;
+
+  // CENTER
+  t += "\x1B\x61\x01";
+
+  t += "Terima kasih sudah berbelanja\n";
+
+  t += "di Ming Mart!\n\n";
+
+  t += "* Simpan struk ini sebagai bukti pembelian *\n";
+
+  t += "\n\n\n";
+
   return t;
 }
 

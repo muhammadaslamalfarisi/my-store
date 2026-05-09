@@ -10415,19 +10415,21 @@ function pilihanCetak() {
   });
 }
 
-// ================================
+// ======================================
 // CETAK STRUK MING MART
-// PDF + PRINT + BLUETOOTH
-// ================================
+// PDF + PRINT + BLUETOOTH FIX
+// ======================================
 
-// Ambil jsPDF
+// ======================================
+// GET JSPDF
+// ======================================
 function getJsPDF() {
   return (window.jspdf && window.jspdf.jsPDF) || window.jsPDF || null;
 }
 
-// ================================
+// ======================================
 // TEMPLATE DATA STRUK
-// ================================
+// ======================================
 function getReceiptData(total, metode, bayar, pembeli, items, diskon = 0) {
   const acc = JSON.parse(localStorage.getItem(DB_ADMIN)) || {};
 
@@ -10447,9 +10449,9 @@ function getReceiptData(total, metode, bayar, pembeli, items, diskon = 0) {
   };
 }
 
-// ================================
+// ======================================
 // CETAK PDF / PRINT
-// ================================
+// ======================================
 async function cetakPDF(
   total,
   metode,
@@ -10462,18 +10464,19 @@ async function cetakPDF(
   try {
     showToast("Menyiapkan struk...", "info");
 
-    const JsPDF = await new Promise((res, rej) => {
-      const t = Date.now();
+    const JsPDF = await new Promise((resolve, reject) => {
+      const start = Date.now();
 
-      const cek = () => {
+      const check = () => {
         const v = getJsPDF();
 
-        if (v) res(v);
-        else if (Date.now() - t > 8000) rej(new Error("jsPDF gagal dimuat"));
-        else setTimeout(cek, 200);
+        if (v) resolve(v);
+        else if (Date.now() - start > 8000)
+          reject(new Error("jsPDF gagal dimuat"));
+        else setTimeout(check, 200);
       };
 
-      cek();
+      check();
     });
 
     const data = getReceiptData(total, metode, bayar, pembeli, items, diskon);
@@ -10485,22 +10488,20 @@ async function cetakPDF(
 
     let y = 8;
 
-    // ================================
+    // ======================================
     // LOGO
-    // ================================
+    // ======================================
     try {
       if (LOGO_TOKO_B64) {
         doc.addImage(LOGO_TOKO_B64, "PNG", 28, y, 24, 24, undefined, "FAST");
 
         y += 28;
       }
-    } catch (e) {
-      console.log("Logo gagal dimuat");
-    }
+    } catch (e) {}
 
-    // ================================
+    // ======================================
     // HEADER
-    // ================================
+    // ======================================
     doc.setFont("helvetica", "bold");
     doc.setFontSize(13);
 
@@ -10531,9 +10532,9 @@ async function cetakPDF(
 
     y += 7;
 
-    // ================================
-    // INFO TRANSAKSI
-    // ================================
+    // ======================================
+    // INFO
+    // ======================================
     const info = [
       ["Pembeli", data.pembeli],
       ["Tanggal", data.tanggal],
@@ -10543,10 +10544,10 @@ async function cetakPDF(
 
     doc.setFontSize(8);
 
-    info.forEach(([label, value]) => {
-      doc.text(label, 5, y);
+    info.forEach(([k, v]) => {
+      doc.text(k, 5, y);
 
-      doc.text(String(value), 75, y, {
+      doc.text(String(v), 75, y, {
         align: "right",
       });
 
@@ -10557,9 +10558,9 @@ async function cetakPDF(
 
     y += 7;
 
-    // ================================
-    // ITEM BELANJA
-    // ================================
+    // ======================================
+    // ITEMS
+    // ======================================
     data.items.forEach((item) => {
       doc.setFont("helvetica", "bold");
       doc.setFontSize(8);
@@ -10584,9 +10585,9 @@ async function cetakPDF(
 
     y += 6;
 
-    // ================================
+    // ======================================
     // DISKON
-    // ================================
+    // ======================================
     if (data.diskon > 0) {
       doc.setFontSize(8);
 
@@ -10612,9 +10613,9 @@ async function cetakPDF(
       y += 6;
     }
 
-    // ================================
+    // ======================================
     // TOTAL
-    // ================================
+    // ======================================
     doc.setFont("helvetica", "bold");
     doc.setFontSize(11);
 
@@ -10645,9 +10646,9 @@ async function cetakPDF(
 
     y += 14;
 
-    // ================================
+    // ======================================
     // FOOTER
-    // ================================
+    // ======================================
     doc.setFontSize(8);
 
     doc.text("Terima kasih sudah berbelanja di Ming Mart!", 40, y, {
@@ -10662,18 +10663,19 @@ async function cetakPDF(
       align: "center",
     });
 
-    // ================================
-    // AKSI
-    // ================================
+    // ======================================
+    // SIMPAN / PRINT
+    // ======================================
     if (aksi === "simpan") {
       doc.save(`Struk-MingMart-${Date.now()}.pdf`);
     } else {
-      const url = doc.output("bloburl");
+      const blobUrl = doc.output("bloburl");
 
       const iframe = document.createElement("iframe");
 
       iframe.style.display = "none";
-      iframe.src = url;
+
+      iframe.src = blobUrl;
 
       document.body.appendChild(iframe);
 
@@ -10691,9 +10693,9 @@ async function cetakPDF(
   }
 }
 
-// ================================
-// CETAK BLUETOOTH
-// ================================
+// ======================================
+// CETAK BLUETOOTH FIX
+// ======================================
 async function cetakBluetooth(
   total,
   metode,
@@ -10703,56 +10705,103 @@ async function cetakBluetooth(
   diskon = 0,
 ) {
   try {
+    // ======================================
+    // VALIDASI
+    // ======================================
     if (!navigator.bluetooth) {
-      throw new Error("Browser tidak mendukung Bluetooth");
+      throw new Error("Browser tidak support Bluetooth");
     }
 
-    showToast("Menghubungkan printer Bluetooth...", "info");
+    showToast("Mencari printer Bluetooth...", "info");
 
+    // ======================================
+    // DATA STRUK
+    // ======================================
     const data = getReceiptData(total, metode, bayar, pembeli, items, diskon);
 
-    // ================================
-    // CONNECT BLUETOOTH
-    // ================================
+    // ======================================
+    // CONNECT DEVICE
+    // ======================================
     const device = await navigator.bluetooth.requestDevice({
       acceptAllDevices: true,
-      optionalServices: ["000018f0-0000-1000-8000-00805f9b34fb"],
+      optionalServices: [
+        "000018f0-0000-1000-8000-00805f9b34fb",
+        "0000ffe0-0000-1000-8000-00805f9b34fb",
+      ],
     });
+
+    showToast("Menghubungkan printer...", "info");
 
     const server = await device.gatt.connect();
 
-    const service = await server.getPrimaryService(
-      "000018f0-0000-1000-8000-00805f9b34fb",
-    );
+    let characteristic = null;
 
-    const characteristic = await service.getCharacteristic(
-      "00002af1-0000-1000-8000-00805f9b34fb",
-    );
+    // ======================================
+    // COBA SERVICE 1
+    // ======================================
+    try {
+      const service = await server.getPrimaryService(
+        "000018f0-0000-1000-8000-00805f9b34fb",
+      );
 
-    // ================================
-    // BUAT TEKS STRUK
-    // ================================
+      characteristic = await service.getCharacteristic(
+        "00002af1-0000-1000-8000-00805f9b34fb",
+      );
+    } catch (e) {}
+
+    // ======================================
+    // COBA SERVICE 2
+    // ======================================
+    if (!characteristic) {
+      try {
+        const service = await server.getPrimaryService(
+          "0000ffe0-0000-1000-8000-00805f9b34fb",
+        );
+
+        characteristic = await service.getCharacteristic(
+          "0000ffe1-0000-1000-8000-00805f9b34fb",
+        );
+      } catch (e) {}
+    }
+
+    // ======================================
+    // GAGAL CONNECT
+    // ======================================
+    if (!characteristic) {
+      throw new Error("Printer Bluetooth tidak kompatibel");
+    }
+
+    // ======================================
+    // BUAT STRUK
+    // ======================================
     const text = buatTeksStrukBluetooth(data);
 
     const encoder = new TextEncoder();
 
     const bytes = encoder.encode(text);
 
-    // ================================
-    // KIRIM DATA BERTAHAP
-    // ================================
-    for (let i = 0; i < bytes.length; i += 100) {
-      await characteristic.writeValue(bytes.slice(i, i + 100));
+    // ======================================
+    // KIRIM DATA PER CHUNK
+    // ======================================
+    for (let i = 0; i < bytes.length; i += 50) {
+      const chunk = bytes.slice(i, i + 50);
 
-      await new Promise((resolve) => setTimeout(resolve, 50));
+      await characteristic.writeValue(chunk);
+
+      await new Promise((r) => setTimeout(r, 100));
     }
 
-    // ================================
+    // ======================================
     // CUT PAPER
-    // ================================
+    // ======================================
     await characteristic.writeValue(Uint8Array.from([0x1d, 0x56, 0x41, 0x10]));
 
-    device.gatt.disconnect();
+    // ======================================
+    // DISCONNECT
+    // ======================================
+    if (device.gatt.connected) {
+      device.gatt.disconnect();
+    }
 
     showToast("Cetak Bluetooth berhasil!", "success");
   } catch (e) {
@@ -10762,16 +10811,19 @@ async function cetakBluetooth(
   }
 }
 
-// ================================
+// ======================================
 // TEMPLATE STRUK BLUETOOTH
-// ================================
+// AGAR MIRIP PDF
+// ======================================
 function buatTeksStrukBluetooth(data) {
   const garis = "--------------------------------\n";
 
   const center = (text) => {
-    const spasi = Math.max(0, Math.floor((32 - text.length) / 2));
+    const width = 32;
 
-    return " ".repeat(spasi) + text + "\n";
+    const left = Math.max(0, Math.floor((width - text.length) / 2));
+
+    return " ".repeat(left) + text + "\n";
   };
 
   let t = "";
@@ -10782,7 +10834,13 @@ function buatTeksStrukBluetooth(data) {
   // CENTER
   t += "\x1B\x61\x01";
 
+  // BOLD ON
+  t += "\x1B\x45\x01";
+
   t += center("MING MART");
+
+  // BOLD OFF
+  t += "\x1B\x45\x00";
 
   t += center("Dusun Batu Menjangkong, Desa Anyar");
 
@@ -10800,26 +10858,26 @@ function buatTeksStrukBluetooth(data) {
 
   t += garis;
 
-  // ================================
-  // ITEM
-  // ================================
+  // ======================================
+  // ITEMS
+  // ======================================
   data.items.forEach((item) => {
+    const subtotal = `Rp ${item.subtotal.toLocaleString("id-ID")}`;
+
     t += `${item.nama}\n`;
 
-    const kiri = `${item.qty} x Rp ${item.harga.toLocaleString("id-ID")}`;
+    const qtyText = `${item.qty} x Rp ${item.harga.toLocaleString("id-ID")}`;
 
-    const kanan = `Rp ${item.subtotal.toLocaleString("id-ID")}`;
+    const space = Math.max(1, 32 - qtyText.length - subtotal.length);
 
-    const spasi = Math.max(1, 32 - kiri.length - kanan.length);
-
-    t += kiri + " ".repeat(spasi) + kanan + "\n\n";
+    t += qtyText + " ".repeat(space) + subtotal + "\n";
   });
 
   t += garis;
 
-  // ================================
+  // ======================================
   // DISKON
-  // ================================
+  // ======================================
   if (data.diskon > 0) {
     t += `Subtotal : Rp ${(data.total + data.diskon).toLocaleString(
       "id-ID",
@@ -10828,9 +10886,9 @@ function buatTeksStrukBluetooth(data) {
     t += `Diskon   : Rp ${data.diskon.toLocaleString("id-ID")}\n`;
   }
 
-  // ================================
+  // ======================================
   // TOTAL
-  // ================================
+  // ======================================
   t += "\x1B\x45\x01";
 
   t += `TOTAL    : Rp ${data.total.toLocaleString("id-ID")}\n`;

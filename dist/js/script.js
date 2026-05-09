@@ -10367,7 +10367,14 @@ async function konfirmasiBayar() {
   showToast("Transaksi berhasil! Stok diperbarui.", "success");
 
   // Pilih cetak
-  const pil = await pilihanCetak();
+  const pil = await pilihanCetak(
+    total,
+    metode,
+    nominal,
+    pembeli,
+    snap,
+    snapDiskon,
+  );
   if (!pil) return;
   if (pil === "pdf")
     cetakPDF(total, metode, nominal, "simpan", pembeli, snap, snapDiskon);
@@ -10377,7 +10384,7 @@ async function konfirmasiBayar() {
     cetakBluetooth(total, metode, nominal, pembeli, snap, snapDiskon);
 }
 
-function pilihanCetak() {
+function pilihanCetak(total, metode, bayar, pembeli, items, diskon = 0) {
   return new Promise((resolve) => {
     let m = document.getElementById("modalPilihanCetak");
     if (!m) {
@@ -10395,7 +10402,8 @@ function pilihanCetak() {
                 <div class="col-6"><button class="btn btn-warning w-100 py-3" id="btnCetakPDF"><i class="bi bi-file-pdf-fill d-block fs-3 mb-1"></i>Simpan PDF</button></div>
                 <div class="col-6"><button class="btn btn-primary w-100 py-3" id="btnCetakPrint"><i class="bi bi-printer-fill d-block fs-3 mb-1"></i>Cetak Printer</button></div>
                 <div class="col-6"><button class="btn btn-success w-100 py-3" id="btnCetakBT"><i class="bi bi-bluetooth d-block fs-3 mb-1"></i>Bluetooth</button></div>
-                <div class="col-6"><button class="btn btn-secondary w-100 py-3" id="btnCetakSkip"><i class="bi bi-x-circle d-block fs-3 mb-1"></i>Lewati</button></div>
+                <div class="col-6"><button class="btn btn-info w-100 py-3" id="btnPreviewStruk"><i class="bi bi-eye-fill d-block fs-3 mb-1"></i>Lihat Struk</button></div>
+                <div class="col-12"><button class="btn btn-secondary w-100 py-2" id="btnCetakSkip"><i class="bi bi-x-circle me-2"></i>Lewati</button></div>
               </div>
             </div>
           </div>
@@ -10411,8 +10419,65 @@ function pilihanCetak() {
     document.getElementById("btnCetakPDF").onclick = () => hide("pdf");
     document.getElementById("btnCetakPrint").onclick = () => hide("print");
     document.getElementById("btnCetakBT").onclick = () => hide("bluetooth");
+    document.getElementById("btnPreviewStruk").onclick = () => {
+      previewStruk(total, metode, bayar, pembeli, items, diskon);
+    };
     document.getElementById("btnCetakSkip").onclick = () => hide(null);
   });
+}
+
+// ======================================
+// PREVIEW STRUK
+// ======================================
+function previewStruk(total, metode, bayar, pembeli, items, diskon = 0) {
+  const data = getReceiptData(total, metode, bayar, pembeli, items, diskon);
+
+  let m = document.getElementById("modalPreviewStruk");
+  if (!m) {
+    m = document.createElement("div");
+    m.id = "modalPreviewStruk";
+    m.className = "modal fade";
+    m.setAttribute("tabindex", "-1");
+    document.body.appendChild(m);
+  }
+
+  const text = buatTeksStrukBluetooth(data);
+  const previewText = text
+    .replace(/\x1B/g, "")
+    .replace(/\x0A/g, "\n")
+    .replace(/\x1D/g, "")
+    .replace(/[\x00-\x1F]/g, "");
+
+  m.innerHTML = `
+    <div class="modal-dialog modal-fullscreen-sm-down modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header bg-light">
+          <h5 class="modal-title"><i class="bi bi-receipt me-2"></i>Preview Struk</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body" style="background: #f8f9fa; padding: 20px;">
+          <div style="
+            width: 80mm;
+            margin: 0 auto;
+            background: white;
+            padding: 10mm;
+            font-family: 'Courier New', monospace;
+            font-size: 11px;
+            line-height: 1.4;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            border: 1px solid #ddd;
+          ">${previewText}</div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+        </div>
+      </div>
+    </div>`;
+
+  const bsM = new bootstrap.Modal(m);
+  bsM.show();
 }
 
 // ======================================
@@ -10700,7 +10765,7 @@ async function cetakPDF(
 }
 
 // ======================================
-// CETAK BLUETOOTH
+// CETAK BLUETOOTH / THERMAL PRINTER
 // ======================================
 async function cetakBluetooth(
   total,
@@ -10712,29 +10777,36 @@ async function cetakBluetooth(
 ) {
   try {
     if (!navigator.bluetooth) {
-      throw new Error("Browser tidak support Bluetooth");
+      throw new Error(
+        "Browser Anda tidak mendukung Bluetooth. Gunakan Chrome, Edge, atau Opera.",
+      );
     }
 
-    showToast("Mencari printer Bluetooth...", "info");
+    showToast("🔍 Mencari printer Bluetooth...", "info");
 
     const data = getReceiptData(total, metode, bayar, pembeli, items, diskon);
 
     // ======================================
-    // CONNECT DEVICE
+    // KONEKSI KE DEVICE BLUETOOTH
     // ======================================
+    // Terima semua device, termasuk printer ESC/POS kompatibel
     const device = await navigator.bluetooth.requestDevice({
       acceptAllDevices: true,
       optionalServices: [
-        "000018f0-0000-1000-8000-00805f9b34fb",
-        "0000ffe0-0000-1000-8000-00805f9b34fb",
+        "000018f0-0000-1000-8000-00805f9b34fb", // Service 1
+        "0000ffe0-0000-1000-8000-00805f9b34fb", // Service 2
+        "0000180a-0000-1000-8000-00805f9b34fb", // Device Info
+        "00001200-0000-1000-8000-00805f9b34fb", // HID
       ],
     });
+
+    showToast(`📱 Terhubung ke: ${device.name}...`, "info");
 
     const server = await device.gatt.connect();
 
     let characteristic = null;
 
-    // SERVICE 1
+    // Coba Service 1 (SPP / Serial Port Profile)
     try {
       const service = await server.getPrimaryService(
         "000018f0-0000-1000-8000-00805f9b34fb",
@@ -10743,9 +10815,13 @@ async function cetakBluetooth(
       characteristic = await service.getCharacteristic(
         "00002af1-0000-1000-8000-00805f9b34fb",
       );
-    } catch (e) {}
 
-    // SERVICE 2
+      console.log("✓ Menggunakan Service 1");
+    } catch (e) {
+      console.log("Service 1 tidak tersedia, mencoba Service 2...");
+    }
+
+    // Coba Service 2 (Generic Service)
     if (!characteristic) {
       try {
         const service = await server.getPrimaryService(
@@ -10755,169 +10831,209 @@ async function cetakBluetooth(
         characteristic = await service.getCharacteristic(
           "0000ffe1-0000-1000-8000-00805f9b34fb",
         );
-      } catch (e) {}
+
+        console.log("✓ Menggunakan Service 2");
+      } catch (e) {
+        console.log("Service 2 tidak tersedia");
+      }
     }
 
     if (!characteristic) {
-      throw new Error("Printer tidak kompatibel");
+      throw new Error(
+        "Printer tidak kompatibel. Pastikan printer mendukung ESC/POS.",
+      );
     }
 
     // ======================================
-    // BUAT STRUK
+    // BUAT STRUK DALAM FORMAT THERMAL PRINTER
     // ======================================
+    showToast("📄 Menyiapkan format struk...", "info");
+
     const text = buatTeksStrukBluetooth(data);
-
     const encoder = new TextEncoder();
-
     const bytes = encoder.encode(text);
 
-    // ======================================
-    // KIRIM DATA
-    // ======================================
-    for (let i = 0; i < bytes.length; i += 50) {
-      await characteristic.writeValue(bytes.slice(i, i + 50));
+    console.log(`📤 Mengirim ${bytes.length} bytes ke printer...`);
 
+    // ======================================
+    // KIRIM DATA KE PRINTER (50 bytes per chunk)
+    // ======================================
+    showToast("🖨️ Mengirim data ke printer...", "info");
+
+    for (let i = 0; i < bytes.length; i += 50) {
+      const chunk = bytes.slice(i, Math.min(i + 50, bytes.length));
+
+      await characteristic.writeValue(chunk);
+
+      // Delay untuk mencegah buffer overflow
       await new Promise((r) => setTimeout(r, 100));
     }
 
-    // CUT PAPER
-    await characteristic.writeValue(Uint8Array.from([0x1d, 0x56, 0x41, 0x10]));
+    showToast("✂️ Memotong kertas...", "info");
+
+    // Perintah memotong kertas (ESC/POS)
+    // 0x1D = GS, 0x56 = V, 0x42 = B (Partial cut), 0x00 = parameter
+    const cutCommand = Uint8Array.from([0x1d, 0x56, 0x42, 0x00]);
+
+    await characteristic.writeValue(cutCommand);
+
+    // Tunggu sebentar sebelum disconnect
+    await new Promise((r) => setTimeout(r, 500));
 
     // DISCONNECT
     if (device.gatt.connected) {
       device.gatt.disconnect();
+      console.log("✓ Disconnect dari printer");
     }
 
-    showToast("Cetak Bluetooth berhasil!", "success");
+    showToast("✅ Cetak Bluetooth berhasil!", "success");
   } catch (e) {
-    console.error(e);
+    console.error("❌ Error Bluetooth:", e);
 
-    showToast("Gagal cetak Bluetooth : " + e.message, "danger");
+    showToast("❌ Gagal cetak Bluetooth : " + e.message, "danger");
   }
 }
 
 // ======================================
-// TEMPLATE STRUK BLUETOOTH
-// MIRIP PDF
+// TEMPLATE STRUK BLUETOOTH / THERMAL PRINTER
+// Format: ESC/POS untuk printer thermal 80mm
 // ======================================
 function buatTeksStrukBluetooth(data) {
-  const garis = "--------------------------------\n";
-
-  const center = (text) => {
-    const width = 32;
-
-    const left = Math.max(0, Math.floor((width - text.length) / 2));
-
-    return " ".repeat(left) + text + "\n";
-  };
-
   let t = "";
 
-  // RESET
+  // ======================================
+  // INISIALISASI PRINTER
+  // ======================================
+  // Reset printer
   t += "\x1B\x40";
 
-  // CENTER
+  // Set alignment center
   t += "\x1B\x61\x01";
 
-  // BOLD
-  t += "\x1B\x45\x01";
+  // ======================================
+  // HEADER / JUDUL TOKO
+  // ======================================
+  // Font size: double height and width
+  t += "\x1B\x21\x30";
+  t += "\x1D\x21\x11"; // 2x height, 1x width
+  t += "MING MART\n";
 
-  t += center("MING MART");
+  // Reset font size
+  t += "\x1B\x21\x00";
 
-  // NORMAL
-  t += "\x1B\x45\x00";
+  // Alamat toko
+  t += "\x0A"; // Line feed
+  t += "Dusun Batu Menjangkong, Desa Anyar\n";
+  t += "Kec. Bayan, Kab. Lombok Utara\n";
+  t += "\x0A";
 
-  t += center("Dusun Batu Menjangkong, Desa Anyar");
-
-  t += center("Kec. Bayan, Kab. Lombok Utara");
-
-  t += garis;
-
-  // LEFT
-  t += "\x1B\x61\x00";
+  // Garis pemisah
+  t += "================================\n";
 
   // ======================================
-  // INFO
+  // INFO TRANSAKSI
   // ======================================
-  const addRow = (label, value) => {
-    const left = label.padEnd(12);
+  t += "\x1B\x61\x00"; // Alignment left
 
-    const right = String(value);
-
-    const space = Math.max(1, 32 - left.length - right.length);
-
-    t += left + " ".repeat(space) + right + "\n";
+  // Format: label..........................value
+  const addRow = (label, value, width = 40) => {
+    const val = String(value);
+    const dots = Math.max(1, width - label.length - val.length);
+    return label + ".".repeat(dots) + val + "\n";
   };
 
-  addRow("Pembeli", data.pembeli);
-  addRow("Tanggal", data.tanggal);
-  addRow("Pembayaran", data.metode);
-  addRow("Kasir", data.kasir);
+  t += "\x0A";
+  t += addRow("Pembeli", data.pembeli, 40);
+  t += addRow("Tanggal", data.tanggal, 40);
+  t += addRow("Metode", data.metode, 40);
+  t += addRow("Kasir", data.kasir, 40);
+  t += "\x0A";
 
-  t += garis;
+  // Garis pemisah
+  t += "\x1B\x61\x01"; // Center alignment
+  t += "================================\n";
+  t += "\x1B\x61\x00"; // Left alignment
 
   // ======================================
-  // ITEMS
+  // DAFTAR ITEM BELANJA
   // ======================================
+  t += "\x0A";
+
   data.items.forEach((item) => {
-    // NAMA ITEM
-    t += "\x1B\x45\x01";
-
+    // Nama produk (bold)
+    t += "\x1B\x45\x01"; // Bold on
     t += item.nama + "\n";
+    t += "\x1B\x45\x00"; // Bold off
 
-    t += "\x1B\x45\x00";
+    // Detail item: qty x harga
+    const detail = `${item.qty}x Rp ${item.harga.toLocaleString("id-ID")}`;
+    const harga = `Rp ${item.subtotal.toLocaleString("id-ID")}`;
 
-    // DETAIL ITEM
-    const kiri = `${item.qty} x Rp ${item.harga.toLocaleString("id-ID")}`;
+    // Layout: qty x harga .......................... total
+    const space = Math.max(1, 40 - detail.length - harga.length);
+    t += detail + " ".repeat(space) + harga + "\n";
 
-    const kanan = `Rp ${item.subtotal.toLocaleString("id-ID")}`;
-
-    const spasi = Math.max(1, 32 - kiri.length - kanan.length);
-
-    t += kiri + " ".repeat(spasi) + kanan + "\n\n";
+    t += "\x0A";
   });
 
-  t += garis;
+  // Garis pemisah
+  t += "\x1B\x61\x01"; // Center
+  t += "================================\n";
+  t += "\x1B\x61\x00"; // Left
 
   // ======================================
-  // DISKON
+  // RINGKASAN PEMBAYARAN
   // ======================================
+  t += "\x0A";
+
+  // Jika ada diskon
   if (data.diskon > 0) {
-    addRow(
+    t += addRow(
       "Subtotal",
       `Rp ${(data.total + data.diskon).toLocaleString("id-ID")}`,
+      40,
     );
-
-    addRow("Diskon", `- Rp ${data.diskon.toLocaleString("id-ID")}`);
+    t += addRow("Diskon", `- Rp ${data.diskon.toLocaleString("id-ID")}`, 40);
+    t += "\x0A";
   }
 
-  // ======================================
-  // TOTAL
-  // ======================================
-  t += "\x1B\x45\x01";
+  // Total (bold dan besar)
+  t += "\x1B\x45\x01"; // Bold on
+  t += "\x1D\x21\x10"; // Double width
+  const total = `TOTAL Rp ${data.total.toLocaleString("id-ID")}`;
+  const totalPad = Math.max(1, 40 - total.length);
+  t += " ".repeat(Math.floor(totalPad / 2)) + total + "\n";
+  t += "\x1B\x21\x00"; // Reset size
+  t += "\x1B\x45\x00"; // Bold off
 
-  addRow("TOTAL", `Rp ${data.total.toLocaleString("id-ID")}`);
+  t += "\x0A";
 
-  t += "\x1B\x45\x00";
-
-  addRow("Bayar", `Rp ${data.bayar.toLocaleString("id-ID")}`);
-
-  addRow("Kembali", `Rp ${data.kembali.toLocaleString("id-ID")}`);
-
-  t += "\n";
+  // Bayar dan Kembali
+  t += addRow("Bayar", `Rp ${data.bayar.toLocaleString("id-ID")}`, 40);
+  t += addRow("Kembali", `Rp ${data.kembali.toLocaleString("id-ID")}`, 40);
 
   // ======================================
   // FOOTER
   // ======================================
-  t += "\x1B\x61\x01";
+  t += "\x0A";
+  t += "\x1B\x61\x01"; // Center alignment
+  t += "================================\n";
+  t += "\x0A";
 
-  t += "Terima kasih sudah berbelanja di\n";
-
-  t += "Ming Mart!\n\n";
-
+  t += "Terima kasih telah berbelanja\n";
+  t += "di MING MART!\n";
+  t += "\x0A";
+  t += "\x1B\x45\x01"; // Bold on
   t += "* Simpan struk ini sebagai bukti pembelian *\n";
+  t += "\x1B\x45\x00"; // Bold off
 
-  t += "\n\n\n";
+  t += "\x0A\x0A";
+
+  // ======================================
+  // PERINTAH CUT PAPER
+  // ======================================
+  // Full cut (partial cut bisa di-set sesuai printer)
+  t += "\x1D\x56\x42\x00"; // Partial cut
 
   return t;
 }

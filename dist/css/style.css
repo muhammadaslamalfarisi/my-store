@@ -857,3 +857,72 @@ body {
 .table .badge {
   font-size: 0.7rem;
 }
+
+/* ============================================================
+   PRINT STYLES FOR RECEIPT PRINTING
+   ============================================================ */
+
+@media print {
+  /* Hide unnecessary elements */
+  body .app-sidebar,
+  body .app-header,
+  body .app-footer,
+  body .btn-close,
+  body button:not(.print-button),
+  body .modal-header .btn-close,
+  body .no-print {
+    display: none !important;
+  }
+
+  /* Optimize page for 80mm thermal printer */
+  @page {
+    margin: 0;
+    size: 80mm auto;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: "Courier New", monospace;
+  }
+
+  /* Receipt container */
+  .receipt-container {
+    width: 80mm;
+    margin: 0;
+    padding: 5mm;
+    font-size: 11px;
+    line-height: 1.4;
+  }
+
+  /* Print layout reset */
+  .app-wrapper,
+  .content-wrapper {
+    all: unset;
+  }
+
+  /* Text alignment for receipt */
+  .receipt-center {
+    text-align: center;
+  }
+
+  .receipt-left {
+    text-align: left;
+  }
+
+  .receipt-right {
+    text-align: right;
+  }
+
+  /* Hide scrollbars and interactive elements */
+  ::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Preserve colors in print */
+  * {
+    -webkit-print-color-adjust: exact;
+    color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}

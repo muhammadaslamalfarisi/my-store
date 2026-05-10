@@ -10441,34 +10441,106 @@ function previewStruk(total, metode, bayar, pembeli, items, diskon = 0) {
     document.body.appendChild(m);
   }
 
-  const text = buatTeksStrukBluetooth(data);
-  const previewText = text
-    .replace(/\x1B/g, "")
-    .replace(/\x0A/g, "\n")
-    .replace(/\x1D/g, "")
-    .replace(/[\x00-\x1F]/g, "");
+  // Build HTML visual receipt (same layout as PDF)
+  const fmtRp = (n) => `Rp ${Number(n).toLocaleString("id-ID")}`;
+  const dashedLine = `<div style="border-top:1px dashed #999;margin:8px 0;"></div>`;
+
+  let itemsHtml = "";
+  data.items.forEach((item) => {
+    itemsHtml += `
+      <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:2px;">
+        <span style="font-weight:700;font-size:12px;max-width:60%;">${item.nama}</span>
+        <span style="font-weight:700;font-size:12px;">${fmtRp(item.subtotal)}</span>
+      </div>
+      <div style="font-size:10.5px;color:#555;margin-bottom:8px;padding-left:4px;">
+        ${item.qty} x ${fmtRp(item.harga)}
+      </div>`;
+  });
+
+  let diskonHtml = "";
+  if (data.diskon > 0) {
+    diskonHtml = `
+      <div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:4px;">
+        <span>Subtotal</span><span>${fmtRp(data.total + data.diskon)}</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:4px;color:#c0392b;">
+        <span>Diskon</span><span>- ${fmtRp(data.diskon)}</span>
+      </div>`;
+  }
+
+  const logoHtml = (typeof LOGO_TOKO_B64 !== "undefined" && LOGO_TOKO_B64)
+    ? `<img src="${LOGO_TOKO_B64}" style="width:60px;height:60px;object-fit:contain;margin-bottom:6px;" />`
+    : "";
 
   m.innerHTML = `
-    <div class="modal-dialog modal-fullscreen-sm-down modal-dialog-centered">
+    <div class="modal-dialog modal-dialog-centered" style="max-width:360px;">
       <div class="modal-content">
-        <div class="modal-header bg-light">
+        <div class="modal-header" style="background:#f8f9fa;">
           <h5 class="modal-title"><i class="bi bi-receipt me-2"></i>Preview Struk</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
-        <div class="modal-body" style="background: #f8f9fa; padding: 20px;">
+        <div class="modal-body" style="background:#e9ecef;padding:20px;">
           <div style="
-            width: 80mm;
-            margin: 0 auto;
-            background: white;
-            padding: 10mm;
-            font-family: 'Courier New', monospace;
-            font-size: 11px;
-            line-height: 1.4;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            white-space: pre-wrap;
-            word-wrap: break-word;
-            border: 1px solid #ddd;
-          ">${previewText}</div>
+            width:100%;
+            max-width:280px;
+            margin:0 auto;
+            background:white;
+            padding:14px 12px;
+            font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
+            font-size:11px;
+            line-height:1.5;
+            box-shadow:0 4px 12px rgba(0,0,0,0.15);
+            border-radius:4px;
+          ">
+            <!-- LOGO + HEADER -->
+            <div style="text-align:center;margin-bottom:6px;">
+              ${logoHtml}
+              <div style="font-size:18px;font-weight:700;letter-spacing:1px;">${data.toko}</div>
+              <div style="font-size:9.5px;color:#555;margin-top:2px;">${data.alamat1}</div>
+              <div style="font-size:9.5px;color:#555;">${data.alamat2}</div>
+            </div>
+            ${dashedLine}
+            <!-- INFO TRANSAKSI -->
+            <div style="font-size:11px;margin-bottom:6px;">
+              <div style="display:flex;justify-content:space-between;margin-bottom:3px;">
+                <span>Pembeli</span><span style="font-weight:600;text-align:right;max-width:55%;">${data.pembeli}</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;margin-bottom:3px;">
+                <span>Tanggal</span><span style="font-weight:600;text-align:right;max-width:55%;font-size:10px;">${data.tanggal}</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;margin-bottom:3px;">
+                <span>Pembayaran</span><span style="font-weight:600;">${data.metode}</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;">
+                <span>Kasir</span><span style="font-weight:600;">${data.kasir}</span>
+              </div>
+            </div>
+            ${dashedLine}
+            <!-- ITEMS -->
+            <div style="margin-bottom:4px;">${itemsHtml}</div>
+            ${dashedLine}
+            <!-- DISKON -->
+            ${diskonHtml}
+            <!-- TOTAL -->
+            <div style="display:flex;justify-content:space-between;font-size:16px;font-weight:700;margin:6px 0;">
+              <span>TOTAL</span><span>${fmtRp(data.total)}</span>
+            </div>
+            <!-- BAYAR & KEMBALI -->
+            <div style="font-size:11px;">
+              <div style="display:flex;justify-content:space-between;margin-bottom:3px;">
+                <span>Bayar</span><span>${fmtRp(data.bayar)}</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;">
+                <span>Kembali</span><span>${fmtRp(data.kembali)}</span>
+              </div>
+            </div>
+            ${dashedLine}
+            <!-- FOOTER -->
+            <div style="text-align:center;font-size:9.5px;color:#555;margin-top:4px;">
+              <div>Terima kasih sudah berbelanja di Ming Mart!</div>
+              <div style="font-style:italic;margin-top:2px;">* Simpan struk ini sebagai bukti pembelian *</div>
+            </div>
+          </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>

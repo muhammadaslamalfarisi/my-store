@@ -9311,44 +9311,57 @@ function hapusPengeluaran(id) {
   );
 }
 
+// ======================================
+// HELPER: Pastikan library XLSX tersedia (multi-CDN fallback)
+// ======================================
+const XLSX_CDNS = [
+  "https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js",
+  "https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js",
+  "https://unpkg.com/xlsx@0.18.5/dist/xlsx.full.min.js",
+];
+
+function ensureXLSX() {
+  return new Promise((resolve, reject) => {
+    if (typeof XLSX !== "undefined") { resolve(XLSX); return; }
+    let idx = 0;
+    function tryNext() {
+      if (idx >= XLSX_CDNS.length) { reject(new Error("Library XLSX gagal dimuat dari semua sumber.")); return; }
+      const s = document.createElement("script");
+      s.src = XLSX_CDNS[idx++];
+      s.onload = () => { if (typeof XLSX !== "undefined") resolve(XLSX); else tryNext(); };
+      s.onerror = () => tryNext();
+      document.head.appendChild(s);
+    }
+    tryNext();
+  });
+}
+
 function eksporPengeluaranExcel() {
-  if (typeof XLSX === "undefined") {
-    showToast("Library XLSX tidak tersedia!", "warning");
-    return;
-  }
-  const data = getPengeluaran();
-  if (!data.length) {
-    showToast("Tidak ada data!", "warning");
-    return;
-  }
-  const rows = [
-    [
-      "No",
-      "Tanggal",
-      "Keterangan",
-      "Kategori",
-      "Produk Stok",
-      "Jumlah Stok",
-      "Jumlah (Rp)",
-    ],
-    ...data.map((p, i) => [
-      i + 1,
-      new Date(p.tanggal).toLocaleDateString("id-ID"),
-      p.keterangan,
-      p.kategori || "Umum",
-      p.stokProdukNama || "-",
-      p.stokJumlah || 0,
-      p.jumlah,
-    ]),
-  ];
-  const ws = XLSX.utils.aoa_to_sheet(rows);
-  const wb = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb, ws, "Pengeluaran");
-  XLSX.writeFile(
-    wb,
-    `Pengeluaran_MingMart_${new Date().toLocaleDateString("id-ID").replace(/\//g, "-")}.xlsx`,
-  );
-  showToast("Ekspor Excel pengeluaran berhasil!", "success");
+  showToast("Menyiapkan Excel...", "info");
+  ensureXLSX().then((XLSX) => {
+    const data = getPengeluaran();
+    if (!data.length) {
+      showToast("Tidak ada data!", "warning");
+      return;
+    }
+    const rows = [
+      ["No", "Tanggal", "Keterangan", "Kategori", "Produk Stok", "Jumlah Stok", "Jumlah (Rp)"],
+      ...data.map((p, i) => [
+        i + 1,
+        new Date(p.tanggal).toLocaleDateString("id-ID"),
+        p.keterangan,
+        p.kategori || "Umum",
+        p.stokProdukNama || "-",
+        p.stokJumlah || 0,
+        p.jumlah,
+      ]),
+    ];
+    const ws = XLSX.utils.aoa_to_sheet(rows);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Pengeluaran");
+    XLSX.writeFile(wb, `Pengeluaran_MingMart_${new Date().toLocaleDateString("id-ID").replace(/\//g, "-")}.xlsx`);
+    showToast("Ekspor Excel pengeluaran berhasil!", "success");
+  }).catch((err) => showToast("Gagal ekspor: " + err.message, "danger"));
 }
 
 //  SINKRON STOK — Helper untuk Pembelian Stok
@@ -9473,18 +9486,16 @@ function clearStokProduk() {
 //  IMPORT EXCEL FUNCTIONS
 
 function importProdukExcel(input) {
-  if (typeof XLSX === "undefined") {
-    showToast("Library XLSX tidak tersedia!", "warning");
-    return;
-  }
   const file = input.files[0];
   if (!file) return;
-  const reader = new FileReader();
-  reader.onload = (e) => {
-    try {
-      const wb = XLSX.read(e.target.result, { type: "binary" });
-      const ws = wb.Sheets[wb.SheetNames[0]];
-      const rows = XLSX.utils.sheet_to_json(ws, { header: 1 });
+  showToast("Membaca file Excel...", "info");
+  ensureXLSX().then((XLSX) => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      try {
+        const wb = XLSX.read(e.target.result, { type: "binary" });
+        const ws = wb.Sheets[wb.SheetNames[0]];
+        const rows = XLSX.utils.sheet_to_json(ws, { header: 1 });
       if (rows.length < 2) {
         showToast("File kosong atau format salah!", "warning");
         return;
@@ -9530,124 +9541,92 @@ function importProdukExcel(input) {
       saveProducts(produk);
       renderTabelProduk();
       updateStatProduk();
-      showToast(
-        `Import berhasil! Ditambah: ${added}, Diperbarui: ${updated}`,
-        "success",
-      );
+      showToast(`Import berhasil! Ditambah: ${added}, Diperbarui: ${updated}`, "success");
       input.value = "";
     } catch (err) {
       showToast("Gagal baca file Excel: " + err.message, "danger");
     }
   };
   reader.readAsBinaryString(file);
+  }).catch((err) => showToast("Gagal muat library: " + err.message, "danger"));
 }
 
 function importHutangExcel(input) {
-  if (typeof XLSX === "undefined") {
-    showToast("Library XLSX tidak tersedia!", "warning");
-    return;
-  }
+  const file = input.files[0];
+  if (!file) return;
+  showToast("Membaca file Excel...", "info");
+  ensureXLSX().then((XLSX) => {
   const file = input.files[0];
   if (!file) return;
   const reader = new FileReader();
-  reader.onload = (e) => {
-    try {
-      const wb = XLSX.read(e.target.result, { type: "binary" });
-      const ws = wb.Sheets[wb.SheetNames[0]];
-      const rows = XLSX.utils.sheet_to_json(ws, { header: 1 });
-      if (rows.length < 2) {
-        showToast("File kosong!", "warning");
-        return;
+    reader.onload = (e) => {
+      try {
+        const wb = XLSX.read(e.target.result, { type: "binary" });
+        const ws = wb.Sheets[wb.SheetNames[0]];
+        const rows = XLSX.utils.sheet_to_json(ws, { header: 1 });
+        if (rows.length < 2) { showToast("File kosong!", "warning"); return; }
+        const hutang = JSON.parse(localStorage.getItem(DB_HUTANG)) || [];
+        let added = 0;
+        for (let i = 1; i < rows.length; i++) {
+          const row = rows[i];
+          if (!row || !row[1]) continue;
+          const pembeli = String(row[1]).trim();
+          const total = parseInt(row[3]) || 0;
+          const status = row[4] ? String(row[4]).trim() : "Belum Lunas";
+          const catatan = row[5] ? String(row[5]).trim() : "";
+          if (!pembeli || total <= 0) continue;
+          hutang.unshift({ id: "HT-" + (Date.now() + i), trxId: "", pembeli, total, waktu: new Date().toLocaleString("id-ID"), status, catatan });
+          added++;
+        }
+        localStorage.setItem(DB_HUTANG, JSON.stringify(hutang));
+        renderTabelHutang();
+        showToast(`Import hutang berhasil! ${added} data diimpor.`, "success");
+        input.value = "";
+      } catch (err) {
+        showToast("Gagal baca file Excel: " + err.message, "danger");
       }
-
-      const hutang = JSON.parse(localStorage.getItem(DB_HUTANG)) || [];
-      let added = 0;
-      for (let i = 1; i < rows.length; i++) {
-        const row = rows[i];
-        if (!row || !row[1]) continue; // pembeli harus ada
-        const pembeli = String(row[1]).trim();
-        const total = parseInt(row[3]) || 0;
-        const status = row[4] ? String(row[4]).trim() : "Belum Lunas";
-        const catatan = row[5] ? String(row[5]).trim() : "";
-        if (!pembeli || total <= 0) continue;
-        hutang.unshift({
-          id: "HT-" + (Date.now() + i),
-          trxId: "",
-          pembeli,
-          total,
-          waktu: new Date().toLocaleString("id-ID"),
-          status,
-          catatan,
-        });
-        added++;
-      }
-      localStorage.setItem(DB_HUTANG, JSON.stringify(hutang));
-      renderTabelHutang();
-      showToast(`Import hutang berhasil! ${added} data diimpor.`, "success");
-      input.value = "";
-    } catch (err) {
-      showToast("Gagal baca file Excel: " + err.message, "danger");
-    }
-  };
-  reader.readAsBinaryString(file);
+    };
+    reader.readAsBinaryString(file);
+  }).catch((err) => showToast("Gagal muat library: " + err.message, "danger"));
 }
 
 function importLaporanExcel(input) {
-  if (typeof XLSX === "undefined") {
-    showToast("Library XLSX tidak tersedia!", "warning");
-    return;
-  }
   const file = input.files[0];
   if (!file) return;
-  const reader = new FileReader();
-  reader.onload = (e) => {
-    try {
-      const wb = XLSX.read(e.target.result, { type: "binary" });
-      const ws = wb.Sheets[wb.SheetNames[0]];
-      const rows = XLSX.utils.sheet_to_json(ws, { header: 1 });
-      if (rows.length < 2) {
-        showToast("File kosong!", "warning");
-        return;
+  showToast("Membaca file Excel...", "info");
+  ensureXLSX().then((XLSX) => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      try {
+        const wb = XLSX.read(e.target.result, { type: "binary" });
+        const ws = wb.Sheets[wb.SheetNames[0]];
+        const rows = XLSX.utils.sheet_to_json(ws, { header: 1 });
+        if (rows.length < 2) { showToast("File kosong!", "warning"); return; }
+        const riwayat = JSON.parse(localStorage.getItem(DB_RIWAYAT)) || [];
+        let added = 0;
+        for (let i = 1; i < rows.length; i++) {
+          const row = rows[i];
+          if (!row || !row[1]) continue;
+          const waktu = String(row[1]).trim();
+          const idTrx = row[0] ? String(row[0]).trim() : "TRX-IMP-" + (Date.now() + i);
+          const pembeli = row[2] ? String(row[2]).trim() : "-";
+          const metode = row[3] ? String(row[3]).trim() : "Tunai";
+          const total = parseInt(row[4]) || 0;
+          if (!total) continue;
+          if (riwayat.find((t) => t.id === idTrx)) continue;
+          riwayat.unshift({ id: idTrx, waktu, pembeli, metode, total, diskon: parseInt(row[5]) || 0, items: [] });
+          added++;
+        }
+        localStorage.setItem(DB_RIWAYAT, JSON.stringify(riwayat));
+        if (typeof renderDashboard === "function") renderDashboard();
+        showToast(`Import laporan berhasil! ${added} transaksi diimpor.`, "success");
+        input.value = "";
+      } catch (err) {
+        showToast("Gagal baca file Excel: " + err.message, "danger");
       }
-
-      const riwayat = JSON.parse(localStorage.getItem(DB_RIWAYAT)) || [];
-      let added = 0;
-      for (let i = 1; i < rows.length; i++) {
-        const row = rows[i];
-        if (!row || !row[1]) continue; // waktu harus ada
-        const waktu = String(row[1]).trim();
-        const idTrx = row[0]
-          ? String(row[0]).trim()
-          : "TRX-IMP-" + (Date.now() + i);
-        const pembeli = row[2] ? String(row[2]).trim() : "-";
-        const metode = row[3] ? String(row[3]).trim() : "Tunai";
-        const total = parseInt(row[4]) || 0;
-        if (!total) continue;
-        // Skip if ID exists
-        if (riwayat.find((t) => t.id === idTrx)) continue;
-        riwayat.unshift({
-          id: idTrx,
-          waktu,
-          pembeli,
-          metode,
-          total,
-          diskon: parseInt(row[5]) || 0,
-          items: [],
-        });
-        added++;
-      }
-      localStorage.setItem(DB_RIWAYAT, JSON.stringify(riwayat));
-      if (typeof renderDashboard === "function") renderDashboard();
-      showToast(
-        `Import laporan berhasil! ${added} transaksi diimpor.`,
-        "success",
-      );
-      input.value = "";
-    } catch (err) {
-      showToast("Gagal baca file Excel: " + err.message, "danger");
-    }
-  };
-  reader.readAsBinaryString(file);
+    };
+    reader.readAsBinaryString(file);
+  }).catch((err) => showToast("Gagal muat library: " + err.message, "danger"));
 }
 
 //  PRODUK CRUD
@@ -9818,30 +9797,22 @@ function hapusProduk(id, nama) {
 
 function eksporProdukExcel() {
   const produk = getProducts();
-  if (!produk.length || typeof XLSX === "undefined") {
-    showToast("Tidak ada data", "warning");
+  if (!produk.length) {
+    showToast("Tidak ada data produk!", "warning");
     return;
   }
-  const data = [
-    ["No", "ID", "Nama", "Kategori", "Harga", "Stok", "Satuan"],
-    ...produk.map((p, i) => [
-      i + 1,
-      p.id,
-      p.nama,
-      p.kategori || "-",
-      p.harga,
-      p.stok,
-      p.satuan || "pcs",
-    ]),
-  ];
-  const ws = XLSX.utils.aoa_to_sheet(data);
-  const wb = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb, ws, "Produk");
-  XLSX.writeFile(
-    wb,
-    `DataProduk_MingMart_${new Date().toLocaleDateString("id-ID").replace(/\//g, "-")}.xlsx`,
-  );
-  showToast("Ekspor Excel berhasil!", "success");
+  showToast("Menyiapkan Excel...", "info");
+  ensureXLSX().then((XLSX) => {
+    const data = [
+      ["No", "ID", "Nama", "Kategori", "Harga", "Stok", "Satuan"],
+      ...produk.map((p, i) => [i + 1, p.id, p.nama, p.kategori || "-", p.harga, p.stok, p.satuan || "pcs"]),
+    ];
+    const ws = XLSX.utils.aoa_to_sheet(data);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Produk");
+    XLSX.writeFile(wb, `DataProduk_MingMart_${new Date().toLocaleDateString("id-ID").replace(/\//g, "-")}.xlsx`);
+    showToast("Ekspor Excel berhasil!", "success");
+  }).catch((err) => showToast("Gagal ekspor: " + err.message, "danger"));
 }
 
 //  KATEGORI CRUD
@@ -10459,10 +10430,10 @@ function previewStruk(total, metode, bayar, pembeli, items, diskon = 0) {
   data.items.forEach((item) => {
     itemsHtml += `
       <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:1px;">
-        <span style="font-weight:700;font-size:11px;max-width:62%;">${item.nama}</span>
-        <span style="font-weight:700;font-size:11px;">Rp ${Number(item.subtotal).toLocaleString("id-ID")}</span>
+        <span style="font-weight:700;font-size:9.5px;max-width:62%;">${item.nama}</span>
+        <span style="font-weight:700;font-size:9.5px;">Rp ${Number(item.subtotal).toLocaleString("id-ID")}</span>
       </div>
-      <div style="font-size:9.5px;color:#444;margin-bottom:7px;padding-left:5px;">
+      <div style="font-size:8px;color:#444;margin-bottom:5px;padding-left:4px;">
         ${item.qty} x Rp ${Number(item.harga).toLocaleString("id-ID")}
       </div>`;
   });
@@ -10471,17 +10442,17 @@ function previewStruk(total, metode, bayar, pembeli, items, diskon = 0) {
   let diskonHtml = "";
   if (data.diskon > 0) {
     diskonHtml = `
-      <div style="display:flex;justify-content:space-between;font-size:10px;margin-bottom:3px;">
+      <div style="display:flex;justify-content:space-between;font-size:8.5px;margin-bottom:2px;">
         <span>Subtotal</span><span>${fmtRp(data.total + data.diskon)}</span>
       </div>
-      <div style="display:flex;justify-content:space-between;font-size:10px;margin-bottom:3px;color:#c0392b;">
+      <div style="display:flex;justify-content:space-between;font-size:8.5px;margin-bottom:2px;color:#c0392b;">
         <span>Diskon</span><span>- ${fmtRp(data.diskon)}</span>
       </div>`;
   }
 
   // ── BUILD MODAL HTML ──────────────────────────────
   m.innerHTML = `
-    <div class="modal-dialog modal-dialog-centered" style="max-width:370px;">
+    <div class="modal-dialog modal-dialog-centered" style="max-width:310px;">
       <div class="modal-content">
         <div class="modal-header" style="background:#f8f9fa;padding:10px 16px;">
           <h5 class="modal-title" style="font-size:15px;">
@@ -10494,37 +10465,37 @@ function previewStruk(total, metode, bayar, pembeli, items, diskon = 0) {
           <!-- ===== KERTAS STRUK ===== -->
           <div id="struktCetak" style="
             width:100%;
-            max-width:280px;
+            max-width:220px;
             margin:0 auto;
             background:#fff;
-            padding:14px 12px 16px 12px;
+            padding:10px 8px 12px 8px;
             font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
-            font-size:10.5px;
-            line-height:1.5;
+            font-size:9.5px;
+            line-height:1.45;
             box-shadow:0 4px 14px rgba(0,0,0,0.18);
             border-radius:3px;
           ">
             <!-- LOGO + NAMA TOKO -->
-            <div style="text-align:center;margin-bottom:5px;">
+            <div style="text-align:center;margin-bottom:4px;">
               ${logoHtml}
-              <div style="font-size:17px;font-weight:700;letter-spacing:1px;margin-top:2px;">${data.toko}</div>
-              <div style="font-size:9px;color:#555;margin-top:2px;">${data.alamat1}</div>
-              <div style="font-size:9px;color:#555;">${data.alamat2}</div>
+              <div style="font-size:14px;font-weight:700;letter-spacing:0.5px;margin-top:2px;">${data.toko}</div>
+              <div style="font-size:8px;color:#555;margin-top:1px;">${data.alamat1}</div>
+              <div style="font-size:8px;color:#555;">${data.alamat2}</div>
             </div>
 
             ${dashedLine}
 
             <!-- INFO TRANSAKSI -->
-            <div style="font-size:10.5px;margin-bottom:5px;">
-              <div style="display:flex;justify-content:space-between;margin-bottom:2px;">
+            <div style="font-size:9px;margin-bottom:4px;">
+              <div style="display:flex;justify-content:space-between;margin-bottom:1px;">
                 <span>Pembeli</span>
                 <span style="font-weight:600;text-align:right;max-width:58%;">${data.pembeli}</span>
               </div>
-              <div style="display:flex;justify-content:space-between;margin-bottom:2px;">
+              <div style="display:flex;justify-content:space-between;margin-bottom:1px;">
                 <span>Tanggal</span>
-                <span style="font-weight:600;text-align:right;max-width:58%;font-size:9.5px;">${data.tanggal}</span>
+                <span style="font-weight:600;text-align:right;max-width:58%;font-size:8px;">${data.tanggal}</span>
               </div>
-              <div style="display:flex;justify-content:space-between;margin-bottom:2px;">
+              <div style="display:flex;justify-content:space-between;margin-bottom:1px;">
                 <span>Pembayaran</span>
                 <span style="font-weight:600;">${data.metode}</span>
               </div>
@@ -10537,7 +10508,7 @@ function previewStruk(total, metode, bayar, pembeli, items, diskon = 0) {
             ${dashedLine}
 
             <!-- DAFTAR ITEM -->
-            <div style="margin-bottom:3px;">${itemsHtml}</div>
+            <div style="margin-bottom:2px;">${itemsHtml}</div>
 
             ${dashedLine}
 
@@ -10545,13 +10516,13 @@ function previewStruk(total, metode, bayar, pembeli, items, diskon = 0) {
             ${diskonHtml}
 
             <!-- TOTAL (bold, besar) -->
-            <div style="display:flex;justify-content:space-between;font-size:15px;font-weight:700;margin:5px 0 5px 0;">
+            <div style="display:flex;justify-content:space-between;font-size:13px;font-weight:700;margin:4px 0 4px 0;">
               <span>TOTAL</span><span>${fmtRp(data.total)}</span>
             </div>
 
             <!-- BAYAR & KEMBALI -->
-            <div style="font-size:10.5px;">
-              <div style="display:flex;justify-content:space-between;margin-bottom:2px;">
+            <div style="font-size:9px;">
+              <div style="display:flex;justify-content:space-between;margin-bottom:1px;">
                 <span>Bayar</span><span>${fmtRp(data.bayar)}</span>
               </div>
               <div style="display:flex;justify-content:space-between;">
@@ -10562,7 +10533,7 @@ function previewStruk(total, metode, bayar, pembeli, items, diskon = 0) {
             ${dashedLine}
 
             <!-- FOOTER -->
-            <div style="text-align:center;font-size:9px;color:#555;margin-top:3px;">
+            <div style="text-align:center;font-size:8px;color:#555;margin-top:2px;">
               <div>Terima kasih sudah berbelanja di ${data.toko}!</div>
               <div style="font-style:italic;margin-top:1px;">* Simpan struk ini sebagai bukti pembelian *</div>
             </div>
@@ -10648,38 +10619,38 @@ function hitungTinggiDok(data) {
   let tinggi = 0;
 
   // Logo
-  if (typeof LOGO_TOKO_B64 !== "undefined" && LOGO_TOKO_B64) tinggi += 36;
+  if (typeof LOGO_TOKO_B64 !== "undefined" && LOGO_TOKO_B64) tinggi += 30;
 
   // Header: nama toko + 2 baris alamat
-  tinggi += 7 + 5 + 5 + 7; // toko, alamat1, alamat2, gap
+  tinggi += 6 + 4 + 4 + 6; // toko, alamat1, alamat2, gap
 
   // Garis + gap
-  tinggi += 2 + 8;
+  tinggi += 2 + 7;
 
-  // Info (4 baris x 6mm) + garis + gap
-  tinggi += 4 * 6 + 2 + 8;
+  // Info (4 baris x 5mm) + garis + gap
+  tinggi += 4 * 5 + 2 + 7;
 
   // Items
   data.items.forEach(() => {
-    tinggi += 6 + 6 + 4; // nama+harga, qty, spasi antar item
+    tinggi += 5 + 3 + 3; // nama+harga, qty, spasi antar item
   });
 
   // Garis setelah items + gap
-  tinggi += 2 + 6;
+  tinggi += 2 + 5;
 
   // Diskon (opsional)
-  if (data.diskon > 0) tinggi += 6 + 6 + 4;
+  if (data.diskon > 0) tinggi += 5 + 5 + 3;
 
   // Total
-  tinggi += 12;
+  tinggi += 10;
 
   // Bayar + Kembali
-  tinggi += 6 + 6;
+  tinggi += 5 + 5;
 
   // Footer
-  tinggi += 18 + 6 + 6;
+  tinggi += 14 + 5 + 5;
 
-  return tinggi + 10; // padding bawah
+  return tinggi + 8; // padding bawah
 }
 
 // ======================================
@@ -10690,12 +10661,12 @@ function buildReceiptDoc(JsPDF, data) {
 
   const doc = new JsPDF({
     unit: "mm",
-    format: [80, tinggi],
+    format: [58, tinggi],
   });
 
-  const pageW = 80;
-  const L = 5; // margin kiri
-  const R = 75; // margin kanan
+  const pageW = 58;
+  const L = 4; // margin kiri
+  const R = 54; // margin kanan
   let y = 8;
 
   // ─── HELPER ───────────────────────────────────
@@ -10726,25 +10697,25 @@ function buildReceiptDoc(JsPDF, data) {
 
   // ─── NAMA TOKO ────────────────────────────────
   doc.setFont("helvetica", "bold");
-  doc.setFontSize(15);
+  doc.setFontSize(13);
   doc.text(data.toko, pageW / 2, y, { align: "center" });
-  y += 7;
+  y += 6;
 
   // ─── ALAMAT ───────────────────────────────────
   doc.setFont("helvetica", "normal");
-  doc.setFontSize(7.5);
+  doc.setFontSize(7);
   doc.text(data.alamat1, pageW / 2, y, { align: "center" });
-  y += 5;
+  y += 4;
   doc.text(data.alamat2, pageW / 2, y, { align: "center" });
-  y += 7;
+  y += 6;
 
   // ─── GARIS 1 ──────────────────────────────────
   dashedLine();
-  y += 8;
+  y += 7;
 
   // ─── INFO TRANSAKSI ───────────────────────────
   doc.setFont("helvetica", "normal");
-  doc.setFontSize(8);
+  doc.setFontSize(7.5);
 
   const infoRows = [
     ["Pembeli", data.pembeli],
@@ -10756,96 +10727,96 @@ function buildReceiptDoc(JsPDF, data) {
   infoRows.forEach(([label, value]) => {
     doc.text(label, L, y);
     doc.text(String(value), R, y, { align: "right" });
-    y += 6;
+    y += 5;
   });
 
   // ─── GARIS 2 ──────────────────────────────────
   dashedLine();
-  y += 8;
+  y += 7;
 
   // ─── DAFTAR ITEM ──────────────────────────────
   data.items.forEach((item) => {
     // Baris 1: Nama produk (bold) + subtotal (bold)
     doc.setFont("helvetica", "bold");
-    doc.setFontSize(8.5);
+    doc.setFontSize(8);
     doc.text(item.nama, L, y);
     doc.text(`Rp ${item.subtotal.toLocaleString("id-ID")}`, R, y, {
       align: "right",
     });
-    y += 6;
+    y += 5;
 
     // Baris 2: qty x harga (normal, sedikit indent)
     doc.setFont("helvetica", "normal");
-    doc.setFontSize(7.5);
+    doc.setFontSize(7);
     doc.text(
       `${item.qty} x Rp ${item.harga.toLocaleString("id-ID")}`,
       L + 2,
       y,
     );
-    y += 4;
+    y += 3;
 
     // Spasi antar item
-    y += 4;
+    y += 3;
   });
 
   // ─── GARIS 3 (setelah item) ───────────────────
-  y -= 4;
+  y -= 3;
   dashedLine();
-  y += 8;
+  y += 7;
 
   // ─── DISKON (jika ada) ────────────────────────
   if (data.diskon > 0) {
     doc.setFont("helvetica", "normal");
-    doc.setFontSize(8);
+    doc.setFontSize(7.5);
 
     doc.text("Subtotal", L, y);
     doc.text(`Rp ${(data.total + data.diskon).toLocaleString("id-ID")}`, R, y, {
       align: "right",
     });
-    y += 6;
+    y += 5;
 
     doc.text("Diskon", L, y);
     doc.text(`- Rp ${data.diskon.toLocaleString("id-ID")}`, R, y, {
       align: "right",
     });
-    y += 8;
+    y += 7;
   }
 
   // ─── TOTAL ────────────────────────────────────
   doc.setFont("helvetica", "bold");
-  doc.setFontSize(13);
+  doc.setFontSize(12);
   doc.text("TOTAL", L, y);
   doc.text(`Rp ${data.total.toLocaleString("id-ID")}`, R, y, {
     align: "right",
   });
-  y += 10;
+  y += 9;
 
   // ─── BAYAR & KEMBALI ──────────────────────────
   doc.setFont("helvetica", "normal");
-  doc.setFontSize(8);
+  doc.setFontSize(7.5);
 
   doc.text("Bayar", L, y);
   doc.text(`Rp ${data.bayar.toLocaleString("id-ID")}`, R, y, {
     align: "right",
   });
-  y += 6;
+  y += 5;
 
   doc.text("Kembali", L, y);
   doc.text(`Rp ${data.kembali.toLocaleString("id-ID")}`, R, y, {
     align: "right",
   });
-  y += 16;
+  y += 13;
 
   // ─── FOOTER ───────────────────────────────────
   doc.setFont("helvetica", "normal");
-  doc.setFontSize(8);
-  doc.text("Terima kasih sudah berbelanja di Ming Mart!", pageW / 2, y, {
+  doc.setFontSize(7);
+  doc.text(`Terima kasih sudah berbelanja di ${data.toko}!`, pageW / 2, y, {
     align: "center",
   });
-  y += 5;
+  y += 4;
 
   doc.setFont("helvetica", "italic");
-  doc.setFontSize(7);
+  doc.setFontSize(6.5);
   doc.text("* Simpan struk ini sebagai bukti pembelian *", pageW / 2, y, {
     align: "center",
   });
@@ -10888,24 +10859,167 @@ async function cetakPDF(
       doc.save(`Struk-MingMart-${Date.now()}.pdf`);
       showToast("PDF berhasil disimpan!", "success");
     } else {
-      // ── PRINT LANGSUNG ──
-      const blobUrl = doc.output("bloburl");
-      const iframe = document.createElement("iframe");
-      iframe.style.cssText =
-        "position:fixed;top:-9999px;left:-9999px;width:0;height:0;border:0;";
-      iframe.src = blobUrl;
-      document.body.appendChild(iframe);
-      iframe.onload = () => {
-        setTimeout(() => {
-          iframe.contentWindow.focus();
-          iframe.contentWindow.print();
-        }, 200);
-      };
-      showToast("Struk dikirim ke printer!", "success");
+      // ── PRINT LANGSUNG — gunakan HTML agar tampilan sama dengan preview & kompatibel thermal ──
+      cetakHTMLStruk(total, metode, bayar, pembeli, items, diskon);
     }
   } catch (e) {
     console.error(e);
     showToast("Gagal membuat struk: " + e.message, "danger");
+  }
+}
+
+// ======================================
+// 1b. CETAK HTML — tampilan identik preview, kompatibel thermal printer
+// ======================================
+function cetakHTMLStruk(total, metode, bayar, pembeli, items, diskon = 0) {
+  try {
+    const data = getReceiptData(total, metode, bayar, pembeli, items, diskon);
+    const fmtRp = (n) => `Rp ${Number(n).toLocaleString("id-ID")}`;
+    const dashedLine = `<hr style="border:none;border-top:1.5px dashed #888;margin:7px 0;" />`;
+
+    const logoHtml =
+      typeof LOGO_TOKO_B64 !== "undefined" && LOGO_TOKO_B64
+        ? `<img src="${LOGO_TOKO_B64}" style="width:52px;height:52px;object-fit:contain;display:block;margin:0 auto 4px auto;" />`
+        : "";
+
+    let itemsHtml = "";
+    data.items.forEach((item) => {
+      itemsHtml += `
+        <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:1px;">
+          <span style="font-weight:700;font-size:9.5px;max-width:62%;">${item.nama}</span>
+          <span style="font-weight:700;font-size:9.5px;">Rp ${Number(item.subtotal).toLocaleString("id-ID")}</span>
+        </div>
+        <div style="font-size:8px;color:#444;margin-bottom:5px;padding-left:4px;">
+          ${item.qty} x Rp ${Number(item.harga).toLocaleString("id-ID")}
+        </div>`;
+    });
+
+    let diskonHtml = "";
+    if (data.diskon > 0) {
+      diskonHtml = `
+        <div style="display:flex;justify-content:space-between;font-size:8.5px;margin-bottom:2px;">
+          <span>Subtotal</span><span>${fmtRp(data.total + data.diskon)}</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:8.5px;margin-bottom:2px;color:#c0392b;">
+          <span>Diskon</span><span>- ${fmtRp(data.diskon)}</span>
+        </div>`;
+    }
+
+    const htmlContent = `<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Struk ${data.toko}</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-size: 9.5px;
+      line-height: 1.45;
+      background: #fff;
+      color: #000;
+    }
+    .struk {
+      width: 52mm;
+      max-width: 52mm;
+      margin: 0 auto;
+      padding: 6px 4px 10px 4px;
+      background: #fff;
+    }
+    @media print {
+      @page {
+        size: 58mm auto;
+        margin: 0mm 3mm 0mm 3mm;
+      }
+      body { margin: 0; background: #fff; }
+      .struk { width: 52mm; margin: 0; padding: 3px 2px 8px 2px; }
+    }
+  </style>
+</head>
+<body>
+<div class="struk">
+  <div style="text-align:center;margin-bottom:4px;">
+    ${logoHtml}
+    <div style="font-size:14px;font-weight:700;letter-spacing:0.5px;margin-top:2px;">${data.toko}</div>
+    <div style="font-size:8px;color:#555;margin-top:1px;">${data.alamat1}</div>
+    <div style="font-size:8px;color:#555;">${data.alamat2}</div>
+  </div>
+  ${dashedLine}
+  <div style="font-size:9px;margin-bottom:4px;">
+    <div style="display:flex;justify-content:space-between;margin-bottom:1px;">
+      <span>Pembeli</span>
+      <span style="font-weight:600;text-align:right;max-width:58%;">${data.pembeli}</span>
+    </div>
+    <div style="display:flex;justify-content:space-between;margin-bottom:1px;">
+      <span>Tanggal</span>
+      <span style="font-weight:600;text-align:right;max-width:58%;font-size:8px;">${data.tanggal}</span>
+    </div>
+    <div style="display:flex;justify-content:space-between;margin-bottom:1px;">
+      <span>Pembayaran</span>
+      <span style="font-weight:600;">${data.metode}</span>
+    </div>
+    <div style="display:flex;justify-content:space-between;">
+      <span>Kasir</span>
+      <span style="font-weight:600;">${data.kasir}</span>
+    </div>
+  </div>
+  ${dashedLine}
+  <div style="margin-bottom:2px;">${itemsHtml}</div>
+  ${dashedLine}
+  ${diskonHtml}
+  <div style="display:flex;justify-content:space-between;font-size:13px;font-weight:700;margin:4px 0;">
+    <span>TOTAL</span><span>${fmtRp(data.total)}</span>
+  </div>
+  <div style="font-size:9px;">
+    <div style="display:flex;justify-content:space-between;margin-bottom:1px;">
+      <span>Bayar</span><span>${fmtRp(data.bayar)}</span>
+    </div>
+    <div style="display:flex;justify-content:space-between;">
+      <span>Kembali</span><span>${fmtRp(data.kembali)}</span>
+    </div>
+  </div>
+  ${dashedLine}
+  <div style="text-align:center;font-size:8px;color:#555;margin-top:2px;">
+    <div>Terima kasih sudah berbelanja di ${data.toko}!</div>
+    <div style="font-style:italic;margin-top:1px;">* Simpan struk ini sebagai bukti pembelian *</div>
+  </div>
+</div>
+<script>
+  window.onload = function() {
+    window.focus();
+    window.print();
+    setTimeout(function() { window.close(); }, 800);
+  };
+<\/script>
+</body>
+</html>`;
+
+    const blob = new Blob([htmlContent], { type: "text/html;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const printWin = window.open(url, "_blank", "width=400,height=600,toolbar=0,menubar=0,scrollbars=1");
+    if (!printWin) {
+      // Fallback: iframe jika popup diblokir
+      const iframe = document.createElement("iframe");
+      iframe.style.cssText = "position:fixed;top:-9999px;left:-9999px;width:400px;height:600px;border:0;";
+      document.body.appendChild(iframe);
+      iframe.contentDocument.open();
+      iframe.contentDocument.write(htmlContent);
+      iframe.contentDocument.close();
+      iframe.contentWindow.focus();
+      setTimeout(() => {
+        iframe.contentWindow.print();
+        setTimeout(() => {
+          document.body.removeChild(iframe);
+          URL.revokeObjectURL(url);
+        }, 2000);
+      }, 400);
+    } else {
+      setTimeout(() => URL.revokeObjectURL(url), 10000);
+    }
+    showToast("Struk dikirim ke printer!", "success");
+  } catch (e) {
+    console.error(e);
+    showToast("Gagal cetak struk: " + e.message, "danger");
   }
 }
 
@@ -11350,84 +11464,51 @@ function resetLaporan() {
 //  EKSPOR LAPORAN EXCEL
 // ============================================================
 function eksporLaporanExcel(tipe = "semua") {
-  if (typeof XLSX === "undefined") {
-    showToast("Library Excel tidak tersedia", "danger");
-    return;
-  }
-  const riwayat = JSON.parse(localStorage.getItem(DB_RIWAYAT)) || [];
-  const produk = getProducts();
-  const wb = XLSX.utils.book_new();
+  showToast("Menyiapkan Excel...", "info");
+  ensureXLSX().then((XLSX) => {
+    const riwayat = JSON.parse(localStorage.getItem(DB_RIWAYAT)) || [];
+    const produk = getProducts();
+    const wb = XLSX.utils.book_new();
 
-  if (tipe === "transaksi" || tipe === "semua") {
-    const data = [
-      ["ID", "Waktu", "Pembeli", "Metode", "Total", "Diskon"],
-      ...riwayat.map((t) => [
-        t.id,
-        t.waktu,
-        t.pembeli || "-",
-        t.metode,
-        t.total,
-        t.diskon || 0,
-      ]),
-    ];
-    XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(data), "Riwayat");
-  }
-  if (tipe === "produk" || tipe === "semua") {
-    const data = [
-      ["ID", "Nama", "Kategori", "Harga", "Stok", "Satuan"],
-      ...produk.map((p) => [
-        p.id,
-        p.nama,
-        p.kategori || "-",
-        p.harga,
-        p.stok,
-        p.satuan || "pcs",
-      ]),
-    ];
-    XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(data), "Produk");
-  }
-  if (tipe === "hutang" || tipe === "semua") {
-    const hutang = riwayat.filter((t) => t.metode === "Hutang");
-    const data = [
-      ["ID", "Waktu", "Pembeli", "Total"],
-      ...hutang.map((t) => [t.id, t.waktu, t.pembeli || "-", t.total]),
-    ];
-    XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(data), "Hutang");
-  }
-  if (tipe === "pengeluaran" || tipe === "semua") {
-    const pengeluaran = JSON.parse(localStorage.getItem(DB_PENGELUARAN)) || [];
-    const data = [
-      [
-        "No",
-        "Tanggal",
-        "Keterangan",
-        "Kategori",
-        "Produk Stok",
-        "Jumlah Stok",
-        "Jumlah (Rp)",
-      ],
-      ...pengeluaran.map((p, i) => [
-        i + 1,
-        new Date(p.tanggal).toLocaleDateString("id-ID"),
-        p.keterangan,
-        p.kategori || "Umum",
-        p.stokProdukNama || "-",
-        p.stokJumlah || 0,
-        p.jumlah,
-      ]),
-    ];
-    XLSX.utils.book_append_sheet(
-      wb,
-      XLSX.utils.aoa_to_sheet(data),
-      "Pengeluaran",
-    );
-  }
+    if (tipe === "transaksi" || tipe === "semua") {
+      const data = [
+        ["ID", "Waktu", "Pembeli", "Metode", "Total", "Diskon"],
+        ...riwayat.map((t) => [t.id, t.waktu, t.pembeli || "-", t.metode, t.total, t.diskon || 0]),
+      ];
+      XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(data), "Riwayat");
+    }
+    if (tipe === "produk" || tipe === "semua") {
+      const data = [
+        ["ID", "Nama", "Kategori", "Harga", "Stok", "Satuan"],
+        ...produk.map((p) => [p.id, p.nama, p.kategori || "-", p.harga, p.stok, p.satuan || "pcs"]),
+      ];
+      XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(data), "Produk");
+    }
+    if (tipe === "hutang" || tipe === "semua") {
+      const hutang = riwayat.filter((t) => t.metode === "Hutang");
+      const data = [
+        ["ID", "Waktu", "Pembeli", "Total"],
+        ...hutang.map((t) => [t.id, t.waktu, t.pembeli || "-", t.total]),
+      ];
+      XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(data), "Hutang");
+    }
+    if (tipe === "pengeluaran" || tipe === "semua") {
+      const pengeluaran = JSON.parse(localStorage.getItem(DB_PENGELUARAN)) || [];
+      const data = [
+        ["No", "Tanggal", "Keterangan", "Kategori", "Produk Stok", "Jumlah Stok", "Jumlah (Rp)"],
+        ...pengeluaran.map((p, i) => [
+          i + 1,
+          new Date(p.tanggal).toLocaleDateString("id-ID"),
+          p.keterangan, p.kategori || "Umum",
+          p.stokProdukNama || "-", p.stokJumlah || 0, p.jumlah,
+        ]),
+      ];
+      XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(data), "Pengeluaran");
+    }
 
-  XLSX.writeFile(
-    wb,
-    `LaporanMingMart_${new Date().toLocaleDateString("id-ID").replace(/\//g, "-")}.xlsx`,
-  );
-  showToast("Ekspor Excel berhasil!", "success");
+    XLSX.writeFile(wb, `LaporanMingMart_${new Date().toLocaleDateString("id-ID").replace(/\//g, "-")}.xlsx`);
+    showToast("Ekspor Excel berhasil!", "success");
+  }).catch((err) => showToast("Gagal ekspor: " + err.message, "danger"));
 }
 
 // ============================================================

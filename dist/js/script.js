@@ -10427,7 +10427,8 @@ function pilihanCetak(total, metode, bayar, pembeli, items, diskon = 0) {
 }
 
 // ======================================
-// PREVIEW STRUK
+// PREVIEW STRUK — tampilan identik dengan PDF
+// + tombol Cetak Printer & Cetak Bluetooth
 // ======================================
 function previewStruk(total, metode, bayar, pembeli, items, diskon = 0) {
   const data = getReceiptData(total, metode, bayar, pembeli, items, diskon);
@@ -10441,115 +10442,168 @@ function previewStruk(total, metode, bayar, pembeli, items, diskon = 0) {
     document.body.appendChild(m);
   }
 
-  // Build HTML visual receipt (same layout as PDF)
+  // ── FORMAT HELPER ──────────────────────────────────
   const fmtRp = (n) => `Rp ${Number(n).toLocaleString("id-ID")}`;
-  const dashedLine = `<div style="border-top:1px dashed #999;margin:8px 0;"></div>`;
+  // Garis putus-putus persis seperti PDF (dashed border)
+  const dashedLine = `<div style="border-top:1.5px dashed #888;margin:7px 0;"></div>`;
 
+  // ── LOGO ──────────────────────────────────────────
+  // Gunakan logo-struk.png (LOGO_TOKO_B64) — sama persis dengan PDF
+  const logoHtml = (typeof LOGO_TOKO_B64 !== "undefined" && LOGO_TOKO_B64)
+    ? `<img src="${LOGO_TOKO_B64}" style="width:52px;height:52px;object-fit:contain;margin-bottom:4px;display:block;margin-left:auto;margin-right:auto;" />`
+    : "";
+
+  // ── DAFTAR ITEM ───────────────────────────────────
+  // Dua baris per item: (bold) Nama + Subtotal | qty x harga (normal, indent)
   let itemsHtml = "";
   data.items.forEach((item) => {
     itemsHtml += `
-      <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:2px;">
-        <span style="font-weight:700;font-size:12px;max-width:60%;">${item.nama}</span>
-        <span style="font-weight:700;font-size:12px;">${fmtRp(item.subtotal)}</span>
+      <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:1px;">
+        <span style="font-weight:700;font-size:11px;max-width:62%;">${item.nama}</span>
+        <span style="font-weight:700;font-size:11px;">Rp ${Number(item.subtotal).toLocaleString("id-ID")}</span>
       </div>
-      <div style="font-size:10.5px;color:#555;margin-bottom:8px;padding-left:4px;">
-        ${item.qty} x ${fmtRp(item.harga)}
+      <div style="font-size:9.5px;color:#444;margin-bottom:7px;padding-left:5px;">
+        ${item.qty} x Rp ${Number(item.harga).toLocaleString("id-ID")}
       </div>`;
   });
 
+  // ── DISKON (opsional) ─────────────────────────────
   let diskonHtml = "";
   if (data.diskon > 0) {
     diskonHtml = `
-      <div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:4px;">
+      <div style="display:flex;justify-content:space-between;font-size:10px;margin-bottom:3px;">
         <span>Subtotal</span><span>${fmtRp(data.total + data.diskon)}</span>
       </div>
-      <div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:4px;color:#c0392b;">
+      <div style="display:flex;justify-content:space-between;font-size:10px;margin-bottom:3px;color:#c0392b;">
         <span>Diskon</span><span>- ${fmtRp(data.diskon)}</span>
       </div>`;
   }
 
-  const logoHtml = (typeof LOGO_TOKO_B64 !== "undefined" && LOGO_TOKO_B64)
-    ? `<img src="${LOGO_TOKO_B64}" style="width:60px;height:60px;object-fit:contain;margin-bottom:6px;" />`
-    : "";
-
+  // ── BUILD MODAL HTML ──────────────────────────────
   m.innerHTML = `
-    <div class="modal-dialog modal-dialog-centered" style="max-width:360px;">
+    <div class="modal-dialog modal-dialog-centered" style="max-width:370px;">
       <div class="modal-content">
-        <div class="modal-header" style="background:#f8f9fa;">
-          <h5 class="modal-title"><i class="bi bi-receipt me-2"></i>Preview Struk</h5>
+        <div class="modal-header" style="background:#f8f9fa;padding:10px 16px;">
+          <h5 class="modal-title" style="font-size:15px;">
+            <i class="bi bi-receipt me-2"></i>Preview Struk
+          </h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
-        <div class="modal-body" style="background:#e9ecef;padding:20px;">
-          <div style="
+
+        <div class="modal-body" style="background:#d6d6d6;padding:18px 14px;">
+          <!-- ===== KERTAS STRUK ===== -->
+          <div id="struktCetak" style="
             width:100%;
             max-width:280px;
             margin:0 auto;
-            background:white;
-            padding:14px 12px;
+            background:#fff;
+            padding:14px 12px 16px 12px;
             font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
-            font-size:11px;
+            font-size:10.5px;
             line-height:1.5;
-            box-shadow:0 4px 12px rgba(0,0,0,0.15);
-            border-radius:4px;
+            box-shadow:0 4px 14px rgba(0,0,0,0.18);
+            border-radius:3px;
           ">
-            <!-- LOGO + HEADER -->
-            <div style="text-align:center;margin-bottom:6px;">
+            <!-- LOGO + NAMA TOKO -->
+            <div style="text-align:center;margin-bottom:5px;">
               ${logoHtml}
-              <div style="font-size:18px;font-weight:700;letter-spacing:1px;">${data.toko}</div>
-              <div style="font-size:9.5px;color:#555;margin-top:2px;">${data.alamat1}</div>
-              <div style="font-size:9.5px;color:#555;">${data.alamat2}</div>
+              <div style="font-size:17px;font-weight:700;letter-spacing:1px;margin-top:2px;">${data.toko}</div>
+              <div style="font-size:9px;color:#555;margin-top:2px;">${data.alamat1}</div>
+              <div style="font-size:9px;color:#555;">${data.alamat2}</div>
             </div>
+
             ${dashedLine}
+
             <!-- INFO TRANSAKSI -->
-            <div style="font-size:11px;margin-bottom:6px;">
-              <div style="display:flex;justify-content:space-between;margin-bottom:3px;">
-                <span>Pembeli</span><span style="font-weight:600;text-align:right;max-width:55%;">${data.pembeli}</span>
+            <div style="font-size:10.5px;margin-bottom:5px;">
+              <div style="display:flex;justify-content:space-between;margin-bottom:2px;">
+                <span>Pembeli</span>
+                <span style="font-weight:600;text-align:right;max-width:58%;">${data.pembeli}</span>
               </div>
-              <div style="display:flex;justify-content:space-between;margin-bottom:3px;">
-                <span>Tanggal</span><span style="font-weight:600;text-align:right;max-width:55%;font-size:10px;">${data.tanggal}</span>
+              <div style="display:flex;justify-content:space-between;margin-bottom:2px;">
+                <span>Tanggal</span>
+                <span style="font-weight:600;text-align:right;max-width:58%;font-size:9.5px;">${data.tanggal}</span>
               </div>
-              <div style="display:flex;justify-content:space-between;margin-bottom:3px;">
-                <span>Pembayaran</span><span style="font-weight:600;">${data.metode}</span>
+              <div style="display:flex;justify-content:space-between;margin-bottom:2px;">
+                <span>Pembayaran</span>
+                <span style="font-weight:600;">${data.metode}</span>
               </div>
               <div style="display:flex;justify-content:space-between;">
-                <span>Kasir</span><span style="font-weight:600;">${data.kasir}</span>
+                <span>Kasir</span>
+                <span style="font-weight:600;">${data.kasir}</span>
               </div>
             </div>
+
             ${dashedLine}
-            <!-- ITEMS -->
-            <div style="margin-bottom:4px;">${itemsHtml}</div>
+
+            <!-- DAFTAR ITEM -->
+            <div style="margin-bottom:3px;">${itemsHtml}</div>
+
             ${dashedLine}
+
             <!-- DISKON -->
             ${diskonHtml}
-            <!-- TOTAL -->
-            <div style="display:flex;justify-content:space-between;font-size:16px;font-weight:700;margin:6px 0;">
+
+            <!-- TOTAL (bold, besar) -->
+            <div style="display:flex;justify-content:space-between;font-size:15px;font-weight:700;margin:5px 0 5px 0;">
               <span>TOTAL</span><span>${fmtRp(data.total)}</span>
             </div>
+
             <!-- BAYAR & KEMBALI -->
-            <div style="font-size:11px;">
-              <div style="display:flex;justify-content:space-between;margin-bottom:3px;">
+            <div style="font-size:10.5px;">
+              <div style="display:flex;justify-content:space-between;margin-bottom:2px;">
                 <span>Bayar</span><span>${fmtRp(data.bayar)}</span>
               </div>
               <div style="display:flex;justify-content:space-between;">
                 <span>Kembali</span><span>${fmtRp(data.kembali)}</span>
               </div>
             </div>
+
             ${dashedLine}
+
             <!-- FOOTER -->
-            <div style="text-align:center;font-size:9.5px;color:#555;margin-top:4px;">
-              <div>Terima kasih sudah berbelanja di Ming Mart!</div>
-              <div style="font-style:italic;margin-top:2px;">* Simpan struk ini sebagai bukti pembelian *</div>
+            <div style="text-align:center;font-size:9px;color:#555;margin-top:3px;">
+              <div>Terima kasih sudah berbelanja di ${data.toko}!</div>
+              <div style="font-style:italic;margin-top:1px;">* Simpan struk ini sebagai bukti pembelian *</div>
             </div>
           </div>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+
+        <!-- TOMBOL AKSI -->
+        <div class="modal-footer" style="gap:6px;flex-wrap:wrap;justify-content:center;">
+          <button type="button" class="btn btn-primary btn-sm px-3" id="btnPreviewCetakPrinter">
+            <i class="bi bi-printer-fill me-1"></i>Cetak Printer
+          </button>
+          <button type="button" class="btn btn-success btn-sm px-3" id="btnPreviewCetakBT">
+            <i class="bi bi-bluetooth me-1"></i>Cetak Bluetooth
+          </button>
+          <button type="button" class="btn btn-warning btn-sm px-3" id="btnPreviewSimpanPDF">
+            <i class="bi bi-file-pdf-fill me-1"></i>Simpan PDF
+          </button>
+          <button type="button" class="btn btn-secondary btn-sm px-3" data-bs-dismiss="modal">
+            <i class="bi bi-x-circle me-1"></i>Tutup
+          </button>
         </div>
       </div>
     </div>`;
 
   const bsM = new bootstrap.Modal(m);
   bsM.show();
+
+  // ── TOMBOL CETAK PRINTER dari preview ─────────────
+  document.getElementById("btnPreviewCetakPrinter").onclick = () => {
+    cetakPDF(total, metode, bayar, "cetak", pembeli, items, diskon);
+  };
+
+  // ── TOMBOL CETAK BLUETOOTH dari preview ───────────
+  document.getElementById("btnPreviewCetakBT").onclick = () => {
+    cetakBluetooth(total, metode, bayar, pembeli, items, diskon);
+  };
+
+  // ── TOMBOL SIMPAN PDF dari preview ────────────────
+  document.getElementById("btnPreviewSimpanPDF").onclick = () => {
+    cetakPDF(total, metode, bayar, "simpan", pembeli, items, diskon);
+  };
 }
 
 // ======================================

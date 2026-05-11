@@ -11140,40 +11140,71 @@ async function cetakBluetooth(
 function buatTeksStrukBluetooth(data) {
   let t = "";
 
-  // Lebar kertas thermal 80mm = ±48 karakter
-  const LEBAR = 48;
+  // Lebar kertas thermal 58mm = ±32 karakter
+  const LEBAR = 32;
 
-  // Helper: teks kanan-kiri dalam satu baris
-  const rowKiriKanan = (kiri, kanan, lebar = LEBAR) => {
-    const sisa = lebar - kiri.length - kanan.length;
-    return kiri + " ".repeat(Math.max(1, sisa)) + kanan + "\n";
+  // Helper: word-wrap teks panjang menjadi beberapa baris, tiap baris max `lebar` karakter
+  const wrapTeks = (teks, lebar = LEBAR) => {
+    if (teks.length <= lebar) return [teks];
+    const words = teks.split(" ");
+    const baris = [];
+    let cur = "";
+    for (const w of words) {
+      if (!cur) {
+        cur = w.substring(0, lebar);
+      } else if ((cur + " " + w).length <= lebar) {
+        cur += " " + w;
+      } else {
+        baris.push(cur);
+        cur = w.substring(0, lebar);
+      }
+    }
+    if (cur) baris.push(cur);
+    return baris;
   };
 
-  // Helper: teks tengah
+  // Helper: teks tengah (dengan word-wrap otomatis)
   const tengah = (teks, lebar = LEBAR) => {
-    const sisa = Math.max(0, lebar - teks.length);
-    return " ".repeat(Math.floor(sisa / 2)) + teks + "\n";
+    return wrapTeks(teks, lebar)
+      .map((b) => {
+        const sisa = Math.max(0, lebar - b.length);
+        return " ".repeat(Math.floor(sisa / 2)) + b + "\n";
+      })
+      .join("");
   };
 
-  // Helper: garis putus-putus
-  const garis = () => "- ".repeat(LEBAR / 2) + "\n";
+  // Helper: baris kiri-kanan — jika total melebihi lebar, nilai wrap ke baris baru rata kanan
+  const rowKiriKanan = (kiri, kanan, lebar = LEBAR) => {
+    const kiriStr = String(kiri);
+    const kananStr = String(kanan);
+    const total = kiriStr.length + 1 + kananStr.length;
+    if (total <= lebar) {
+      const spasi = lebar - kiriStr.length - kananStr.length;
+      return kiriStr + " ".repeat(Math.max(1, spasi)) + kananStr + "\n";
+    }
+    // Nilai terlalu panjang → tampilkan kiri, lalu nilai di baris berikutnya rata kanan
+    const spasi = Math.max(0, lebar - kananStr.length);
+    return kiriStr + "\n" + " ".repeat(spasi) + kananStr + "\n";
+  };
+
+  // Helper: garis putus-putus penuh lebar
+  const garis = () => "-".repeat(LEBAR) + "\n";
 
   // ── INISIALISASI ──────────────────────────────
   t += "\x1B\x40"; // Reset printer
   t += "\x1B\x61\x01"; // Alignment center
 
   // ── HEADER / NAMA TOKO ────────────────────────
-  // Font bold + double height & width
+  // Bold saja (tanpa double-width agar tidak terpotong di 58mm)
   t += "\x1B\x45\x01"; // Bold on
-  t += "\x1B\x21\x30"; // Double height + width
-  t += "MING MART\n";
+  t += "\x1B\x21\x10"; // Double width — nama toko pendek, aman di 58mm
+  t += tengah(data.toko, Math.floor(LEBAR / 2)); // efektif setengah karena tiap char 2x lebar
   t += "\x1B\x21\x00"; // Reset ukuran
   t += "\x1B\x45\x00"; // Bold off
 
-  // Alamat
-  t += "\n";
-  t += tengah("Dusun Batu Menjangkong, Desa Anyar");
-  t += tengah("Kec. Bayan, Kab. Lombok Utara");
+  // Alamat (word-wrap jika panjang)
+  t += tengah(data.alamat1);
+  t += tengah(data.alamat2);
   t += "\n";
 
   // Garis 1
@@ -11183,38 +11214,42 @@ function buatTeksStrukBluetooth(data) {
   // ── INFO TRANSAKSI ────────────────────────────
   t += "\x1B\x61\x00"; // Alignment left
 
+  // Pembeli
   t += rowKiriKanan("Pembeli", String(data.pembeli));
+  // Tanggal — nilai tanggal bisa panjang, rowKiriKanan handles wrap
   t += rowKiriKanan("Tanggal", String(data.tanggal));
+  // Pembayaran
   t += rowKiriKanan("Pembayaran", String(data.metode));
+  // Kasir
   t += rowKiriKanan("Kasir", String(data.kasir));
 
   t += "\n";
 
   // Garis 2
-  t += "\x1B\x61\x01"; // Center
   t += garis();
-  t += "\x1B\x61\x00"; // Left
   t += "\n";
 
   // ── DAFTAR ITEM ───────────────────────────────
+  // Sama seperti preview: baris 1 = nama (bold) + subtotal kanan
+  //                       baris 2 = qty x harga (indent, normal)
   data.items.forEach((item) => {
     const subtotal = `Rp ${item.subtotal.toLocaleString("id-ID")}`;
     const qtyHarga = `  ${item.qty} x Rp ${item.harga.toLocaleString("id-ID")}`;
 
-    // Nama produk bold + subtotal di kanan
+    // Nama produk bold + subtotal di kanan (dengan proteksi panjang)
     t += "\x1B\x45\x01"; // Bold on
     t += rowKiriKanan(item.nama, subtotal);
     t += "\x1B\x45\x00"; // Bold off
 
-    // Qty x harga (normal, indent)
-    t += qtyHarga + "\n";
+    // Qty x harga — pastikan tidak melebihi LEBAR
+    const qtyLine =
+      qtyHarga.length <= LEBAR ? qtyHarga : qtyHarga.substring(0, LEBAR);
+    t += qtyLine + "\n";
     t += "\n";
   });
 
   // Garis 3
-  t += "\x1B\x61\x01"; // Center
   t += garis();
-  t += "\x1B\x61\x00"; // Left
   t += "\n";
 
   // ── DISKON (jika ada) ─────────────────────────
@@ -11223,20 +11258,16 @@ function buatTeksStrukBluetooth(data) {
       "Subtotal",
       `Rp ${(data.total + data.diskon).toLocaleString("id-ID")}`,
     );
-    t += rowKiriKanan("Diskon", `- Rp ${data.diskon.toLocaleString("id-ID")}`);
+    t += rowKiriKanan(
+      "Diskon",
+      `- Rp ${data.diskon.toLocaleString("id-ID")}`,
+    );
     t += "\n";
   }
 
-  // ── TOTAL ─────────────────────────────────────
-  // Bold + double height & width
+  // ── TOTAL (bold, sama seperti preview font besar) ─
   t += "\x1B\x45\x01"; // Bold on
-  t += "\x1B\x21\x10"; // Double width
-  t += rowKiriKanan(
-    "TOTAL",
-    `Rp ${data.total.toLocaleString("id-ID")}`,
-    LEBAR / 2,
-  );
-  t += "\x1B\x21\x00"; // Reset ukuran
+  t += rowKiriKanan("TOTAL", `Rp ${data.total.toLocaleString("id-ID")}`);
   t += "\x1B\x45\x00"; // Bold off
 
   t += "\n";
@@ -11245,13 +11276,17 @@ function buatTeksStrukBluetooth(data) {
   t += rowKiriKanan("Bayar", `Rp ${data.bayar.toLocaleString("id-ID")}`);
   t += rowKiriKanan("Kembali", `Rp ${data.kembali.toLocaleString("id-ID")}`);
 
-  // ── FOOTER ────────────────────────────────────
+  // ── GARIS FOOTER ──────────────────────────────
   t += "\n";
-  t += "\x1B\x61\x01"; // Center
+  t += garis();
 
+  // ── FOOTER ────────────────────────────────────
+  t += "\x1B\x61\x01"; // Center
   t += "\n";
-  t += tengah("Terima kasih sudah berbelanja di Ming Mart!");
-  t += tengah("* Simpan struk ini sebagai bukti pembelian *");
+  t += tengah(`Terima kasih sudah`);
+  t += tengah(`berbelanja di ${data.toko}!`);
+  t += tengah("* Simpan struk ini sebagai");
+  t += tengah("bukti pembelian *");
   t += "\n\n\n";
 
   // ── POTONG KERTAS ─────────────────────────────

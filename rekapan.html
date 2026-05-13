@@ -27,6 +27,11 @@
       .rekap-table th { background: var(--bs-primary); color: #fff; white-space: nowrap; }
       .rekap-table td { vertical-align: middle; white-space: nowrap; }
       .badge-metode { font-size: .75rem; }
+      .sync-bar { background: var(--bs-body-bg); border-bottom: 1px solid var(--bs-border-color); padding: 4px 16px; font-size: .78rem; display: flex; align-items: center; gap: 8px; }
+      .sync-dot { width: 8px; height: 8px; border-radius: 50%; background: #198754; display: inline-block; animation: pulse-dot 2s infinite; }
+      @keyframes pulse-dot { 0%,100%{opacity:1} 50%{opacity:.3} }
+      .sync-dot.syncing { background: #ffc107; animation: none; }
+      .btn-refresh { font-size:.75rem; padding: 2px 10px; }
     </style>
   </head>
   <body class="layout-fixed sidebar-expand-lg bg-body-tertiary">
@@ -149,6 +154,16 @@
           </nav>
         </div>
       </aside>
+
+      <!-- SYNC BAR -->
+      <div class="sync-bar" id="syncBar">
+        <span class="sync-dot" id="syncDot"></span>
+        <span id="syncStatus">Menghubungkan...</span>
+        <span class="ms-auto text-muted" id="syncLastUpdate"></span>
+        <button class="btn btn-sm btn-outline-secondary btn-refresh" onclick="manualRefresh()" title="Refresh data sekarang">
+          <i class="bi bi-arrow-clockwise"></i> Refresh
+        </button>
+      </div>
 
       <!-- MAIN -->
       <main class="app-main">
@@ -323,21 +338,110 @@
 
     <script>
     // ============================================================
-    //  REKAPAN TRANSAKSI
+    //  REKAPAN TRANSAKSI — dengan Sinkronisasi Real-time
     // ============================================================
     const DB_RIWAYAT_KEY = "pos_riwayat";
     let currentPeriod = "harian";
     let chartOmzetInst = null;
     let chartMetodeInst = null;
     let chartProdukInst = null;
+    let syncInterval = null;
+    let lastDataHash = "";
 
     // Color palette
     const COLORS = ["#0d6efd","#198754","#ffc107","#dc3545","#0dcaf0","#6f42c1","#fd7e14","#20c997"];
+
+    // ---- Sync helpers ----
+    function getDataHash(data) {
+      // simple hash: jumlah transaksi + total terakhir
+      if (!data.length) return "0";
+      return data.length + "_" + (data[0].id || "") + "_" + (data[0].total || 0);
+    }
+
+    function setSyncStatus(status, msg) {
+      const dot = document.getElementById("syncDot");
+      const txt = document.getElementById("syncStatus");
+      if (!dot || !txt) return;
+      if (status === "live") {
+        dot.classList.remove("syncing");
+        dot.style.background = "#198754";
+        txt.innerHTML = '<span class="text-success">● Live</span> &mdash; Data tersinkronisasi otomatis';
+      } else if (status === "syncing") {
+        dot.classList.add("syncing");
+        dot.style.background = "#ffc107";
+        txt.textContent = msg || "Menyinkronkan...";
+      } else {
+        dot.style.background = "#dc3545";
+        txt.textContent = msg || "Tidak terhubung";
+      }
+    }
+
+    function updateLastSyncTime() {
+      const el = document.getElementById("syncLastUpdate");
+      if (el) {
+        const now = new Date();
+        el.textContent = "Terakhir update: " + now.toLocaleTimeString("id-ID");
+      }
+    }
 
     function getRiwayat() {
       return JSON.parse(localStorage.getItem(DB_RIWAYAT_KEY) || localStorage.getItem("pos_riwayat") || "[]");
     }
 
+    // ---- Refresh logic ----
+    function syncAndRender(silent) {
+      const data = getRiwayat();
+      const hash = getDataHash(data);
+      if (!silent) {
+        setSyncStatus("syncing", "Memuat data...");
+      }
+      if (hash !== lastDataHash) {
+        lastDataHash = hash;
+        renderRekapan();
+        if (!silent) setSyncStatus("live");
+        updateLastSyncTime();
+        return true; // ada perubahan
+      }
+      if (!silent) setSyncStatus("live");
+      updateLastSyncTime();
+      return false;
+    }
+
+    function manualRefresh() {
+      setSyncStatus("syncing", "Memuat ulang data...");
+      setTimeout(() => {
+        lastDataHash = ""; // force re-render
+        syncAndRender(false);
+      }, 200);
+    }
+
+    function startAutoSync() {
+      setSyncStatus("live");
+      // Polling setiap 5 detik
+      syncInterval = setInterval(() => syncAndRender(true), 5000);
+
+      // Storage event untuk sinkronisasi antar tab
+      window.addEventListener("storage", (e) => {
+        if (e.key === "pos_riwayat" || e.key === DB_RIWAYAT_KEY) {
+          setSyncStatus("syncing", "Data baru diterima...");
+          setTimeout(() => {
+            lastDataHash = "";
+            syncAndRender(false);
+          }, 100);
+        }
+      });
+
+      // Visibility change — refresh saat tab kembali aktif
+      document.addEventListener("visibilitychange", () => {
+        if (!document.hidden) {
+          lastDataHash = "";
+          syncAndRender(true);
+          updateLastSyncTime();
+        }
+      });
+    }
+
+    // ---- Core functions ----
     function fmtRp(n) {
       return "Rp " + Number(n).toLocaleString("id-ID");
     }
@@ -347,7 +451,6 @@
       document.querySelectorAll(".period-btn").forEach(b => b.classList.remove("active"));
       document.getElementById("btn" + p.charAt(0).toUpperCase() + p.slice(1)).classList.add("active");
 
-      // Set default date filter
       const now = new Date();
       const input = document.getElementById("filterTanggal");
       if (p === "harian") {
@@ -391,7 +494,6 @@
         if (currentPeriod === "harian") {
           return d.toISOString().split("T")[0] === val;
         } else if (currentPeriod === "mingguan") {
-          // val format: "2025-W22"
           const [yr, wk] = val.split("-W");
           return d.getFullYear() === parseInt(yr) && getWeekNumber(d) === parseInt(wk);
         } else if (currentPeriod === "bulanan") {
@@ -448,9 +550,7 @@
         if (val) {
           const [yr, wkStr] = val.split("-W");
           const wk = parseInt(wkStr);
-          const jan1 = new Date(parseInt(yr), 0, 1);
           const days = ["Min","Sen","Sel","Rab","Kam","Jum","Sab"];
-          // Find monday of that week
           const d = new Date(parseInt(yr), 0, 1 + (wk - 1) * 7);
           for (let i = 0; i < 7; i++) {
             const dd = new Date(d);
@@ -608,6 +708,8 @@
       input.type = "date";
       input.value = now.toISOString().split("T")[0];
       renderRekapan();
+      updateLastSyncTime();
+      startAutoSync();
     });
     </script>
   </body>
